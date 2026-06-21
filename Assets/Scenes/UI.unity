@@ -3839,7 +3839,7 @@ MonoBehaviour:
   maxPlayersDropdown: {fileID: 312081466}
   lobbyNameTextInput: {fileID: 1075397977}
   roomNameTextInput: {fileID: 47135399}
-  sessionButton: {fileID: 1564684238}
+  sessionButton: {fileID: 777602563034550059, guid: 0fa6701f4fa896b41a360401a9262f62, type: 3}
 --- !u!4 &1264714959
 Transform:
   m_ObjectHideFlags: 0
