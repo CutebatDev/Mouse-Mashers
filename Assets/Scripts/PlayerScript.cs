@@ -9,8 +9,8 @@ public class PlayerScript : NetworkBehaviour
     [SerializeField] private Color readyColor = Color.green;
     [SerializeField] private Color notReadyColor = Color.red;
 
-    //[Networked]
-    public bool IsReady => isReady;
+    [Networked]
+    public bool IsReady { get { return isReady; } set { isReady = value; } }
 
     [Rpc]
     public void SetReadyRPC()
