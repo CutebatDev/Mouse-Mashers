@@ -14,5 +14,8 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/FlailTestScene.unity
     guid: b147e48ea5045504297933a8a2d8b478
+  - enabled: 1
+    path: Assets/Scenes/MultiplayerFlail.unity
+    guid: 81fb218c87b259646aa19c9b1ba6c860
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}

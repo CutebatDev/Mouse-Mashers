@@ -483,7 +483,7 @@ MonoBehaviour:
   - {fileID: 943439117}
   - {fileID: 1812341205}
   - {fileID: 260412245}
-  GAME_SCENE_NAME: FlailTestScene
+  GAME_SCENE_NAME: MultiplayerFlail
 --- !u!114 &180104447
 MonoBehaviour:
   m_ObjectHideFlags: 0
