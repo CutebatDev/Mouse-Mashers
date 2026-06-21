@@ -13,14 +13,18 @@ public class LobbyManager : MonoBehaviour, INetworkRunnerCallbacks
     [SerializeField] private NetworkRunner runnerPrefab;
     [SerializeField] private GameObject playerPrefab;
 
+    [Header("References")]
     [SerializeField] private LobbyUI lobbyUI;
     [SerializeField] private Transform[] spawnPoints;
+    [SerializeField] private string GAME_SCENE_NAME;
 
     private readonly List<PlayerRef> players = new();
 
     private NetState state;
     private NetworkRunner runner;
     private PlayerScript currentPlayer;
+
+    private int readiedPlayers = 0;
 
     void Start()
     {
@@ -197,6 +201,22 @@ public class LobbyManager : MonoBehaviour, INetworkRunnerCallbacks
     public void TogglePlayerReady()
     {
         currentPlayer.ToggleReadyRPC();
+
+        if (currentPlayer.IsReady)
+            readiedPlayers++;
+        else
+            readiedPlayers--;
+
+        Debug.Log($"Current Readied Players: {readiedPlayers}");
+
+        if (players.Count > 1 && readiedPlayers == players.Count)
+            StartMatch();
+    }
+
+    public void StartMatch()
+    {
+        Debug.Log("Loading Game Scene");
+        runner.LoadScene(GAME_SCENE_NAME);
     }
 
     public void OnPlayerLeft(NetworkRunner runner, PlayerRef player)
