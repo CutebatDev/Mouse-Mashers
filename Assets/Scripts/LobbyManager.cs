@@ -1,0 +1,251 @@
+﻿using Fusion;
+using Fusion.Sockets;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using TMPro;
+using UnityEngine;
+using UnityEngine.UI;
+
+public class LobbyManager : MonoBehaviour, INetworkRunnerCallbacks
+{
+    [Header("Prefabs")]
+    [SerializeField] private NetworkRunner runnerPrefab;
+    [SerializeField] private GameObject playerPrefab;
+
+    // [SerializeField] private LobbyUI lobbyUI;
+    [SerializeField] private Transform[] spawnPoints;
+
+    private readonly List<PlayerRef> players = new();
+
+    private NetState state;
+    private NetworkRunner runner;
+    // private PlayerScript currentPlayer;
+
+    void Start()
+    {
+        state = NetState.Disconnected;
+
+        CreateRunner();
+    }
+
+    private void CreateRunner()
+    {
+        runner = Instantiate(runnerPrefab);
+        runner.AddCallbacks(this);
+    }
+
+    private void RefreshRoomUI()
+    {
+        if (runner.IsRunning && !runner.IsShutdown)
+        {
+            // lobbyUI.UpdatePlayerCount(players.Count);
+        }
+    }
+
+    public async void JoinLobby()
+    {
+        // string lobbyName = lobbyUI.LobbyNameText;
+        string lobbyName = "example";
+
+        StartGameResult result = await runner.JoinSessionLobby(SessionLobby.Custom, lobbyName);
+
+        if (result.Ok)
+        {
+            state = NetState.Lobby;
+            // Debug.Log($"Joined Lobby: {lobbyName}");
+        }
+        else
+        {
+            // Debug.LogError($"Failed to create/join lobby: {result.ErrorMessage}");
+            return;
+        }
+
+            // lobbyUI.UpdateUIState(state);
+    }
+
+    public async void CreateRoom(string roomName, int maxPlayers)
+    {
+        if (string.IsNullOrWhiteSpace(roomName))
+            return;
+
+        StartGameResult result = await runner.StartGame(new StartGameArgs
+        {
+            GameMode = GameMode.Shared,
+            SessionName = roomName,
+            PlayerCount = maxPlayers,
+            OnGameStarted = OnGameStarted
+        });
+
+        if (result.Ok)
+        {
+            state = NetState.InSession;
+            Debug.Log($"Created and Joined Room: {roomName}");
+        }
+        else
+        {
+            Debug.LogError($"Failed to create room: {result.ErrorMessage}");
+            return;
+        }
+    }
+
+    public async void JoinRoom(string roomName)
+    {
+        StartGameResult result = await runner.StartGame(new StartGameArgs
+        {
+            GameMode = GameMode.Shared,
+            SessionName = roomName,
+            OnGameStarted = OnGameStarted
+        });
+
+        if (result.Ok)
+        {
+            state = NetState.InSession;
+            Debug.Log($"Joined Room: {roomName}");
+        }
+        else
+        {
+            Debug.LogError($"Failed to join room: {result.ErrorMessage}");
+            return;
+        }
+    }
+
+    private void OnGameStarted(NetworkRunner obj)
+    {
+        // lobbyUI.UpdateUIState(state);
+    }
+
+    public void OnCreateRoomPressed()
+    {
+        // string roomName = lobbyUI.RoomNameText;
+        // int maxPlayers = lobbyUI.RoomMaxPlayers;
+
+        // CreateRoom(roomName, maxPlayers);
+    }
+
+    public async void OnLeaveSessionPressed()
+    {
+        if (!runner.IsRunning)
+            return;
+
+        await runner.Shutdown();
+
+        await Task.Yield();
+
+        JoinLobby();
+    }
+
+
+    // Beware, callbacks below!
+
+    public void OnConnectedToServer(NetworkRunner runner)
+    {
+    }
+
+    public void OnConnectFailed(NetworkRunner runner, NetAddress remoteAddress, NetConnectFailedReason reason)
+    {
+    }
+
+    public void OnConnectRequest(NetworkRunner runner, NetworkRunnerCallbackArgs.ConnectRequest request, byte[] token)
+    {
+    }
+
+    public void OnCustomAuthenticationResponse(NetworkRunner runner, Dictionary<string, object> data)
+    {
+    }
+
+    public void OnDisconnectedFromServer(NetworkRunner runner, NetDisconnectReason reason)
+    {
+    }
+
+    public void OnHostMigration(NetworkRunner runner, HostMigrationToken hostMigrationToken)
+    {
+    }
+
+    public void OnInput(NetworkRunner runner, NetworkInput input)
+    {
+    }
+
+    public void OnInputMissing(NetworkRunner runner, PlayerRef player, NetworkInput input)
+    {
+    }
+
+    public void OnObjectEnterAOI(NetworkRunner runner, NetworkObject obj, PlayerRef player)
+    {
+    }
+
+    public void OnObjectExitAOI(NetworkRunner runner, NetworkObject obj, PlayerRef player)
+    {
+    }
+
+    public void OnPlayerJoined(NetworkRunner runner, PlayerRef player)
+    {
+        if (state != NetState.InSession)
+            return;
+
+        bool isLocalPlayer = runner.LocalPlayer == player;
+
+        Debug.Log($"Player {player.PlayerId} joined, localPlayer: {isLocalPlayer}");
+
+        players.Add(player);
+
+        // if (isLocalPlayer)
+        //     currentPlayer = runner.Spawn(playerPrefab, spawnPoints[player.PlayerId - 1].transform.position).GetComponent<PlayerScript>();
+
+        RefreshRoomUI();
+    }
+
+    public void TogglePlayerReady()
+    {
+        // currentPlayer.ToggleReadyRPC();
+    }
+
+    public void OnPlayerLeft(NetworkRunner runner, PlayerRef player)
+    {
+        if (state != NetState.InSession)
+            return;
+
+        players.RemoveAll(p => p == player);
+
+        RefreshRoomUI();
+    }
+
+    public void OnReliableDataProgress(NetworkRunner runner, PlayerRef player, ReliableKey key, float progress)
+    {
+    }
+
+    public void OnReliableDataReceived(NetworkRunner runner, PlayerRef player, ReliableKey key, ArraySegment<byte> data)
+    {
+    }
+
+    public void OnSceneLoadDone(NetworkRunner runner)
+    {
+    }
+
+    public void OnSceneLoadStart(NetworkRunner runner)
+    {
+    }
+
+    public void OnSessionListUpdated(NetworkRunner runner, List<SessionInfo> sessionList)
+    {
+        //if (state != NetState.Lobby)
+        //    return;
+
+        // lobbyUI.UpdateSessions(sessionList);
+    }
+
+    public void OnShutdown(NetworkRunner runner, ShutdownReason shutdownReason)
+    {
+        Debug.Log($"Shutdown: {shutdownReason}");
+
+        players.Clear();
+
+        CreateRunner();
+
+        // lobbyUI.UpdateUIState(state);
+    }
+
+    public void OnUserSimulationMessage(NetworkRunner runner, SimulationMessagePtr message)
+    {
+    }
+}
