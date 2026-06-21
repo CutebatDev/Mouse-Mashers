@@ -214,7 +214,7 @@ public class LobbyManager : MonoBehaviour, INetworkRunnerCallbacks
     [Rpc]
     public void TogglePlayerReadyRPC()
     {
-        if (currentPlayer.IsReady)
+        if (!currentPlayer.IsReady)
         {
             currentPlayer.SetReadyRPC();
             readiedPlayers++;
