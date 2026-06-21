@@ -211,14 +211,19 @@ public class LobbyManager : MonoBehaviour, INetworkRunnerCallbacks
         RefreshRoomUI();
     }
 
-    public void TogglePlayerReady()
+    [Rpc]
+    public void TogglePlayerReadyRPC()
     {
-        currentPlayer.ToggleReadyRPC();
-
         if (currentPlayer.IsReady)
-            ReadiedPlayers++;
+        {
+            currentPlayer.SetReadyRPC();
+            readiedPlayers++;
+        }
         else
+        {
+            currentPlayer.SetUnreadyRPC();
             ReadiedPlayers--;
+        }
 
         Debug.Log($"Current Readied Players: {ReadiedPlayers}");
 
