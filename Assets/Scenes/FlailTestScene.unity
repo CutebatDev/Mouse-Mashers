@@ -148,7 +148,7 @@ Transform:
   m_GameObject: {fileID: 116171281}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -1.21, z: 0}
+  m_LocalPosition: {x: 0, y: -2, z: 0}
   m_LocalScale: {x: 0.25, y: 0.25, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -252,9 +252,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 588d4266f45549a46863d2f8bae887d8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HandleController
-  input: {fileID: 0}
-  handleRb: {fileID: 0}
-  handleSpeed: 10
+  input: {fileID: 632071117}
+  handleRb: {fileID: 116171284}
+  handleSpeed: 25
 --- !u!232 &116171286
 DistanceJoint2D:
   m_ObjectHideFlags: 0
@@ -485,7 +485,7 @@ Transform:
   m_GameObject: {fileID: 632071114}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.69127, y: 0.79055, z: 0}
+  m_LocalPosition: {x: -2.07, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -759,9 +759,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca1eef667e2113449bdc32a61845eb16, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RopeScript
-  line: {fileID: 0}
-  handle: {fileID: 0}
-  rat: {fileID: 0}
+  line: {fileID: 998969300}
+  handle: {fileID: 116171282}
+  rat: {fileID: 1932302661}
   points: 20
 --- !u!1 &1191792374
 GameObject:
@@ -935,7 +935,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 5, y: 5, z: 1}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 632071115}
@@ -989,12 +989,12 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_MaskInteraction: 0
-  m_Sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
+  m_Sprite: {fileID: 21300000, guid: 78d6ceaf71ef11c408665514e82ff5a5, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 0.2, y: 0.2}
+  m_Size: {x: 0.5, y: 0.5}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -1061,7 +1061,7 @@ CircleCollider2D:
   m_CompositeOperation: 0
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
-  m_Radius: 0.5
+  m_Radius: 0.1
 --- !u!114 &1932302665
 MonoBehaviour:
   m_ObjectHideFlags: 0
