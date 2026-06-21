@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class PlayerScript : NetworkBehaviour
 {
-    private bool isReady;
+    private bool isReady = false;
     private SpriteRenderer sr;
 
     [SerializeField] private Color readyColor = Color.green;
