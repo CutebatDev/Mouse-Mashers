@@ -60,7 +60,7 @@ public class LobbyManager : MonoBehaviour, INetworkRunnerCallbacks
             return;
         }
 
-            lobbyUI.UpdateUIState(state);
+        lobbyUI.UpdateUIState(state);
     }
 
     public async void CreateRoom(string roomName, int maxPlayers)

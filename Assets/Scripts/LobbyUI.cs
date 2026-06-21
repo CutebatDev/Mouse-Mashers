@@ -41,7 +41,7 @@ public class LobbyUI : MonoBehaviour
 
     public void UpdateUIState(NetState state)
     {
-        playerPanel.SetActive(state == NetState.InSession);
+        playerPanel.SetActive(state == NetState.Lobby);
         menuPanel.SetActive(state == NetState.Disconnected);
         lobbyPanel.SetActive(state == NetState.Lobby);
         sessionPanel.SetActive(state == NetState.InSession);
