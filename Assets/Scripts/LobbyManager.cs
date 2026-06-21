@@ -26,6 +26,19 @@ public class LobbyManager : MonoBehaviour, INetworkRunnerCallbacks
 
     private int readiedPlayers = 0;
 
+    [Networked]
+    private int ReadiedPlayers
+    {
+        get
+        {
+            return readiedPlayers;
+        }
+        set
+        {
+            readiedPlayers = value;
+        }
+    }
+
     void Start()
     {
         state = NetState.Disconnected;
@@ -203,13 +216,13 @@ public class LobbyManager : MonoBehaviour, INetworkRunnerCallbacks
         currentPlayer.ToggleReadyRPC();
 
         if (currentPlayer.IsReady)
-            readiedPlayers++;
+            ReadiedPlayers++;
         else
-            readiedPlayers--;
+            ReadiedPlayers--;
 
-        Debug.Log($"Current Readied Players: {readiedPlayers}");
+        Debug.Log($"Current Readied Players: {ReadiedPlayers}");
 
-        if (players.Count > 1 && readiedPlayers == players.Count)
+        if (players.Count > 1 && ReadiedPlayers == players.Count)
             StartMatch();
     }
 
