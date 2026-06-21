@@ -3835,7 +3835,7 @@ MonoBehaviour:
   lobbyPanel: {fileID: 1842195210}
   sessionPanel: {fileID: 948094994}
   bottomPanel: {fileID: 783547532}
-  playerPanel: {fileID: 139434976}
+  playerPanel: {fileID: 402316410}
   maxPlayersDropdown: {fileID: 312081466}
   lobbyNameTextInput: {fileID: 1075397977}
   roomNameTextInput: {fileID: 47135399}
