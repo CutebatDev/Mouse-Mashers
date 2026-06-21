@@ -208,28 +208,33 @@ public class LobbyManager : MonoBehaviour, INetworkRunnerCallbacks
         if (isLocalPlayer)
             currentPlayer = runner.Spawn(playerPrefab, spawnPoints[player.PlayerId - 1].transform.position).GetComponent<PlayerScript>();
 
+        ReadiedPlayers++;
+
         RefreshRoomUI();
-    }
 
-    [Rpc]
-    public void TogglePlayerReadyRPC()
-    {
-        if (!currentPlayer.IsReady)
-        {
-            currentPlayer.SetReadyRPC();
-            ReadiedPlayers++;
-        }
-        else
-        {
-            currentPlayer.SetUnreadyRPC();
-            ReadiedPlayers--;
-        }
-
-        Debug.Log($"Current Readied Players: {ReadiedPlayers}");
-
-        if (players.Count > 1 && ReadiedPlayers == players.Count)
+        if (ReadiedPlayers == runner.SessionInfo.MaxPlayers)
             StartMatch();
     }
+
+    //[Rpc]
+    //public void TogglePlayerReadyRPC()
+    //{
+    //    if (!currentPlayer.IsReady)
+    //    {
+    //        currentPlayer.SetReadyRPC();
+    //        ReadiedPlayers++;
+    //    }
+    //    else
+    //    {
+    //        currentPlayer.SetUnreadyRPC();
+    //        ReadiedPlayers--;
+    //    }
+
+    //    Debug.Log($"Current Readied Players: {ReadiedPlayers}");
+
+    //    if (players.Count > 1 && ReadiedPlayers == players.Count)
+    //        StartMatch();
+    //}
 
     public void StartMatch()
     {
@@ -243,6 +248,8 @@ public class LobbyManager : MonoBehaviour, INetworkRunnerCallbacks
             return;
 
         players.RemoveAll(p => p == player);
+
+        ReadiedPlayers--;
 
         RefreshRoomUI();
     }
