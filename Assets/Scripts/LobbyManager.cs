@@ -13,14 +13,14 @@ public class LobbyManager : MonoBehaviour, INetworkRunnerCallbacks
     [SerializeField] private NetworkRunner runnerPrefab;
     [SerializeField] private GameObject playerPrefab;
 
-    // [SerializeField] private LobbyUI lobbyUI;
+    [SerializeField] private LobbyUI lobbyUI;
     [SerializeField] private Transform[] spawnPoints;
 
     private readonly List<PlayerRef> players = new();
 
     private NetState state;
     private NetworkRunner runner;
-    // private PlayerScript currentPlayer;
+    private PlayerScript currentPlayer;
 
     void Start()
     {
@@ -39,29 +39,28 @@ public class LobbyManager : MonoBehaviour, INetworkRunnerCallbacks
     {
         if (runner.IsRunning && !runner.IsShutdown)
         {
-            // lobbyUI.UpdatePlayerCount(players.Count);
+            lobbyUI.UpdatePlayerCount(players.Count);
         }
     }
 
     public async void JoinLobby()
     {
-        // string lobbyName = lobbyUI.LobbyNameText;
-        string lobbyName = "example";
+        string lobbyName = lobbyUI.LobbyNameText;
 
         StartGameResult result = await runner.JoinSessionLobby(SessionLobby.Custom, lobbyName);
 
         if (result.Ok)
         {
             state = NetState.Lobby;
-            // Debug.Log($"Joined Lobby: {lobbyName}");
+            Debug.Log($"Joined Lobby: {lobbyName}");
         }
         else
         {
-            // Debug.LogError($"Failed to create/join lobby: {result.ErrorMessage}");
+            Debug.LogError($"Failed to create/join lobby: {result.ErrorMessage}");
             return;
         }
 
-            // lobbyUI.UpdateUIState(state);
+            lobbyUI.UpdateUIState(state);
     }
 
     public async void CreateRoom(string roomName, int maxPlayers)
@@ -112,15 +111,15 @@ public class LobbyManager : MonoBehaviour, INetworkRunnerCallbacks
 
     private void OnGameStarted(NetworkRunner obj)
     {
-        // lobbyUI.UpdateUIState(state);
+        lobbyUI.UpdateUIState(state);
     }
 
     public void OnCreateRoomPressed()
     {
-        // string roomName = lobbyUI.RoomNameText;
-        // int maxPlayers = lobbyUI.RoomMaxPlayers;
+        string roomName = lobbyUI.RoomNameText;
+        int maxPlayers = lobbyUI.RoomMaxPlayers;
 
-        // CreateRoom(roomName, maxPlayers);
+        CreateRoom(roomName, maxPlayers);
     }
 
     public async void OnLeaveSessionPressed()
@@ -189,15 +188,15 @@ public class LobbyManager : MonoBehaviour, INetworkRunnerCallbacks
 
         players.Add(player);
 
-        // if (isLocalPlayer)
-        //     currentPlayer = runner.Spawn(playerPrefab, spawnPoints[player.PlayerId - 1].transform.position).GetComponent<PlayerScript>();
+        if (isLocalPlayer)
+            currentPlayer = runner.Spawn(playerPrefab, spawnPoints[player.PlayerId - 1].transform.position).GetComponent<PlayerScript>();
 
         RefreshRoomUI();
     }
 
     public void TogglePlayerReady()
     {
-        // currentPlayer.ToggleReadyRPC();
+        currentPlayer.ToggleReadyRPC();
     }
 
     public void OnPlayerLeft(NetworkRunner runner, PlayerRef player)
@@ -228,10 +227,10 @@ public class LobbyManager : MonoBehaviour, INetworkRunnerCallbacks
 
     public void OnSessionListUpdated(NetworkRunner runner, List<SessionInfo> sessionList)
     {
-        //if (state != NetState.Lobby)
-        //    return;
+        if (state != NetState.Lobby)
+            return;
 
-        // lobbyUI.UpdateSessions(sessionList);
+        lobbyUI.UpdateSessions(sessionList);
     }
 
     public void OnShutdown(NetworkRunner runner, ShutdownReason shutdownReason)
@@ -242,7 +241,7 @@ public class LobbyManager : MonoBehaviour, INetworkRunnerCallbacks
 
         CreateRunner();
 
-        // lobbyUI.UpdateUIState(state);
+        lobbyUI.UpdateUIState(state);
     }
 
     public void OnUserSimulationMessage(NetworkRunner runner, SimulationMessagePtr message)
