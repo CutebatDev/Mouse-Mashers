@@ -120,7 +120,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 5146204526907467316}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f92b8174051344a4981267d0f0b359e2, type: 3}
+  m_Script: {fileID: 11500000, guid: b0e8ed4faf5705c47a334cfea21bbbfb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerScript
   readyColor: {r: 0, g: 1, b: 0, a: 1}
@@ -137,7 +137,7 @@ MonoBehaviour:
   m_Script: {fileID: -1552182283, guid: e725a070cec140c4caffb81624c8c787, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Fusion.Runtime.dll::Fusion.NetworkObject
-  SortKey: 2598589412
+  SortKey: 2591865180
   ObjectInterest: 1
   Flags: 262145
   NestedObjects: []

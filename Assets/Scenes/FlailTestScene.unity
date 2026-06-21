@@ -865,9 +865,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1191792374}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 948ac8b7ab3a065469a2bb5a6003e36a, type: 3}
+  m_Script: {fileID: 11500000, guid: d41e5b77f5c08fa409658fbe08134095, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Health
+  hp: 100
 --- !u!70 &1191792378
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
