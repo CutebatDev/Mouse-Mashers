@@ -62,14 +62,14 @@ public class LobbyManager : MonoBehaviour, INetworkRunnerCallbacks
 
     public async void JoinLobby()
     {
-        string lobbyName = lobbyUI.LobbyNameText;
+        // string lobbyName = lobbyUI.LobbyNameText;
 
-        StartGameResult result = await runner.JoinSessionLobby(SessionLobby.Custom, lobbyName);
+        StartGameResult result = await runner.JoinSessionLobby(SessionLobby.Custom,"default");
 
         if (result.Ok)
         {
             state = NetState.Lobby;
-            Debug.Log($"Joined Lobby: {lobbyName}");
+            Debug.Log($"Joined Lobby: default");
         }
         else
         {
