@@ -649,7 +649,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
   mainCamera: {fileID: 133992274}
   playerPrefab: {fileID: 8783994713923211441, guid: 5ac016975b391fa45b7ae7743060ace3, type: 3}
-  playerSpawnPoint: {fileID: 8764150}
+  playerSpawnPoint: {fileID: 0}
   twoPlayerSpawnPoints:
   - {fileID: 8764151}
   - {fileID: 63620849}

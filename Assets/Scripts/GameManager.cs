@@ -122,8 +122,7 @@ public class GameManager : NetworkBehaviour, INetworkRunnerCallbacks
         SpawnPoint targetSpawnPoint = sixPlayerSpawnPoints[spawnPointIndex];
 
         targetSpawnPoint.isTaken = true;
-        networkRunner.SpawnAsync(playerPrefab, targetSpawnPoint.transform.position,
-            targetSpawnPoint.transform.rotation);
+        networkRunner.SpawnAsync(playerPrefab, Vector3.zero, Quaternion.identity);
     }
 
     [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
