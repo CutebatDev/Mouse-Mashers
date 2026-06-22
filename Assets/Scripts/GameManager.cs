@@ -150,8 +150,7 @@ public class GameManager : NetworkBehaviour, INetworkRunnerCallbacks
         if (player == runner.LocalPlayer)
         {
             localPlayerRef = player;
-            networkRunner.SpawnAsync(playerPrefab, targetSpawnPoint.transform.position,
-                targetSpawnPoint.transform.rotation, localPlayerRef);
+            networkRunner.SpawnAsync(playerPrefab, Vector3.zero, Quaternion.identity, localPlayerRef); //targetSpawnPoint.transform.position, targetSpawnPoint.transform.rotation, 
         }
     }
 
