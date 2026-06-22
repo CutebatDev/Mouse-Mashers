@@ -1,10 +1,12 @@
+using Fusion;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class HandleController : MonoBehaviour
+public class HandleController : NetworkBehaviour
 {
     [SerializeField] private InputHandler input;
     [SerializeField] private Rigidbody2D handleRb;
+    [SerializeField] private NetworkObject networkObject;
 
     [SerializeField] private float handleSpeed = 10f;
 
@@ -12,11 +14,19 @@ public class HandleController : MonoBehaviour
 
     void Update()
     {
+        if(!networkObject.HasStateAuthority)
+            return;
         if (input.IsHoldingLMB)
             targetPosition = Vector2.MoveTowards(handleRb.position, input.WorldPosition, handleSpeed * Time.fixedDeltaTime);
     }
 
-    void FixedUpdate()
+    public override void Spawned()
+    {
+        base.Spawned();
+        Debug.Log($"Has input authority?? - {networkObject.HasInputAuthority}");
+    }
+
+    public override void FixedUpdateNetwork()
     {
         handleRb.MovePosition(targetPosition);
     }

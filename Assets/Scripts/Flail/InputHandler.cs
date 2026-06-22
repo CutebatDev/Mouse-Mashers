@@ -1,3 +1,4 @@
+using System;
 using Mono.Cecil.Cil;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -9,6 +10,12 @@ public class InputHandler : MonoBehaviour
     Vector2 ScreenPosition => Mouse.current.position.ReadValue();
 
     public bool IsHoldingLMB => Mouse.current.leftButton.isPressed;
+
+    private void Awake()
+    {
+        if (!mainCam)
+            mainCam = Camera.main;
+    }
 
     public Vector2 WorldPosition
     {

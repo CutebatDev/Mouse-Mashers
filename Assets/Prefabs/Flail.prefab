@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 353575195796760113}
   - component: {fileID: 5112802171417024867}
   - component: {fileID: 4013709904662826061}
+  - component: {fileID: 3967485660881755961}
   - component: {fileID: 7955266653488768817}
   m_Layer: 0
   m_Name: Handle
@@ -108,6 +109,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::HandleController
   input: {fileID: 6892195497712721331}
   handleRb: {fileID: 4013709904662826061}
+  networkObject: {fileID: 4168504388729293098}
   handleSpeed: 25
 --- !u!50 &4013709904662826061
 Rigidbody2D:
@@ -136,6 +138,29 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &3967485660881755961
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1411278316123143412}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c5e690b5fb1084f5ab1c86457af401d4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Fusion.Addons.Physics::Fusion.Addons.Physics.NetworkRigidbody2D
+  _stateAuthorityChangeErrorCorrectionDelta: 0
+  SyncScale: 0
+  SyncParent: 1
+  _interpolationTarget: {fileID: 0}
+  UsePreciseRotation: 0
+  UseRenderSleepThresholds: 1
+  RenderThresholds:
+    UseEnergy: 1
+    Position: 0.01
+    Rotation: 0.01
+    Scale: 0.01
 --- !u!232 &7955266653488768817
 DistanceJoint2D:
   m_ObjectHideFlags: 0
@@ -167,8 +192,9 @@ GameObject:
   - component: {fileID: 6618210037318061118}
   - component: {fileID: 3854155200524011751}
   - component: {fileID: 821185334484613019}
-  - component: {fileID: 3221952681136024549}
   - component: {fileID: 3603485330793878756}
+  - component: {fileID: 6265263461444359986}
+  - component: {fileID: 7732840807281928696}
   m_Layer: 0
   m_Name: Rat?
   m_TagString: Untagged
@@ -264,33 +290,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::RatWeapon
   rb: {fileID: 0}
   damageMultiplier: 5
---- !u!50 &3221952681136024549
-Rigidbody2D:
-  serializedVersion: 5
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6122156711470033703}
-  m_BodyType: 0
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 5
-  m_LinearDamping: 0
-  m_AngularDamping: 0.5
-  m_GravityScale: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 1
-  m_Constraints: 0
 --- !u!58 &3603485330793878756
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -327,6 +326,56 @@ CircleCollider2D:
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
   m_Radius: 0.1
+--- !u!50 &6265263461444359986
+Rigidbody2D:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6122156711470033703}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
+--- !u!114 &7732840807281928696
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6122156711470033703}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c5e690b5fb1084f5ab1c86457af401d4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Fusion.Addons.Physics::Fusion.Addons.Physics.NetworkRigidbody2D
+  _stateAuthorityChangeErrorCorrectionDelta: 0
+  SyncScale: 0
+  SyncParent: 1
+  _interpolationTarget: {fileID: 0}
+  UsePreciseRotation: 0
+  UseRenderSleepThresholds: 1
+  RenderThresholds:
+    UseEnergy: 1
+    Position: 0.01
+    Rotation: 0.01
+    Scale: 0.01
 --- !u!1 &7927627704850201731
 GameObject:
   m_ObjectHideFlags: 0
@@ -340,6 +389,7 @@ GameObject:
   - component: {fileID: 5479912317699063347}
   - component: {fileID: 3315903139531209418}
   - component: {fileID: 7854568118356455267}
+  - component: {fileID: 421467628140407065}
   m_Layer: 0
   m_Name: Rope
   m_TagString: Untagged
@@ -543,7 +593,7 @@ DistanceJoint2D:
   m_Enabled: 1
   serializedVersion: 4
   m_EnableCollision: 0
-  m_ConnectedRigidBody: {fileID: 3221952681136024549}
+  m_ConnectedRigidBody: {fileID: 6265263461444359986}
   m_BreakForce: Infinity
   m_BreakTorque: Infinity
   m_BreakAction: 0
@@ -553,6 +603,29 @@ DistanceJoint2D:
   m_AutoConfigureDistance: 0
   m_Distance: 1
   m_MaxDistanceOnly: 0
+--- !u!114 &421467628140407065
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7927627704850201731}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c5e690b5fb1084f5ab1c86457af401d4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Fusion.Addons.Physics::Fusion.Addons.Physics.NetworkRigidbody2D
+  _stateAuthorityChangeErrorCorrectionDelta: 0
+  SyncScale: 0
+  SyncParent: 1
+  _interpolationTarget: {fileID: 0}
+  UsePreciseRotation: 0
+  UseRenderSleepThresholds: 1
+  RenderThresholds:
+    UseEnergy: 1
+    Position: 0.01
+    Rotation: 0.01
+    Scale: 0.01
 --- !u!1 &8783994713923211441
 GameObject:
   m_ObjectHideFlags: 0
@@ -669,4 +742,8 @@ MonoBehaviour:
   NestedObjects: []
   NetworkedBehaviours:
   - {fileID: 78375316069179767}
+  - {fileID: 7732840807281928696}
+  - {fileID: 421467628140407065}
+  - {fileID: 5112802171417024867}
+  - {fileID: 3967485660881755961}
   ForceRemoteRenderTimeframe: 0

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Fusion;
 using Fusion.Sockets;
 using UnityEngine;
@@ -147,10 +148,11 @@ public class GameManager : NetworkBehaviour, INetworkRunnerCallbacks
     public void OnPlayerJoined(NetworkRunner runner, PlayerRef player)
     {
         if (player == runner.LocalPlayer)
+        {
             localPlayerRef = player;
-        
-        networkRunner.SpawnAsync(playerPrefab, targetSpawnPoint.transform.position,
-            targetSpawnPoint.transform.rotation);
+            networkRunner.SpawnAsync(playerPrefab, targetSpawnPoint.transform.position,
+                targetSpawnPoint.transform.rotation, localPlayerRef);
+        }
     }
 
     public void OnPlayerLeft(NetworkRunner runner, PlayerRef player)
