@@ -20,10 +20,12 @@ public class GameManager : NetworkBehaviour, INetworkRunnerCallbacks
     public Transform playerSpawnPoint;
 
     private NetworkRunner networkRunner;
-
+    private PlayerRef localPlayerRef;
+    
     public SpawnPoint[] twoPlayerSpawnPoints;
     public SpawnPoint[] sixPlayerSpawnPoints;
 
+    SpawnPoint targetSpawnPoint;
     private void Awake()
     {
         Instance = this;
@@ -51,15 +53,13 @@ public class GameManager : NetworkBehaviour, INetworkRunnerCallbacks
         //     targetSpawnPoint.transform.rotation);
 
         //Option 3
-        SpawnPoint targetSpawnPoint;
         do
         {
             targetSpawnPoint = sixPlayerSpawnPoints[Random.Range(0, sixPlayerSpawnPoints.Length)];
         } while (targetSpawnPoint.isTaken);
         
         targetSpawnPoint.isTaken = true;
-        networkRunner.SpawnAsync(playerPrefab, targetSpawnPoint.transform.position,
-            targetSpawnPoint.transform.rotation);
+        
     }
 
     public override void Spawned()
@@ -88,7 +88,7 @@ public class GameManager : NetworkBehaviour, INetworkRunnerCallbacks
     }
     
     [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
-    private void RPCRequestSpawn(RpcInfo info = default)
+    private void RPCRequestSpawn(RpcInfo info = default) 
     {
         string userId = networkRunner.GetPlayerUserId(info.Source);
         if(userIdPlayersMap.TryGetValue(userId, out PlayerRef playerRef))
@@ -146,7 +146,11 @@ public class GameManager : NetworkBehaviour, INetworkRunnerCallbacks
 
     public void OnPlayerJoined(NetworkRunner runner, PlayerRef player)
     {
-     
+        if (player == runner.LocalPlayer)
+            localPlayerRef = player;
+        
+        networkRunner.SpawnAsync(playerPrefab, targetSpawnPoint.transform.position,
+            targetSpawnPoint.transform.rotation);
     }
 
     public void OnPlayerLeft(NetworkRunner runner, PlayerRef player)
