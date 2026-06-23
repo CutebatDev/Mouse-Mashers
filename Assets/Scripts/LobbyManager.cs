@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using TMPro;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 public class LobbyManager : MonoBehaviour, INetworkRunnerCallbacks
@@ -26,6 +27,8 @@ public class LobbyManager : MonoBehaviour, INetworkRunnerCallbacks
 
     private int readiedPlayers = 0;
 
+    private InputAction devAction;
+
     [Networked]
     private int ReadiedPlayers
     {
@@ -39,11 +42,37 @@ public class LobbyManager : MonoBehaviour, INetworkRunnerCallbacks
         }
     }
 
+    private void Awake()
+    {
+        devAction = new InputAction(
+            name: "DevKey",
+            type: InputActionType.Button,
+            binding: "<Keyboard>/f1"
+            );
+
+        devAction.performed += _ => StartMatch();
+    }
+
+    private void OnEnable()
+    {
+        devAction.Enable();
+    }
+
+    private void OnDisable()
+    {
+        devAction.Disable();
+    }
+
     void Start()
     {
         state = NetState.Disconnected;
 
         CreateRunner();
+    }
+
+    void Update()
+    {
+            
     }
 
     private void CreateRunner()
