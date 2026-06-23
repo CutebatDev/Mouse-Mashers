@@ -238,6 +238,12 @@ public class LobbyManager : MonoBehaviour, INetworkRunnerCallbacks
 
     public void StartMatch()
     {
+        if (runner.IsSharedModeMasterClient)
+        {
+            runner.SessionInfo.IsVisible = false;
+            runner.SessionInfo.IsOpen = false;
+            
+        }
         Debug.Log("Loading Game Scene");
         runner.LoadScene(GAME_SCENE_NAME);
     }
