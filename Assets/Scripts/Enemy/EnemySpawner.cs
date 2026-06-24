@@ -13,8 +13,6 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField] private int minToSpawn;
     [SerializeField] private int maxToSpawn;
 
-    private List<EnemyController> enemyRegistry;
-
     void Update()
     {
         SpawnerLoop();
@@ -26,11 +24,12 @@ public class EnemySpawner : MonoBehaviour
         return spawnPoints[spawnIndex];
     }
 
-    private void SpawnEnemy(EnemyController enemyToSpawn, int amount)
+    private void SpawnEnemy(int amount)
     {
         for (int i = 0;  i < spawnPoints.Length - 1; i++)
         {
-            EnemyController enemy = Instantiate(enemyToSpawn, ChooseSpawnPoint().position, Quaternion.identity, enemyRoot);
+            EnemyController enemy = Instantiate(ChooseEnemy(), ChooseSpawnPoint().position, Quaternion.identity, enemyRoot);
+            EnemyRegistry.Instance.Register(enemy);
         }
     }
 
@@ -47,9 +46,11 @@ public class EnemySpawner : MonoBehaviour
 
     private void SpawnerLoop()
     {
-        if (enemyRegistry.Count > minSpawnThreshold)
+        // Add spawn delay (Coroutine)
+
+        if (EnemyRegistry.Instance.RegisteredEnemies.Count > minSpawnThreshold)
             return;
 
-        SpawnEnemy(ChooseEnemy(), ChooseSpawnAmount());
+        SpawnEnemy(ChooseSpawnAmount());
     }
 }

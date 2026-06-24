@@ -2,15 +2,26 @@ using UnityEngine;
 
 public class EnemyController : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    [SerializeField] private float currentHealth;
+    [SerializeField] private float maxHealth;
+
+    void Awake()
     {
-        
+        currentHealth = maxHealth;    
     }
 
-    // Update is called once per frame
-    void Update()
+    public void TakeDamage(float amount)
     {
-        
+        currentHealth -= amount;
+        if (currentHealth < 0)
+        {
+            currentHealth = 0;
+            Die();
+        }
+    }
+
+    private void Die()
+    {
+        EnemyRegistry.Instance.UnRegister(this);
     }
 }
