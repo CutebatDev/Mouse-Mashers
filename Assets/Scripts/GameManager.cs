@@ -64,8 +64,17 @@ public class GameManager : NetworkBehaviour, INetworkRunnerCallbacks
     [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
     private void RPCSpawnPlayer([RpcTarget] PlayerRef targetPlayer, int character)
     {
-        var temp = networkRunner.SpawnAsync(playerPrefab, Vector3.zero, Quaternion.identity);
-        temp.Object.GetComponent<SetFlailCharacter>().Character = character;
+        NetworkObject spawnedPlayer = networkRunner.Spawn(
+            playerPrefab,
+            Vector3.zero,
+            Quaternion.identity,
+            targetPlayer
+        );
+
+        SetFlailCharacter flailCharacter = spawnedPlayer.GetComponent<SetFlailCharacter>();
+
+        flailCharacter.Character = character;
+        flailCharacter.SetCharacter(character);
     }
 
     [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
@@ -89,10 +98,10 @@ public class GameManager : NetworkBehaviour, INetworkRunnerCallbacks
 
     public void OnPlayerJoined(NetworkRunner runner, PlayerRef player)
     {
-        if (player == runner.LocalPlayer)
-        {
-            networkRunner.SpawnAsync(playerPrefab, Vector3.zero, Quaternion.identity, player);
-        }
+        // if (player == runner.LocalPlayer)
+        // {
+        //     networkRunner.SpawnAsync(playerPrefab, Vector3.zero, Quaternion.identity, player);
+        // }
     }
 
     public void OnPlayerLeft(NetworkRunner runner, PlayerRef player)

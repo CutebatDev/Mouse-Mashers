@@ -1,31 +1,33 @@
-﻿using System;
-using Fusion;
+﻿using Fusion;
 using UnityEngine;
+
 public class SetFlailCharacter : NetworkBehaviour
 {
     [SerializeField] private Sprite[] ratSprites;
     [SerializeField] private SpriteRenderer ratSpriteRenderer;
-    [Networked] public int Character
+
+    [Networked, OnChangedRender(nameof(OnCharacterChanged))]
+    public int Character { get; set; }
+
+    public override void Spawned()
     {
-        get
-        {
-            return Character;
-        }
-        set
-        {
-            Character = value;
-            RPC_UpdateCharacter();
-        }
+        base.Spawned();
+        SetCharacter(Character);
     }
 
-    [Rpc]
-    private void RPC_UpdateCharacter()
+    private void OnCharacterChanged()
     {
         SetCharacter(Character);
     }
-    
+
     public void SetCharacter(int character)
     {
+        if (character < 0 || character >= ratSprites.Length)
+        {
+            Debug.LogError($"Bad character index: {character}");
+            return;
+        }
+
         ratSpriteRenderer.sprite = ratSprites[character];
     }
 }
