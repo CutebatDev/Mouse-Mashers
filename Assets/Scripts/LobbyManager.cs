@@ -3,9 +3,8 @@ using Fusion.Sockets;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
+using UnityEngine.InputSystem;
 
 public class LobbyManager : MonoBehaviour, INetworkRunnerCallbacks
 {
@@ -26,6 +25,8 @@ public class LobbyManager : MonoBehaviour, INetworkRunnerCallbacks
 
     private int readiedPlayers = 0;
 
+    private InputAction devAction;
+
     [Networked]
     private int ReadiedPlayers
     {
@@ -39,11 +40,37 @@ public class LobbyManager : MonoBehaviour, INetworkRunnerCallbacks
         }
     }
 
+    private void Awake()
+    {
+        devAction = new InputAction(
+            name: "DevKey",
+            type: InputActionType.Button,
+            binding: "<Keyboard>/f1"
+            );
+
+        devAction.performed += _ => StartMatch();
+    }
+
+    private void OnEnable()
+    {
+        devAction.Enable();
+    }
+
+    private void OnDisable()
+    {
+        devAction.Disable();
+    }
+
     void Start()
     {
         state = NetState.Disconnected;
 
         CreateRunner();
+    }
+
+    void Update()
+    {
+            
     }
 
     private void CreateRunner()
@@ -62,14 +89,14 @@ public class LobbyManager : MonoBehaviour, INetworkRunnerCallbacks
 
     public async void JoinLobby()
     {
-        string lobbyName = lobbyUI.LobbyNameText;
+        // string lobbyName = lobbyUI.LobbyNameText;
 
-        StartGameResult result = await runner.JoinSessionLobby(SessionLobby.Custom, lobbyName);
+        StartGameResult result = await runner.JoinSessionLobby(SessionLobby.Custom,"default");
 
         if (result.Ok)
         {
             state = NetState.Lobby;
-            Debug.Log($"Joined Lobby: {lobbyName}");
+            Debug.Log($"Joined Lobby: default");
         }
         else
         {
@@ -208,26 +235,42 @@ public class LobbyManager : MonoBehaviour, INetworkRunnerCallbacks
         if (isLocalPlayer)
             currentPlayer = runner.Spawn(playerPrefab, spawnPoints[player.PlayerId - 1].transform.position).GetComponent<PlayerScript>();
 
+        ReadiedPlayers++;
+
         RefreshRoomUI();
-    }
 
-    public void TogglePlayerReady()
-    {
-        currentPlayer.ToggleReadyRPC();
-
-        if (currentPlayer.IsReady)
-            ReadiedPlayers++;
-        else
-            ReadiedPlayers--;
-
-        Debug.Log($"Current Readied Players: {ReadiedPlayers}");
-
-        if (players.Count > 1 && ReadiedPlayers == players.Count)
+        if (ReadiedPlayers == runner.SessionInfo.MaxPlayers)
             StartMatch();
     }
 
+    //[Rpc]
+    //public void TogglePlayerReadyRPC()
+    //{
+    //    if (!currentPlayer.IsReady)
+    //    {
+    //        currentPlayer.SetReadyRPC();
+    //        ReadiedPlayers++;
+    //    }
+    //    else
+    //    {
+    //        currentPlayer.SetUnreadyRPC();
+    //        ReadiedPlayers--;
+    //    }
+
+    //    Debug.Log($"Current Readied Players: {ReadiedPlayers}");
+
+    //    if (players.Count > 1 && ReadiedPlayers == players.Count)
+    //        StartMatch();
+    //}
+
     public void StartMatch()
     {
+        if (runner.IsSharedModeMasterClient)
+        {
+            runner.SessionInfo.IsVisible = false;
+            runner.SessionInfo.IsOpen = false;
+            
+        }
         Debug.Log("Loading Game Scene");
         runner.LoadScene(GAME_SCENE_NAME);
     }
@@ -238,6 +281,8 @@ public class LobbyManager : MonoBehaviour, INetworkRunnerCallbacks
             return;
 
         players.RemoveAll(p => p == player);
+
+        ReadiedPlayers--;
 
         RefreshRoomUI();
     }

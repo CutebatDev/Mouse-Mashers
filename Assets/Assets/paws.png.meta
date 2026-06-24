@@ -1,0 +1,871 @@
+fileFormatVersion: 2
+guid: ed70b492556222f40a0970b8aaaf3090
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 6100948946089977879
+    second: paws_0
+  - first:
+      213: -466313285030213939
+    second: paws_1
+  - first:
+      213: -8679396308505410338
+    second: paws_2
+  - first:
+      213: -5386307025896964632
+    second: paws_3
+  - first:
+      213: -5449040201064031705
+    second: paws_4
+  - first:
+      213: -2795190408284843147
+    second: paws_5
+  - first:
+      213: -4491800467889117922
+    second: paws_6
+  - first:
+      213: -2869390364625695416
+    second: paws_7
+  - first:
+      213: 6529460687624223735
+    second: paws_8
+  - first:
+      213: -2766214232332644284
+    second: paws_9
+  - first:
+      213: 3427148376201215285
+    second: paws_10
+  - first:
+      213: 9141887145513945352
+    second: paws_11
+  - first:
+      213: -3338159542643068919
+    second: paws_12
+  - first:
+      213: 8402238217785597613
+    second: paws_13
+  - first:
+      213: -7493200060686820706
+    second: paws_14
+  - first:
+      213: 5239522823754998107
+    second: paws_15
+  - first:
+      213: 6782141418611719892
+    second: paws_16
+  - first:
+      213: 1795502679555204253
+    second: paws_17
+  - first:
+      213: 8910461778243679631
+    second: paws_18
+  - first:
+      213: 1015635984669335877
+    second: paws_19
+  - first:
+      213: -5961482775055624017
+    second: paws_20
+  - first:
+      213: 4324122688686671380
+    second: paws_21
+  - first:
+      213: -6229041218180434974
+    second: paws_22
+  - first:
+      213: 6001513341361624589
+    second: paws_23
+  - first:
+      213: -8344535503685359346
+    second: paws_24
+  - first:
+      213: -4962915572880216265
+    second: paws_25
+  - first:
+      213: 7357931675867968229
+    second: paws_26
+  - first:
+      213: 4890048057617605098
+    second: paws_27
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WindowsStoreApps
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: paws_0
+      rect:
+        serializedVersion: 2
+        x: 27
+        y: 1094
+        width: 232
+        height: 228
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 718ac740ebceaa450800000000000000
+      internalID: 6100948946089977879
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: paws_1
+      rect:
+        serializedVersion: 2
+        x: 349
+        y: 1079
+        width: 264
+        height: 243
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dc68ab3b9825789f0800000000000000
+      internalID: -466313285030213939
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: paws_2
+      rect:
+        serializedVersion: 2
+        x: 668
+        y: 1094
+        width: 231
+        height: 228
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ed4c2b6fa079c8780800000000000000
+      internalID: -8679396308505410338
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: paws_3
+      rect:
+        serializedVersion: 2
+        x: 1188
+        y: 1133
+        width: 670
+        height: 179
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8ed783e3c4eff35b0800000000000000
+      internalID: -5386307025896964632
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: paws_4
+      rect:
+        serializedVersion: 2
+        x: 1548
+        y: 1041
+        width: 30
+        height: 71
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 72a51c0bece1164b0800000000000000
+      internalID: -5449040201064031705
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: paws_5
+      rect:
+        serializedVersion: 2
+        x: 1582
+        y: 1041
+        width: 29
+        height: 71
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5735a9a122d7539d0800000000000000
+      internalID: -2795190408284843147
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: paws_6
+      rect:
+        serializedVersion: 2
+        x: 1614
+        y: 1041
+        width: 30
+        height: 71
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e152985e54be9a1c0800000000000000
+      internalID: -4491800467889117922
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: paws_7
+      rect:
+        serializedVersion: 2
+        x: 1648
+        y: 1041
+        width: 44
+        height: 71
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 84d8e828aa0ed28d0800000000000000
+      internalID: -2869390364625695416
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: paws_8
+      rect:
+        serializedVersion: 2
+        x: 1697
+        y: 1041
+        width: 30
+        height: 71
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7fb38bc96ed4d9a50800000000000000
+      internalID: 6529460687624223735
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: paws_9
+      rect:
+        serializedVersion: 2
+        x: 1731
+        y: 1041
+        width: 33
+        height: 71
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 440de2dcfce6c99d0800000000000000
+      internalID: -2766214232332644284
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: paws_10
+      rect:
+        serializedVersion: 2
+        x: 1767
+        y: 1041
+        width: 34
+        height: 71
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 53db7045a4daf8f20800000000000000
+      internalID: 3427148376201215285
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: paws_11
+      rect:
+        serializedVersion: 2
+        x: 1804
+        y: 1041
+        width: 32
+        height: 71
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 809811d4ce18ede70800000000000000
+      internalID: 9141887145513945352
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: paws_12
+      rect:
+        serializedVersion: 2
+        x: 27
+        y: 804
+        width: 232
+        height: 229
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 900fd2115997ca1d0800000000000000
+      internalID: -3338159542643068919
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: paws_13
+      rect:
+        serializedVersion: 2
+        x: 347
+        y: 804
+        width: 232
+        height: 229
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dae5251642fba9470800000000000000
+      internalID: 8402238217785597613
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: paws_14
+      rect:
+        serializedVersion: 2
+        x: 668
+        y: 804
+        width: 231
+        height: 229
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e9a93d7de3ec20890800000000000000
+      internalID: -7493200060686820706
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: paws_15
+      rect:
+        serializedVersion: 2
+        x: 980
+        y: 503
+        width: 227
+        height: 518
+      alignment: 9
+      pivot: {x: 0.5, y: 0.9}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b51e77e7f3686b840800000000000000
+      internalID: 5239522823754998107
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: paws_16
+      rect:
+        serializedVersion: 2
+        x: 1249
+        y: 504
+        width: 225
+        height: 517
+      alignment: 9
+      pivot: {x: 0.5, y: 0.7}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4deb0d8dfa10f1e50800000000000000
+      internalID: 6782141418611719892
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: paws_17
+      rect:
+        serializedVersion: 2
+        x: 1515
+        y: 504
+        width: 226
+        height: 516
+      alignment: 9
+      pivot: {x: 0.5, y: 0.7}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d9466209c28eae810800000000000000
+      internalID: 1795502679555204253
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: paws_18
+      rect:
+        serializedVersion: 2
+        x: 28
+        y: 515
+        width: 230
+        height: 229
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f85f8e417c158ab70800000000000000
+      internalID: 8910461778243679631
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: paws_19
+      rect:
+        serializedVersion: 2
+        x: 348
+        y: 515
+        width: 231
+        height: 229
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 541e1570c83481e00800000000000000
+      internalID: 1015635984669335877
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: paws_20
+      rect:
+        serializedVersion: 2
+        x: 668
+        y: 514
+        width: 231
+        height: 229
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fa8133a500f844da0800000000000000
+      internalID: -5961482775055624017
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: paws_21
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 209
+        height: 479
+      alignment: 9
+      pivot: {x: 0.5, y: 0.7}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4164068dcae520c30800000000000000
+      internalID: 4324122688686671380
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: paws_22
+      rect:
+        serializedVersion: 2
+        x: 254
+        y: 0
+        width: 211
+        height: 479
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2e3b613d3000e89a0800000000000000
+      internalID: -6229041218180434974
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: paws_23
+      rect:
+        serializedVersion: 2
+        x: 510
+        y: 0
+        width: 210
+        height: 478
+      alignment: 9
+      pivot: {x: 0.5, y: 0.7}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d0690aa2698a94350800000000000000
+      internalID: 6001513341361624589
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: paws_24
+      rect:
+        serializedVersion: 2
+        x: 765
+        y: 0
+        width: 211
+        height: 479
+      alignment: 9
+      pivot: {x: 0.5, y: 0.7}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e09e23fab21423c80800000000000000
+      internalID: -8344535503685359346
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: paws_25
+      rect:
+        serializedVersion: 2
+        x: 1023
+        y: 0
+        width: 207
+        height: 479
+      alignment: 9
+      pivot: {x: 0.5, y: 0.7}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 73f6834c49e202bb0800000000000000
+      internalID: -4962915572880216265
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: paws_26
+      rect:
+        serializedVersion: 2
+        x: 1254
+        y: 14
+        width: 211
+        height: 479
+      alignment: 9
+      pivot: {x: 0.5, y: 0.7}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5e274bd00ef9c1660800000000000000
+      internalID: 7357931675867968229
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: paws_27
+      rect:
+        serializedVersion: 2
+        x: 1532
+        y: 0
+        width: 211
+        height: 479
+      alignment: 9
+      pivot: {x: 0.5, y: 0.7}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ae1e2e0ccc0fcd340800000000000000
+      internalID: 4890048057617605098
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 141a86bb2a789eb4dac905b0d1ab9550
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      paws_0: 6100948946089977879
+      paws_1: -466313285030213939
+      paws_10: 3427148376201215285
+      paws_11: 9141887145513945352
+      paws_12: -3338159542643068919
+      paws_13: 8402238217785597613
+      paws_14: -7493200060686820706
+      paws_15: 5239522823754998107
+      paws_16: 6782141418611719892
+      paws_17: 1795502679555204253
+      paws_18: 8910461778243679631
+      paws_19: 1015635984669335877
+      paws_2: -8679396308505410338
+      paws_20: -5961482775055624017
+      paws_21: 4324122688686671380
+      paws_22: -6229041218180434974
+      paws_23: 6001513341361624589
+      paws_24: -8344535503685359346
+      paws_25: -4962915572880216265
+      paws_26: 7357931675867968229
+      paws_27: 4890048057617605098
+      paws_3: -5386307025896964632
+      paws_4: -5449040201064031705
+      paws_5: -2795190408284843147
+      paws_6: -4491800467889117922
+      paws_7: -2869390364625695416
+      paws_8: 6529460687624223735
+      paws_9: -2766214232332644284
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

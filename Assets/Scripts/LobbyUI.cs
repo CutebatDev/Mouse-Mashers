@@ -1,9 +1,7 @@
 using Fusion;
-using NUnit.Framework;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.InputSystem.LowLevel;
 using UnityEngine.UI;
 
 public class LobbyUI : MonoBehaviour
@@ -14,12 +12,15 @@ public class LobbyUI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI numberOfPlayersInSessionText;
 
     [SerializeField] private Button endSessionButton;
+    [SerializeField] private Button JoinLobbyButton;
+    [SerializeField] private Button CreateRoomButton;
 
     [SerializeField] private GameObject menuPanel;
     [SerializeField] private GameObject lobbyPanel;
     [SerializeField] private GameObject sessionPanel;
     [SerializeField] private GameObject bottomPanel;
     [SerializeField] private GameObject playerPanel;
+    [SerializeField] private GameObject SessionLoadingBlockingPanel;
 
     [SerializeField] private TMP_Dropdown maxPlayersDropdown;
 
@@ -41,12 +42,25 @@ public class LobbyUI : MonoBehaviour
 
     public void UpdateUIState(NetState state)
     {
+        SessionLoadingBlockingPanel.SetActive(false);
         playerPanel.SetActive(state == NetState.Lobby);
         menuPanel.SetActive(state == NetState.Disconnected);
         lobbyPanel.SetActive(state == NetState.Lobby);
         sessionPanel.SetActive(state == NetState.InSession);
         bottomPanel.SetActive(state == NetState.Lobby);
         endSessionButton.interactable = (state == NetState.InSession);
+    }
+
+    public void JoinLobbyOnClick()
+    {
+        lobbyManager.JoinLobby();
+        JoinLobbyButton.interactable = false;
+    }
+    public void CreateSessionOnClick()
+    {
+        lobbyManager.OnCreateRoomPressed();
+        CreateRoomButton.interactable = false;
+        SessionLoadingBlockingPanel.SetActive(true);
     }
 
     public void CreateSessionUI(string roomName, int maxPlayers, int currentPlayers, bool isFull)
