@@ -1,13 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Fusion;
 using Fusion.Sockets;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.Serialization;
-using Random = UnityEngine.Random;
 
 public class GameManager : NetworkBehaviour, INetworkRunnerCallbacks
 {
@@ -18,15 +15,9 @@ public class GameManager : NetworkBehaviour, INetworkRunnerCallbacks
     public static GameManager Instance;
     public Camera mainCamera;
     public GameObject playerPrefab;
-    public Transform playerSpawnPoint;
 
     private NetworkRunner networkRunner;
-    private PlayerRef localPlayerRef;
-    
-    public SpawnPoint[] twoPlayerSpawnPoints;
-    public SpawnPoint[] sixPlayerSpawnPoints;
 
-    SpawnPoint targetSpawnPoint;
     private void Awake()
     {
         Instance = this;
@@ -35,48 +26,13 @@ public class GameManager : NetworkBehaviour, INetworkRunnerCallbacks
     private void Start()
     {
         networkRunner = NetworkRunner.GetRunnerForScene(SceneManager.GetActiveScene());
-        //Option 1
-        //      networkRunner.SpawnAsync(playerPrefab, playerSpawnPoint.position, playerSpawnPoint.rotation);
-
-        // Option 2
-        // SpawnPoint targetSpawnPoint;
-        //
-        // if (networkRunner.IsSharedModeMasterClient)
-        // {
-        //     targetSpawnPoint = twoPlayerSpawnPoints[0];
-        // }
-        // else
-        // {
-        //     targetSpawnPoint = twoPlayerSpawnPoints[1];
-        // }
-        //
-        // networkRunner.SpawnAsync(playerPrefab, targetSpawnPoint.transform.position,
-        //     targetSpawnPoint.transform.rotation);
-
-        //Option 3
-        do
-        {
-            targetSpawnPoint = sixPlayerSpawnPoints[Random.Range(0, sixPlayerSpawnPoints.Length)];
-        } while (targetSpawnPoint.isTaken);
-        
-        targetSpawnPoint.isTaken = true;
-        
     }
 
     public override void Spawned()
     {
         base.Spawned();
         RPCRequestSpawn(SelectedCharacter.Index);
-   //     InitializeUserIdMap();
     }
-
-    // private void InitializeUserIdMap()
-    // {
-    //     foreach (var player in networkRunner.ActivePlayers)
-    //     {
-    //        
-    //     }
-    // }
 
     public void LeaveGame()
     {
@@ -101,27 +57,13 @@ public class GameManager : NetworkBehaviour, INetworkRunnerCallbacks
         else
         {
             userIdPlayersMap[userId] = info.Source;
-            int spawnSpawnIndex = 0;
-            SpawnPoint targetSpawnPoint;
-            do
-            {
-                spawnSpawnIndex = Random.Range(0, sixPlayerSpawnPoints.Length);
-                targetSpawnPoint = sixPlayerSpawnPoints[spawnSpawnIndex];
-            } while (targetSpawnPoint.isTaken);
-
-            targetSpawnPoint.isTaken = true;
-            RPCSetSpawnPoint(info.Source, spawnSpawnIndex, character);
+            RPCSpawnPlayer(info.Source, character);
         }
     }
 
-    //
     [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
-    private void RPCSetSpawnPoint([RpcTarget] PlayerRef targetPlayer, int spawnPointIndex, int character)
+    private void RPCSpawnPlayer([RpcTarget] PlayerRef targetPlayer, int character)
     {
-        Debug.Log("RPCSetSpawnPoint");
-        SpawnPoint targetSpawnPoint = sixPlayerSpawnPoints[spawnPointIndex];
-
-        targetSpawnPoint.isTaken = true;
         var temp = networkRunner.SpawnAsync(playerPrefab, Vector3.zero, Quaternion.identity);
         temp.Object.GetComponent<SetFlailCharacter>().Character = character;
     }
@@ -149,8 +91,7 @@ public class GameManager : NetworkBehaviour, INetworkRunnerCallbacks
     {
         if (player == runner.LocalPlayer)
         {
-            localPlayerRef = player;
-            networkRunner.SpawnAsync(playerPrefab, Vector3.zero, Quaternion.identity, localPlayerRef); //targetSpawnPoint.transform.position, targetSpawnPoint.transform.rotation, 
+            networkRunner.SpawnAsync(playerPrefab, Vector3.zero, Quaternion.identity, player);
         }
     }
 
@@ -208,7 +149,6 @@ public class GameManager : NetworkBehaviour, INetworkRunnerCallbacks
 
     public void OnHostMigration(NetworkRunner runner, HostMigrationToken hostMigrationToken)
     {
-        int ahui = 10;
     }
 
     public void OnSceneLoadDone(NetworkRunner runner)
