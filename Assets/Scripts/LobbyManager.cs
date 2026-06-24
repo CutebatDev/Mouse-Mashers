@@ -156,6 +156,8 @@ public class LobbyManager : MonoBehaviour, INetworkRunnerCallbacks
     private void OnGameStarted(NetworkRunner obj)
     {
         lobbyUI.UpdateUIState(state);
+        runner.SessionInfo.IsOpen = false;
+        runner.SessionInfo.IsVisible = false;
     }
 
     public void OnCreateRoomPressed()
