@@ -6,14 +6,18 @@ public class EnemyAI : MonoBehaviour
 
     [SerializeField] private float speed = 1.5f;
     [SerializeField] private float turnDelay = 2f;
-    [SerializeField] private BoxCollider2D floor;
+    [SerializeField] private float arrivalDistance = 0.2f;
+
+    private BoxCollider2D floor;
 
     private Vector2 target;
     private float timer;
 
 
-     void Awake()
+    void Awake()
     {
+        floor = FloorManager.Floor;
+
         PickNewTarget();
     }
 
@@ -30,7 +34,7 @@ public class EnemyAI : MonoBehaviour
 
         timer -= Time.deltaTime;
 
-        if (Vector2.Distance(current, target) < 0.2f || timer <= 0)
+        if (Vector2.Distance(current, target) < arrivalDistance || timer <= 0)
         {
             PickNewTarget();
         }
