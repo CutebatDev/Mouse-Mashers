@@ -1,89 +1,58 @@
-﻿using System;
-using System.Collections.Generic;
-using Fusion;
-using Fusion.Sockets;
+﻿using Fusion;
 using UnityEngine;
 
-public class CharacterSelectionManager : MonoBehaviour, INetworkRunnerCallbacks
+public class CharacterSelectionManager : NetworkBehaviour
 {
+    [SerializeField] private CharacterButtonVisuals[] buttons;
+    [SerializeField] private string gameplaySceneName = "MultiplayerFlail";
 
-    #region NetworkCallback
-    
-    public void OnObjectExitAOI(NetworkRunner runner, NetworkObject obj, PlayerRef player)
+    private bool[] takenCharacters;
+    private int pickedPlayers;
+
+    private void Awake()
     {
+        takenCharacters = new bool[buttons.Length];
     }
 
-    public void OnObjectEnterAOI(NetworkRunner runner, NetworkObject obj, PlayerRef player)
+    public void RequestPick(int characterIndex)
     {
+        SelectedCharacter.Index = characterIndex;
+        RPC_RequestPick(characterIndex);
     }
 
-    public void OnPlayerJoined(NetworkRunner runner, PlayerRef player)
+    [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
+    private void RPC_RequestPick(int characterIndex, RpcInfo info = default)
     {
+        Debug.Log($"Requesting Pick, character ID {characterIndex}");
+        if (characterIndex < 0 || characterIndex >= takenCharacters.Length)
+            return;
+
+        if (takenCharacters[characterIndex])
+            return;
+
+        takenCharacters[characterIndex] = true;
+        pickedPlayers++;
+
+        RPC_ConfirmPick(info.Source, characterIndex);
+
+        if (pickedPlayers >= Runner.SessionInfo.PlayerCount)
+        {
+            Runner.SessionInfo.IsVisible = false;
+            Runner.SessionInfo.IsOpen = false;
+
+            Runner.LoadScene(gameplaySceneName);
+        }
     }
 
-    public void OnPlayerLeft(NetworkRunner runner, PlayerRef player)
+    [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
+    private void RPC_ConfirmPick(PlayerRef player, int characterIndex)
     {
-    }
+        Debug.Log($"Confirming Pick, character ID {characterIndex}");
+        buttons[characterIndex].SetTaken(true);
 
-    public void OnShutdown(NetworkRunner runner, ShutdownReason shutdownReason)
-    {
+        if (player == Runner.LocalPlayer)
+        {
+            SelectedCharacter.Index = characterIndex;
+        }
     }
-
-    public void OnDisconnectedFromServer(NetworkRunner runner, NetDisconnectReason reason)
-    {
-    }
-
-    public void OnConnectRequest(NetworkRunner runner, NetworkRunnerCallbackArgs.ConnectRequest request, byte[] token)
-    {
-    }
-
-    public void OnConnectFailed(NetworkRunner runner, NetAddress remoteAddress, NetConnectFailedReason reason)
-    {
-    }
-
-    public void OnUserSimulationMessage(NetworkRunner runner, SimulationMessagePtr message)
-    {
-    }
-
-    public void OnReliableDataReceived(NetworkRunner runner, PlayerRef player, ReliableKey key, ArraySegment<byte> data)
-    {
-    }
-
-    public void OnReliableDataProgress(NetworkRunner runner, PlayerRef player, ReliableKey key, float progress)
-    {
-    }
-
-    public void OnInput(NetworkRunner runner, NetworkInput input)
-    {
-    }
-
-    public void OnInputMissing(NetworkRunner runner, PlayerRef player, NetworkInput input)
-    {
-    }
-
-    public void OnConnectedToServer(NetworkRunner runner)
-    {
-    }
-
-    public void OnSessionListUpdated(NetworkRunner runner, List<SessionInfo> sessionList)
-    {
-    }
-
-    public void OnCustomAuthenticationResponse(NetworkRunner runner, Dictionary<string, object> data)
-    {
-    }
-
-    public void OnHostMigration(NetworkRunner runner, HostMigrationToken hostMigrationToken)
-    {
-    }
-
-    public void OnSceneLoadDone(NetworkRunner runner)
-    {
-    }
-
-    public void OnSceneLoadStart(NetworkRunner runner)
-    {
-    }
-    #endregion
-    
 }

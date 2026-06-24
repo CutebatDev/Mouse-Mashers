@@ -1,22 +1,28 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 public class CharacterButtonVisuals : MonoBehaviour
 {
+    [SerializeField] private int characterIndex;
+    [SerializeField] private Button characterButton;
     [SerializeField] private GameObject blockingPanel;
-    [SerializeField] private Button CharacterButton;
-    public bool IsTaken { get; private set; } = false; 
+    [SerializeField] private CharacterSelectionManager manager;
 
     private void Start()
     {
-        blockingPanel.SetActive(false);
+        SetTaken(false);
     }
 
-    public void ToggleTaken()
+    public void OnClicked()
     {
-        IsTaken = !IsTaken;
-        blockingPanel.SetActive(IsTaken);
-        CharacterButton.interactable = !IsTaken;
+        Debug.Log($"OnClick Happened, , character ID {characterIndex}");
+        manager.RequestPick(characterIndex);
+    }
+
+    public void SetTaken(bool taken)
+    {
+        Debug.Log($"SetTaken Happened, character ID {characterIndex}");
+        blockingPanel.SetActive(taken);
+        characterButton.interactable = !taken;
     }
 }

@@ -66,7 +66,7 @@ public class GameManager : NetworkBehaviour, INetworkRunnerCallbacks
     public override void Spawned()
     {
         base.Spawned();
-        RPCRequestSpawn();
+        RPCRequestSpawn(SelectedCharacter.Index);
    //     InitializeUserIdMap();
     }
 
@@ -89,7 +89,7 @@ public class GameManager : NetworkBehaviour, INetworkRunnerCallbacks
     }
     
     [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
-    private void RPCRequestSpawn(RpcInfo info = default) 
+    private void RPCRequestSpawn(int character, RpcInfo info = default) 
     {
         string userId = networkRunner.GetPlayerUserId(info.Source);
         if(userIdPlayersMap.TryGetValue(userId, out PlayerRef playerRef))
@@ -110,19 +110,20 @@ public class GameManager : NetworkBehaviour, INetworkRunnerCallbacks
             } while (targetSpawnPoint.isTaken);
 
             targetSpawnPoint.isTaken = true;
-            RPCSetSpawnPoint(info.Source, spawnSpawnIndex);
+            RPCSetSpawnPoint(info.Source, spawnSpawnIndex, character);
         }
     }
 
     //
     [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
-    private void RPCSetSpawnPoint([RpcTarget] PlayerRef targetPlayer, int spawnPointIndex)
+    private void RPCSetSpawnPoint([RpcTarget] PlayerRef targetPlayer, int spawnPointIndex, int character)
     {
         Debug.Log("RPCSetSpawnPoint");
         SpawnPoint targetSpawnPoint = sixPlayerSpawnPoints[spawnPointIndex];
 
         targetSpawnPoint.isTaken = true;
-        networkRunner.SpawnAsync(playerPrefab, Vector3.zero, Quaternion.identity);
+        var temp = networkRunner.SpawnAsync(playerPrefab, Vector3.zero, Quaternion.identity);
+        temp.Object.GetComponent<SetFlailCharacter>().Character = character;
     }
 
     [Rpc(RpcSources.StateAuthority, RpcTargets.All)]

@@ -225,6 +225,7 @@ GameObject:
   - component: {fileID: 7888933597114520368}
   - component: {fileID: 84419588238586913}
   - component: {fileID: 6485371279379842741}
+  - component: {fileID: 6242040161583693422}
   m_Layer: 5
   m_Name: Character Selection
   m_TagString: Untagged
@@ -338,7 +339,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 6485371279379842741}
         m_TargetAssemblyTypeName: CharacterButtonVisuals, Assembly-CSharp
-        m_MethodName: ToggleTaken
+        m_MethodName: OnClicked
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -360,8 +361,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 116b401d78714735989da4884fdc5c1c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CharacterButtonVisuals
+  characterIndex: -1
+  characterButton: {fileID: 84419588238586913}
   blockingPanel: {fileID: 4824675035258231023}
-  CharacterButton: {fileID: 84419588238586913}
+  manager: {fileID: 0}
+--- !u!114 &6242040161583693422
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4437766269429662464}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1552182283, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Fusion.Runtime.dll::Fusion.NetworkObject
+  SortKey: 3793014375
+  ObjectInterest: 1
+  Flags: 262145
+  NestedObjects: []
+  NetworkedBehaviours: []
+  ForceRemoteRenderTimeframe: 0
 --- !u!1 &4824675035258231023
 GameObject:
   m_ObjectHideFlags: 0
