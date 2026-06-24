@@ -2,8 +2,9 @@ using UnityEngine;
 
 public class EnemyController : MonoBehaviour
 {
-    [SerializeField] private float currentHealth;
     [SerializeField] private float maxHealth;
+
+    private float currentHealth;
 
     void Awake()
     {
