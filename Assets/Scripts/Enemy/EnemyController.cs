@@ -13,8 +13,8 @@ public class EnemyController : NetworkBehaviour
         currentHealth = maxHealth;    
         
     }
-
-    public void TakeDamage(float amount)
+    [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
+    public void RPC_TakeDamage(float amount)
     {
         Debug.Log($"IM TRYING TO TAKE DAMAGE HERE, TOOK {amount} AND NOW IM AT {currentHealth}");
         currentHealth -= amount;
@@ -31,3 +31,4 @@ public class EnemyController : NetworkBehaviour
         GameManager.Instance.networkRunner.Despawn(Object);
     }
 }
+

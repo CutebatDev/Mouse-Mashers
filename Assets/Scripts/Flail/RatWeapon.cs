@@ -16,7 +16,7 @@ public class RatWeapon : MonoBehaviour
 
         if(target != null)
         {
-            target.TakeDamage(damage);
+            target.RPC_TakeDamage(damage);
         }
     }
 }
