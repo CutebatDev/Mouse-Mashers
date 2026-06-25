@@ -8,7 +8,7 @@ public class EnemySpawner : NetworkBehaviour
     [SerializeField] private RectTransform worldCanvas;
     [SerializeField] private Transform enemyRoot;
     [SerializeField] private EnemyController[] enemyPrefabs;
-    [SerializeField] private Transform[] spawnPoints;
+    //[SerializeField] private Transform[] spawnPoints;
 
     [Header("Spawning")]
     [SerializeField] private int maxEnemyCount = 10;
@@ -16,9 +16,18 @@ public class EnemySpawner : NetworkBehaviour
     [SerializeField] private int minToSpawn = 2;
     [SerializeField] private int maxToSpawn = 5;
     [SerializeField] private float spawnDelay = 3f;
+    [SerializeField] private int maxSpawnAttempts = 20;
+    [SerializeField] private float minSpawnDistance = 2f;
+
+    private Bounds bounds;
 
     private float spawnTimer;
     [CanBeNull] private NetworkRunner networkRunner;
+
+    void Start()
+    {
+        bounds = FloorManager.Floor.bounds;
+    }
 
     private NetworkRunner GetNetworkRunner()
     {
@@ -64,21 +73,53 @@ public class EnemySpawner : NetworkBehaviour
     {
         if(!GetNetworkRunner().IsSharedModeMasterClient)
             return;
-        for (int i = 0;  i < amount - 1; i++)
+
+        for (int i = 0;  i < amount; i++)
         {
             NetworkObject temp = GetNetworkRunner()
-                .Spawn(ChooseEnemy().gameObject, ChooseSpawnPoint().position, Quaternion.identity);
+                .Spawn(ChooseEnemy().gameObject, GetSpawnPosition(), Quaternion.identity);
+
             EnemyController enemy = temp.GetComponent<EnemyController>();
+
             EnemyRegistry.Instance.Register(enemy);
             enemy.SetWorldCanvasRef(worldCanvas);
         }
     }
 
-    private Transform ChooseSpawnPoint()
+    private Vector3 GetSpawnPosition()
     {
-        int spawnIndex = Random.Range(0, spawnPoints.Length);
-        return spawnPoints[spawnIndex];
+        for (int i = 0; i < maxSpawnAttempts; i++)
+        {
+            Vector3 candidate = new Vector3(
+                
+                Random.Range(bounds.min.x, bounds.max.x),
+                Random.Range(bounds.min.y, bounds.max.y),
+                bounds.center.z
+            );
+
+            bool tooClose = false;
+
+            foreach (EnemyController enemy in EnemyRegistry.Instance.RegisteredEnemies)
+            {
+                if(Vector2.Distance(candidate, enemy.transform.position) < minSpawnDistance)
+                {
+                    tooClose = true;
+                    break;
+                }
+            }
+
+            if (!tooClose)
+                return candidate;
+        }
+
+        return bounds.center;
     }
+
+    //private Transform ChooseSpawnPoint()
+    //{
+    //    int spawnIndex = Random.Range(0, spawnPoints.Length);
+    //    return spawnPoints[spawnIndex];
+    //}
 
     private EnemyController ChooseEnemy()
     {
