@@ -1,6 +1,8 @@
+using Fusion;
+using JetBrains.Annotations;
 using UnityEngine;
 
-public class EnemySpawner : MonoBehaviour
+public class EnemySpawner : NetworkBehaviour
 {
     [Header("References")]
     [SerializeField] private Transform enemyRoot;
@@ -15,11 +17,26 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField] private float spawnDelay = 3f;
 
     private float spawnTimer;
+    [CanBeNull] private NetworkRunner networkRunner;
 
-    void Update()
+    private NetworkRunner GetNetworkRunner()
     {
-        spawnTimer -= Time.deltaTime;
+        if (!networkRunner)
+        {
+            networkRunner = GameManager.Instance.networkRunner;
+        }
+        return networkRunner;
+        
+    }
 
+    public override void FixedUpdateNetwork()
+    {
+        base.FixedUpdateNetwork();
+        
+        if(!GetNetworkRunner().IsSharedModeMasterClient)
+            return;
+        spawnTimer -= Time.fixedDeltaTime;
+        
         if (spawnTimer <= 0)
         {
             TrySpawnEnemies();
@@ -41,12 +58,16 @@ public class EnemySpawner : MonoBehaviour
 
         SpawnEnemies(amount);
     }
-
+    
     private void SpawnEnemies(int amount)
     {
+        if(!GetNetworkRunner().IsSharedModeMasterClient)
+            return;
         for (int i = 0;  i < amount - 1; i++)
         {
-            EnemyController enemy = Instantiate(ChooseEnemy(), ChooseSpawnPoint().position, Quaternion.identity, enemyRoot);
+            NetworkObject temp = GetNetworkRunner()
+                .Spawn(ChooseEnemy().gameObject, ChooseSpawnPoint().position, Quaternion.identity);
+            EnemyController enemy = temp.GetComponent<EnemyController>();
             EnemyRegistry.Instance.Register(enemy);
         }
     }

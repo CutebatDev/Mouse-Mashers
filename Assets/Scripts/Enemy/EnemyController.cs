@@ -1,20 +1,24 @@
+using Fusion;
 using UnityEngine;
 
-public class EnemyController : MonoBehaviour
+public class EnemyController : NetworkBehaviour
 {
     [SerializeField] private float maxHealth;
 
-    private float currentHealth;
+    [Networked] private float currentHealth { get; set; }
 
-    void Awake()
+    public override void Spawned()
     {
+        base.Spawned();
         currentHealth = maxHealth;    
+        
     }
 
     public void TakeDamage(float amount)
     {
+        Debug.Log($"IM TRYING TO TAKE DAMAGE HERE, TOOK {amount} AND NOW IM AT {currentHealth}");
         currentHealth -= amount;
-        if (currentHealth < 0)
+        if (currentHealth <= 0)
         {
             currentHealth = 0;
             Die();
@@ -24,5 +28,6 @@ public class EnemyController : MonoBehaviour
     private void Die()
     {
         EnemyRegistry.Instance.UnRegister(this);
+        GameManager.Instance.networkRunner.Despawn(Object);
     }
 }

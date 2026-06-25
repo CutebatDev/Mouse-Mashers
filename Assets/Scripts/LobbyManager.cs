@@ -160,8 +160,6 @@ public class LobbyManager : MonoBehaviour, INetworkRunnerCallbacks
     private void OnGameStarted(NetworkRunner obj)
     {
         lobbyUI.UpdateUIState(state);
-        runner.SessionInfo.IsOpen = false;
-        runner.SessionInfo.IsVisible = false;
     }
 
     public void OnCreateRoomPressed()
@@ -275,7 +273,6 @@ public class LobbyManager : MonoBehaviour, INetworkRunnerCallbacks
         {
             runner.SessionInfo.IsVisible = false;
             runner.SessionInfo.IsOpen = false;
-            
         }
         Debug.Log("Loading Game Scene");
         runner.LoadScene(GAME_SCENE_NAME);

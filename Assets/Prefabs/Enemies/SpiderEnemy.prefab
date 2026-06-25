@@ -13,6 +13,8 @@ GameObject:
   - component: {fileID: 2018032378326632273}
   - component: {fileID: 1599291815898250871}
   - component: {fileID: 4363717574555722462}
+  - component: {fileID: -2701710900733577700}
+  - component: {fileID: -1907188521746986065}
   m_Layer: 0
   m_Name: SpiderEnemy
   m_TagString: Untagged
@@ -29,7 +31,7 @@ Transform:
   m_GameObject: {fileID: 6759407644979426731}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.68, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -169,3 +171,41 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 0.692, y: 0.666}
   m_EdgeRadius: 0
+--- !u!114 &-2701710900733577700
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6759407644979426731}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1552182283, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Fusion.Runtime.dll::Fusion.NetworkObject
+  SortKey: 2554600906
+  ObjectInterest: 1
+  Flags: 262145
+  NestedObjects: []
+  NetworkedBehaviours:
+  - {fileID: 2018032378326632273}
+  - {fileID: 1599291815898250871}
+  - {fileID: -1907188521746986065}
+  ForceRemoteRenderTimeframe: 0
+--- !u!114 &-1907188521746986065
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6759407644979426731}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 158639473, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Fusion.Runtime.dll::Fusion.NetworkTransform
+  _stateAuthorityChangeErrorCorrectionDelta: 0
+  SyncScale: 0
+  SyncParent: 0
+  _autoAOIOverride: 1
+  DisableSharedModeInterpolation: 0

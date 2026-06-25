@@ -23,7 +23,6 @@ public class CharacterSelectionManager : NetworkBehaviour
     [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
     private void RPC_RequestPick(int characterIndex, RpcInfo info = default)
     {
-        Debug.Log($"Requesting Pick, character ID {characterIndex}");
         if (characterIndex < 0 || characterIndex >= takenCharacters.Length)
             return;
 
@@ -47,7 +46,6 @@ public class CharacterSelectionManager : NetworkBehaviour
     [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
     private void RPC_ConfirmPick(PlayerRef player, int characterIndex)
     {
-        Debug.Log($"Confirming Pick, character ID {characterIndex}");
         buttons[characterIndex].SetTaken(true);
 
         if (player == Runner.LocalPlayer)

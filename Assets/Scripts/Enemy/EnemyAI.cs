@@ -1,6 +1,7 @@
+using Fusion;
 using UnityEngine;
 
-public class EnemyAI : MonoBehaviour
+public class EnemyAI : NetworkBehaviour
 {
     [SerializeField] private SpriteRenderer sprite;
 
@@ -21,13 +22,13 @@ public class EnemyAI : MonoBehaviour
         PickNewTarget();
     }
 
-     void Update()
+    public override void FixedUpdateNetwork()
     {
         Vector2 current = transform.position;
 
         Vector2 dir = (target - current).normalized;
 
-        transform.position += (Vector3)(dir * speed * Time.deltaTime);
+        transform.position += (Vector3)(dir * (speed * Time.deltaTime));
 
         if (dir.x != 0)
             sprite.flipX = dir.x < 0;

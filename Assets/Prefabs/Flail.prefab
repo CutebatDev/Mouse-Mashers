@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 4013709904662826061}
   - component: {fileID: 3967485660881755961}
   - component: {fileID: 7955266653488768817}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Handle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -195,7 +195,7 @@ GameObject:
   - component: {fileID: 3603485330793878756}
   - component: {fileID: 6265263461444359986}
   - component: {fileID: 7732840807281928696}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Rat?
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -387,7 +387,7 @@ GameObject:
   - component: {fileID: 627033412825884055}
   - component: {fileID: 5997851822406387892}
   - component: {fileID: 5479912317699063347}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Rope
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -567,7 +567,7 @@ GameObject:
   - component: {fileID: 78375316069179767}
   - component: {fileID: 4168504388729293098}
   - component: {fileID: 67381571944952656}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Flail
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -687,6 +687,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b90891516a3b4788bc230ab06b9a9684, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SetFlailCharacter
+  _Character: 0
   ratSprites:
   - {fileID: 21300000, guid: 78d6ceaf71ef11c408665514e82ff5a5, type: 3}
   - {fileID: 707919401268129858, guid: b19a206b9c6efb745b948bf630ee71d7, type: 3}

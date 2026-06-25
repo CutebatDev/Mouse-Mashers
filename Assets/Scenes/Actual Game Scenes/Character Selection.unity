@@ -805,7 +805,7 @@ MonoBehaviour:
   - {fileID: 49629126}
   - {fileID: 822528686}
   - {fileID: 1564731786}
-  gameplaySceneName: MultiplayerFlail
+  gameplaySceneName: GameSceneSP
 --- !u!114 &1464480730
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -946,66 +946,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 116b401d78714735989da4884fdc5c1c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CharacterButtonVisuals
---- !u!1 &1648109835
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1648109836}
-  - component: {fileID: 1648109837}
-  m_Layer: 0
-  m_Name: Dev Session Starter
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!4 &1648109836
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1648109835}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 960, y: 540, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1648109837
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1648109835}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a842554e94957fa44a36bcc3f39ce4db, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::StartInSession
-  runnerPrefab: {fileID: 2464640736885289735, guid: c749f760057e0e1408386d0fce8501f7, type: 3}
-  onPlayerJoined:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: CreateCharacterButton, Assembly-CSharp
-        m_MethodName: 
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!1 &1854028575
 GameObject:
   m_ObjectHideFlags: 0
@@ -1118,5 +1058,4 @@ SceneRoots:
   - {fileID: 133992275}
   - {fileID: 191078126}
   - {fileID: 515101264}
-  - {fileID: 1648109836}
   - {fileID: 1464480728}

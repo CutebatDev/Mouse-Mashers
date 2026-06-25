@@ -13,6 +13,8 @@ GameObject:
   - component: {fileID: 1522994796642127047}
   - component: {fileID: 6209886339709437289}
   - component: {fileID: 3382683973030300396}
+  - component: {fileID: 6836603165248556873}
+  - component: {fileID: -1744903058768128324}
   m_Layer: 0
   m_Name: CockroachEnemy
   m_TagString: Untagged
@@ -29,7 +31,7 @@ Transform:
   m_GameObject: {fileID: 1954775227510272381}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.42, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -169,3 +171,41 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 0.692, y: 0.666}
   m_EdgeRadius: 0
+--- !u!114 &6836603165248556873
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1954775227510272381}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1552182283, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Fusion.Runtime.dll::Fusion.NetworkObject
+  SortKey: 3533337153
+  ObjectInterest: 1
+  Flags: 262145
+  NestedObjects: []
+  NetworkedBehaviours:
+  - {fileID: 1522994796642127047}
+  - {fileID: 6209886339709437289}
+  - {fileID: -1744903058768128324}
+  ForceRemoteRenderTimeframe: 0
+--- !u!114 &-1744903058768128324
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1954775227510272381}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 158639473, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Fusion.Runtime.dll::Fusion.NetworkTransform
+  _stateAuthorityChangeErrorCorrectionDelta: 0
+  SyncScale: 0
+  SyncParent: 0
+  _autoAOIOverride: 1
+  DisableSharedModeInterpolation: 0

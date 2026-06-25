@@ -16,7 +16,7 @@ public class GameManager : NetworkBehaviour, INetworkRunnerCallbacks
     public Camera mainCamera;
     public GameObject playerPrefab;
 
-    private NetworkRunner networkRunner;
+    public NetworkRunner networkRunner;
 
     private void Awake()
     {
@@ -27,13 +27,13 @@ public class GameManager : NetworkBehaviour, INetworkRunnerCallbacks
     {
         networkRunner = NetworkRunner.GetRunnerForScene(SceneManager.GetActiveScene());
     }
-
+    
     public override void Spawned()
     {
         base.Spawned();
-        //RPCRequestSpawn(SelectedCharacter.Index);
+        RPCRequestSpawn(SelectedCharacter.Index);
     }
-
+    
     public void LeaveGame()
     {
         if (networkRunner.IsRunning)
@@ -60,7 +60,7 @@ public class GameManager : NetworkBehaviour, INetworkRunnerCallbacks
             RPCSpawnPlayer(info.Source, character);
         }
     }
-
+    
     [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
     private void RPCSpawnPlayer([RpcTarget] PlayerRef targetPlayer, int character)
     {
@@ -71,10 +71,9 @@ public class GameManager : NetworkBehaviour, INetworkRunnerCallbacks
             targetPlayer
         );
 
-        //SetFlailCharacter flailCharacter = spawnedPlayer.GetComponent<SetFlailCharacter>();
+        SetFlailCharacter flailCharacter = spawnedPlayer.GetComponent<SetFlailCharacter>();
 
-        //flailCharacter.Character = character;
-        
+        flailCharacter.Character = character;
     }
 
     [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
@@ -98,18 +97,17 @@ public class GameManager : NetworkBehaviour, INetworkRunnerCallbacks
 
     public void OnPlayerJoined(NetworkRunner runner, PlayerRef player)
     {
-        // if (player == runner.LocalPlayer)
-        // {
-        //     networkRunner.SpawnAsync(playerPrefab, Vector3.zero, Quaternion.identity, player);
-        // }
     }
 
     public void OnPlayerLeft(NetworkRunner runner, PlayerRef player)
     {
+        if (player.IsMasterClient)
+            SceneManager.LoadScene("UI");
     }
 
     public void OnShutdown(NetworkRunner runner, ShutdownReason shutdownReason)
     {
+        SceneManager.LoadScene("UI");
     }
 
     public void OnDisconnectedFromServer(NetworkRunner runner, NetDisconnectReason reason)

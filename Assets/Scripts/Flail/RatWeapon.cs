@@ -10,8 +10,9 @@ public class RatWeapon : MonoBehaviour
     {
         float impactSpeed = other.relativeVelocity.magnitude;
         float damage = impactSpeed * damageMultiplier;
+        Debug.Log($"IM DEALING {damage} DMAAGE");
 
-        Health target = other.collider.GetComponent<Health>();
+        EnemyController target = other.collider.GetComponent<EnemyController>();
 
         if(target != null)
         {

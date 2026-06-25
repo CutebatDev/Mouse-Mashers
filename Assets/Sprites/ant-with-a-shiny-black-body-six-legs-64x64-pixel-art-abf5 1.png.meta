@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 51d368a840809c54487149f95f5bf294
+guid: 013f1141bb28cf74281b894f7f4a1dfb
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 3091764714128354139
-    second: ant-with-a-shiny-black-body-six-legs-64x64-pixel-art-abf5_0
+      213: -928844358439996878
+    second: ant-with-a-shiny-black-body-six-legs-64x64-pixel-art-abf5 1_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -109,27 +109,14 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 4
-    buildTarget: WindowsStoreApps
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 1
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    ignorePlatformSupport: 0
-    androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: ant-with-a-shiny-black-body-six-legs-64x64-pixel-art-abf5_0
+      name: ant-with-a-shiny-black-body-six-legs-64x64-pixel-art-abf5 1_0
       rect:
         serializedVersion: 2
-        x: 227
+        x: 246
         y: 284
         width: 743
         height: 610
@@ -141,8 +128,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: b5b25ba60a728ea20800000000000000
-      internalID: 3091764714128354139
+      spriteID: 232fe8b2af41c13f0800000000000000
+      internalID: -928844358439996878
       vertices: []
       indices: 
       edges: []
@@ -161,7 +148,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      ant-with-a-shiny-black-body-six-legs-64x64-pixel-art-abf5_0: 3091764714128354139
+      ant-with-a-shiny-black-body-six-legs-64x64-pixel-art-abf5 1_0: -928844358439996878
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -15,13 +15,11 @@ public class CharacterButtonVisuals : MonoBehaviour
 
     public void OnClicked()
     {
-        Debug.Log($"OnClick Happened, , character ID {characterIndex}");
         manager.RequestPick(characterIndex);
     }
 
     public void SetTaken(bool taken)
     {
-        Debug.Log($"SetTaken Happened, character ID {characterIndex}");
         blockingPanel.SetActive(taken);
         characterButton.interactable = !taken;
     }
