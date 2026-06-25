@@ -41,7 +41,8 @@ public class EnemyController : NetworkBehaviour
             Die();
         }
 
-        ShowDamage(amount, transform.position);
+        if (amount > 0)
+            ShowDamage(amount, transform.position);
     }
 
     private void Die()

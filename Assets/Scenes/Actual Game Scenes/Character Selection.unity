@@ -805,7 +805,7 @@ MonoBehaviour:
   - {fileID: 49629126}
   - {fileID: 822528686}
   - {fileID: 1564731786}
-  gameplaySceneName: GameSceneSP
+  gameplaySceneName: ActualSPScene
 --- !u!114 &1464480730
 MonoBehaviour:
   m_ObjectHideFlags: 0
