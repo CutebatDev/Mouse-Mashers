@@ -100,7 +100,9 @@ public class LobbyManager : MonoBehaviour, INetworkRunnerCallbacks
         }
         else
         {
-            Debug.LogError($"Failed to create/join lobby: {result.ErrorMessage}");
+            string error = $"Failed to create/join lobby: {result.ErrorMessage}";
+            lobbyUI.CreateErrorMessage(error);
+            Debug.LogError(error);
             return;
         }
 
@@ -127,7 +129,9 @@ public class LobbyManager : MonoBehaviour, INetworkRunnerCallbacks
         }
         else
         {
-            Debug.LogError($"Failed to create room: {result.ErrorMessage}");
+            string error = $"Failed to create room: {result.ErrorMessage}";
+            lobbyUI.CreateErrorMessage(error);
+            Debug.LogError(error);
             return;
         }
     }

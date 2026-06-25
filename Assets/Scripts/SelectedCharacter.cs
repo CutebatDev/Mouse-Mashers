@@ -1,4 +1,4 @@
 ﻿public static class SelectedCharacter
 {
-    public static int Index = -1;
+    public static int Index;
 }

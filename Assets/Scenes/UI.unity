@@ -3667,6 +3667,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: '::'
   lobbyManager: {fileID: 180104446}
   numberOfPlayersInSessionText: {fileID: 2096654264}
+  baseObject: {fileID: 1637987210}
   endSessionButton: {fileID: 1093526266}
   JoinLobbyButton: {fileID: 1793776892}
   CreateRoomButton: {fileID: 436720038}
@@ -3679,6 +3680,7 @@ MonoBehaviour:
   maxPlayersDropdown: {fileID: 312081466}
   lobbyNameTextInput: {fileID: 0}
   roomNameTextInput: {fileID: 47135399}
+  ErrorPrefab: {fileID: 9140870110864842297, guid: d7c2ae91691e91d4a9560fa6d6514ebf, type: 3}
   sessionButton: {fileID: 777602563034550059, guid: 0fa6701f4fa896b41a360401a9262f62, type: 3}
 --- !u!4 &1264714959
 Transform:

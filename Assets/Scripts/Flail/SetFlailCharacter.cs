@@ -3,11 +3,12 @@ using UnityEngine;
 
 public class SetFlailCharacter : NetworkBehaviour
 {
-    [SerializeField] private Sprite[] ratSprites;
-    [SerializeField] private SpriteRenderer ratSpriteRenderer;
-
+    
     [Networked, OnChangedRender(nameof(OnCharacterChanged))]
     public int Character { get; set; }
+    
+    [SerializeField] private Sprite[] ratSprites;
+    [SerializeField] private SpriteRenderer ratSpriteRenderer;
 
     public override void Spawned()
     {

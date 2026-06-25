@@ -11,6 +11,7 @@ public class LobbyUI : MonoBehaviour
 
     [SerializeField] private TextMeshProUGUI numberOfPlayersInSessionText;
 
+    [SerializeField] private GameObject baseObject;
     [SerializeField] private Button endSessionButton;
     [SerializeField] private Button JoinLobbyButton;
     [SerializeField] private Button CreateRoomButton;
@@ -27,6 +28,9 @@ public class LobbyUI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI lobbyNameTextInput;
     [SerializeField] private TextMeshProUGUI roomNameTextInput;
 
+    
+    [SerializeField] private GameObject ErrorPrefab;
+    
     public string LobbyNameText => lobbyNameTextInput.text;
     public string RoomNameText => roomNameTextInput.text;
     public int RoomMaxPlayers => int.Parse(maxPlayersDropdown.options[maxPlayersDropdown.value].text);
@@ -136,5 +140,10 @@ public class LobbyUI : MonoBehaviour
 
         foreach (var key in keysToRemove)
             sessionButtons.Remove(key);
+    }
+
+    public void CreateErrorMessage(string message)
+    {
+        Instantiate(ErrorPrefab, baseObject.transform).GetComponent<ErrorMessage>().errorText.text = "IT WORKS";
     }
 }
