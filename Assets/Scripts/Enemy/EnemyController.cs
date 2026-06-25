@@ -5,17 +5,18 @@ public class EnemyController : NetworkBehaviour
 {
     [SerializeField] private DamageNumber damagePrefab;
     [SerializeField] private float maxHealth;
+    [SerializeField] private float iFrameDuration = 0.25f;
 
     [Networked] private float currentHealth { get; set; }
+
+    private float lastDamageTime;
 
     private RectTransform worldCanvas;
 
     public override void Spawned()
     {
         base.Spawned();
-        currentHealth = maxHealth;    
-        
-    }
+        currentHealth = maxHealth;    }
 
     public void SetWorldCanvasRef(RectTransform canvas)
     {
@@ -33,7 +34,11 @@ public class EnemyController : NetworkBehaviour
     [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
     public void RPC_TakeDamage(float amount)
     {
-        Debug.Log($"IM TRYING TO TAKE DAMAGE HERE, TOOK {amount} AND NOW IM AT {currentHealth}");
+        if (Time.time < lastDamageTime + iFrameDuration)
+            return;
+
+        lastDamageTime = Time.time;
+
         currentHealth -= amount;
         if (currentHealth <= 0)
         {

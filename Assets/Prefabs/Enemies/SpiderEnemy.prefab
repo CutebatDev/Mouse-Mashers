@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 8309123757745172583}
   - component: {fileID: 2018032378326632273}
   - component: {fileID: 1599291815898250871}
+  - component: {fileID: 8079023957933892419}
   - component: {fileID: 4363717574555722462}
   - component: {fileID: -2701710900733577700}
   - component: {fileID: -1907188521746986065}
@@ -126,6 +127,42 @@ MonoBehaviour:
   speed: 0.9
   turnDelay: 2
   arrivalDistance: 0.1
+--- !u!58 &8079023957933892419
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6759407644979426731}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 0, y: 0}
+  m_Radius: 0.3
 --- !u!61 &4363717574555722462
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -133,7 +170,7 @@ BoxCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6759407644979426731}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Density: 1
   m_Material: {fileID: 0}

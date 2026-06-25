@@ -6,17 +6,29 @@ public class RatWeapon : MonoBehaviour
 
     [SerializeField] private float damageMultiplier = 5f;
 
-    private void OnCollisionEnter2D(Collision2D other)
+    //private void OnCollisionEnter2D(Collision2D other)
+    //{
+    //    float impactSpeed = other.relativeVelocity.magnitude;
+    //    float damage = impactSpeed * damageMultiplier;
+    //    Debug.Log($"IM DEALING {damage} DMAAGE");
+
+    //    EnemyController target = other.collider.GetComponent<EnemyController>();
+
+    //    if (target != null)
+    //    {
+    //        target.RPC_TakeDamage(damage);
+    //    }
+    //}
+
+    private void OnTriggerEnter2D(Collider2D other)
     {
-        float impactSpeed = other.relativeVelocity.magnitude;
-        float damage = impactSpeed * damageMultiplier;
-        Debug.Log($"IM DEALING {damage} DMAAGE");
+        float damage = rb.linearVelocity.magnitude * damageMultiplier;
 
-        EnemyController target = other.collider.GetComponent<EnemyController>();
+        EnemyController enemy = other.GetComponent<EnemyController>();
 
-        if(target != null)
-        {
-            target.RPC_TakeDamage(damage);
-        }
+        if (enemy == null)
+            return;
+
+        enemy.RPC_TakeDamage(damage);
     }
 }

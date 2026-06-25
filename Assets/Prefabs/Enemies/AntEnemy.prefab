@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 3221785411089241487}
   - component: {fileID: 5078369847042128412}
   - component: {fileID: 5913096013431632162}
+  - component: {fileID: 3676144688188775632}
   - component: {fileID: 6773296637412268586}
   - component: {fileID: 425593979882560813}
   - component: {fileID: 4670679006498977071}
@@ -109,7 +110,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyController
   damagePrefab: {fileID: 7996033507131442853, guid: 8bd8bccfea8a6ce4aa402c251906ca4d, type: 3}
-  worldCanvas: {fileID: 0}
   maxHealth: 100
 --- !u!114 &5913096013431632162
 MonoBehaviour:
@@ -127,6 +127,42 @@ MonoBehaviour:
   speed: 0.8
   turnDelay: 3.5
   arrivalDistance: 0.15
+--- !u!58 &3676144688188775632
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 977421325840125629}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 0, y: 0}
+  m_Radius: 0.275
 --- !u!61 &6773296637412268586
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -134,7 +170,7 @@ BoxCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 977421325840125629}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Density: 1
   m_Material: {fileID: 0}
