@@ -5,6 +5,7 @@ using UnityEngine;
 public class EnemySpawner : NetworkBehaviour
 {
     [Header("References")]
+    [SerializeField] private RectTransform worldCanvas;
     [SerializeField] private Transform enemyRoot;
     [SerializeField] private EnemyController[] enemyPrefabs;
     [SerializeField] private Transform[] spawnPoints;
@@ -69,6 +70,7 @@ public class EnemySpawner : NetworkBehaviour
                 .Spawn(ChooseEnemy().gameObject, ChooseSpawnPoint().position, Quaternion.identity);
             EnemyController enemy = temp.GetComponent<EnemyController>();
             EnemyRegistry.Instance.Register(enemy);
+            enemy.SetWorldCanvasRef(worldCanvas);
         }
     }
 

@@ -3,9 +3,12 @@ using UnityEngine;
 
 public class EnemyController : NetworkBehaviour
 {
+    [SerializeField] private DamageNumber damagePrefab;
     [SerializeField] private float maxHealth;
 
     [Networked] private float currentHealth { get; set; }
+
+    private RectTransform worldCanvas;
 
     public override void Spawned()
     {
@@ -13,6 +16,20 @@ public class EnemyController : NetworkBehaviour
         currentHealth = maxHealth;    
         
     }
+
+    public void SetWorldCanvasRef(RectTransform canvas)
+    {
+        worldCanvas = canvas;
+    }
+
+    private void ShowDamage(float amount, Vector3 position)
+    {
+        DamageNumber number = Instantiate(damagePrefab, position, Quaternion.identity, worldCanvas);
+
+        number.SetDamage(amount);
+        number.transform.position = position;
+    }
+
     [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
     public void RPC_TakeDamage(float amount)
     {
@@ -23,6 +40,8 @@ public class EnemyController : NetworkBehaviour
             currentHealth = 0;
             Die();
         }
+
+        ShowDamage(amount, transform.position);
     }
 
     private void Die()

@@ -108,6 +108,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d963ce3ae56c00747bbf27cc4413a512, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyController
+  damagePrefab: {fileID: 7996033507131442853, guid: 8bd8bccfea8a6ce4aa402c251906ca4d, type: 3}
   maxHealth: 300
 --- !u!114 &6209886339709437289
 MonoBehaviour:
