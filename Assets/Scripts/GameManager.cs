@@ -31,7 +31,7 @@ public class GameManager : NetworkBehaviour, INetworkRunnerCallbacks
     public override void Spawned()
     {
         base.Spawned();
-        RPCRequestSpawn(SelectedCharacter.Index);
+        //RPCRequestSpawn(SelectedCharacter.Index);
     }
 
     public void LeaveGame()
@@ -71,10 +71,10 @@ public class GameManager : NetworkBehaviour, INetworkRunnerCallbacks
             targetPlayer
         );
 
-        SetFlailCharacter flailCharacter = spawnedPlayer.GetComponent<SetFlailCharacter>();
+        //SetFlailCharacter flailCharacter = spawnedPlayer.GetComponent<SetFlailCharacter>();
 
-        flailCharacter.Character = character;
-        flailCharacter.SetCharacter(character);
+        //flailCharacter.Character = character;
+        
     }
 
     [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
