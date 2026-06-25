@@ -111,6 +111,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EnemyController
   damagePrefab: {fileID: 7996033507131442853, guid: 8bd8bccfea8a6ce4aa402c251906ca4d, type: 3}
   maxHealth: 500
+  iFrameDuration: 0.25
 --- !u!114 &1599291815898250871
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -124,7 +125,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyAI
   sprite: {fileID: 8309123757745172583}
-  speed: 0.9
+  speed: 8
   turnDelay: 2
   arrivalDistance: 0.1
 --- !u!58 &8079023957933892419

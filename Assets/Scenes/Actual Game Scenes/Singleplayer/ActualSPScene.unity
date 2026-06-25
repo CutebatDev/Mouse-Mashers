@@ -823,18 +823,13 @@ MonoBehaviour:
   - {fileID: 5078369847042128412, guid: f4304d0f6d7ed3142a95a1d871370c39, type: 3}
   - {fileID: 1522994796642127047, guid: 7e2268be4cac6e5478ba3a475b257412, type: 3}
   - {fileID: 2018032378326632273, guid: 20a0d6c89c678c5489a431e288dbf73a, type: 3}
-  spawnPoints:
-  - {fileID: 1054345963}
-  - {fileID: 48748998}
-  - {fileID: 2022620845}
-  - {fileID: 1804196942}
-  - {fileID: 784484388}
-  - {fileID: 17789844}
   maxEnemyCount: 20
-  spawnThreshold: 5
-  minToSpawn: 8
-  maxToSpawn: 15
+  spawnThreshold: 10
+  minToSpawn: 2
+  maxToSpawn: 10
   spawnDelay: 1.5
+  maxSpawnAttempts: 20
+  minSpawnDistance: 2
 --- !u!4 &1313447810
 Transform:
   m_ObjectHideFlags: 0
