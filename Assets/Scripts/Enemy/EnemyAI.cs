@@ -28,12 +28,12 @@ public class EnemyAI : NetworkBehaviour
 
         Vector2 dir = (target - current).normalized;
 
-        transform.position += (Vector3)(dir * (speed * Time.deltaTime));
+        transform.position += (Vector3)(dir * (speed * Runner.DeltaTime));
 
         if (dir.x != 0)
             sprite.flipX = dir.x < 0;
 
-        timer -= Time.deltaTime;
+        timer -= Runner.DeltaTime;
 
         if (Vector2.Distance(current, target) < arrivalDistance || timer <= 0)
         {

@@ -10,7 +10,6 @@ public class RatWeapon : MonoBehaviour
     //{
     //    float impactSpeed = other.relativeVelocity.magnitude;
     //    float damage = impactSpeed * damageMultiplier;
-    //    Debug.Log($"IM DEALING {damage} DMAAGE");
 
     //    EnemyController target = other.collider.GetComponent<EnemyController>();
 
@@ -29,6 +28,6 @@ public class RatWeapon : MonoBehaviour
         if (enemy == null)
             return;
 
-        enemy.RPC_TakeDamage(damage);
+        enemy.TakeDamage(damage);
     }
 }
