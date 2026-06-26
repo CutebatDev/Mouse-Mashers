@@ -40,7 +40,7 @@ public class AudioManager : MonoBehaviour
     }
     
 
-    public void PlayMusic(AudioClip clip, float volume = 1f, float pitch = 1f)
+    public void PlayMusic(AudioClip clip, float volume = 0.3f, float pitch = 1f)
     {
         GameObject audioSourceObject = Instantiate(Instance.audioSourcePrefab);
         AudioSource audioSourceComponent = audioSourceObject.GetComponent<AudioSource>();

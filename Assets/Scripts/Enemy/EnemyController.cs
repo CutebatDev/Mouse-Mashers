@@ -65,7 +65,7 @@ public class EnemyController : NetworkBehaviour
         if (amount <= 10)
             return;
         ShowDamage(amount, transform.position);
-        PlaySquishSound();
+        // PlaySquishSound();
         TakeDamageAnimation();
 
         RPC_TakeDamage(amount);
