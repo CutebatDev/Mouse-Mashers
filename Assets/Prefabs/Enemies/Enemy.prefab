@@ -56,6 +56,10 @@ MonoBehaviour:
   iFrameDuration: 0.25
   enemyAI: {fileID: 5913096013431632162}
   sr: {fileID: 3566565459640174831}
+  hitSounds:
+  - {fileID: 8300000, guid: fa701e00349f26d46b17ccb91f54c70f, type: 3}
+  - {fileID: 8300000, guid: 99c085e076bcd574c8fae68c4575e4ad, type: 3}
+  - {fileID: 8300000, guid: 9598fa465bbfc5648bacab5178c66ccc, type: 3}
 --- !u!114 &5913096013431632162
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -199,7 +203,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 977421325840125629}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c77263be99c31e84a98e80c2de27f617, type: 3}
   m_Name: 

@@ -1,7 +1,9 @@
+using System;
 using DG.Tweening;
 using Fusion;
 using JetBrains.Annotations;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class EnemyController : NetworkBehaviour
 {
@@ -72,9 +74,9 @@ public class EnemyController : NetworkBehaviour
 
     private void PlaySquishSound()
     {
-        AudioManager.Instance.PlaySfx2D(
-            hitSounds[Random.Range(0,hitSounds.Length)]
-        );
+        int soundIndex = Random.Range(0, hitSounds.Length);
+        Debug.Log($"Playing sound {soundIndex} from {hitSounds.Length}");
+        AudioManager.Instance.PlaySfx2D(hitSounds[soundIndex]);
     }
     
     
