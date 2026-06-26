@@ -45,8 +45,6 @@ public class ChatNetworkManager : MonoBehaviour, INetworkRunnerCallbacks
     }
 
 
-
-
     // USELESS CALLBACKS BELOW!!!
 
 

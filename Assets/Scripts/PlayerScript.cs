@@ -3,27 +3,32 @@ using UnityEngine;
 
 public class PlayerScript : NetworkBehaviour
 {
-    private bool isReady = false;
     private SpriteRenderer sr;
 
     [SerializeField] private Color readyColor = Color.green;
     [SerializeField] private Color notReadyColor = Color.red;
 
-    [Networked]
-    public bool IsReady { get { return isReady; } set { isReady = value; } }
+    [Networked, OnChangedRender(nameof(OnReadyChanged))]
+    public bool IsReady { get; set; }
 
-    [Rpc]
-    public void SetReadyRPC()
+    public void ToggleReady()
     {
-        isReady = true;
-        sr.color = readyColor;
+        if (IsReady)
+            SetUnreadyRPC();
+        else
+            SetReadyRPC();
     }
 
-    [Rpc]
+    [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
+    public void SetReadyRPC()
+    {
+        SetReady(true);
+    }
+
+    [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
     public void SetUnreadyRPC()
     {
-        isReady = false;
-        sr.color = notReadyColor;
+        SetReady(false);
     }
 
     public override void Spawned()
@@ -31,5 +36,25 @@ public class PlayerScript : NetworkBehaviour
         base.Spawned();
 
         sr = GetComponent<SpriteRenderer>();
+        ApplyReadyVisual();
+    }
+
+    private void SetReady(bool isReady)
+    {
+        IsReady = isReady;
+        ApplyReadyVisual();
+    }
+
+    private void OnReadyChanged()
+    {
+        ApplyReadyVisual();
+    }
+
+    private void ApplyReadyVisual()
+    {
+        if (sr == null)
+            return;
+
+        sr.color = IsReady ? readyColor : notReadyColor;
     }
 }

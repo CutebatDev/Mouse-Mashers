@@ -1,5 +1,6 @@
 ﻿using Fusion;
 using UnityEngine;
+using System.Collections.Generic;
 
 public class CharacterSelectionManager : NetworkBehaviour
 {
@@ -7,7 +8,9 @@ public class CharacterSelectionManager : NetworkBehaviour
     [SerializeField] private string gameplaySceneName = "MultiplayerFlail";
 
     private bool[] takenCharacters;
-    private int pickedPlayers;
+    private readonly Dictionary<PlayerRef, int> playerCharacters = new();
+    private bool localPickPending;
+    private bool localPickConfirmed;
 
     private void Awake()
     {
@@ -16,7 +19,15 @@ public class CharacterSelectionManager : NetworkBehaviour
 
     public void RequestPick(int characterIndex)
     {
+        if (localPickPending || localPickConfirmed)
+            return;
+
+        if (characterIndex < 0 || characterIndex >= buttons.Length)
+            return;
+
+        localPickPending = true;
         SelectedCharacter.Index = characterIndex;
+        SetLocalButtonsInteractable(false);
         RPC_RequestPick(characterIndex);
     }
 
@@ -24,17 +35,29 @@ public class CharacterSelectionManager : NetworkBehaviour
     private void RPC_RequestPick(int characterIndex, RpcInfo info = default)
     {
         if (characterIndex < 0 || characterIndex >= takenCharacters.Length)
+        {
+            RPC_RejectPick(info.Source);
             return;
+        }
 
         if (takenCharacters[characterIndex])
+        {
+            RPC_RejectPick(info.Source);
             return;
+        }
+
+        if (playerCharacters.ContainsKey(info.Source))
+        {
+            RPC_RejectPick(info.Source);
+            return;
+        }
 
         takenCharacters[characterIndex] = true;
-        pickedPlayers++;
+        playerCharacters[info.Source] = characterIndex;
 
         RPC_ConfirmPick(info.Source, characterIndex);
 
-        if (pickedPlayers >= Runner.SessionInfo.PlayerCount)
+        if (playerCharacters.Count >= Runner.SessionInfo.PlayerCount)
         {
             Runner.SessionInfo.IsVisible = false;
             Runner.SessionInfo.IsOpen = false;
@@ -50,7 +73,23 @@ public class CharacterSelectionManager : NetworkBehaviour
 
         if (player == Runner.LocalPlayer)
         {
+            localPickPending = false;
+            localPickConfirmed = true;
             SelectedCharacter.Index = characterIndex;
+            SetLocalButtonsInteractable(false);
         }
+    }
+
+    [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
+    private void RPC_RejectPick([RpcTarget] PlayerRef targetPlayer)
+    {
+        localPickPending = false;
+        SetLocalButtonsInteractable(true);
+    }
+
+    private void SetLocalButtonsInteractable(bool interactable)
+    {
+        foreach (CharacterButtonVisuals button in buttons)
+            button.SetInteractable(interactable);
     }
 }

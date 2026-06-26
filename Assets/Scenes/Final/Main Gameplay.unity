@@ -503,7 +503,15 @@ MonoBehaviour:
     m_Id: f78f83ba-1a4d-461d-959e-bfee8fb7255a
     m_Processors: 
     m_Interactions: 
-    m_SingletonActionBindings: []
+    m_SingletonActionBindings:
+    - m_Name: 
+      m_Id: 60394aaa-c440-4b0b-9aa9-033cdee97758
+      m_Path: <Keyboard>/q
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Quit
+      m_Flags: 0
     m_Flags: 0
 --- !u!4 &994932416
 Transform:
