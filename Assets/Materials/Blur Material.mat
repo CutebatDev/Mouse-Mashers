@@ -70,6 +70,7 @@ Material:
     - _b: 9.11
     - _max: 0.304
     - _min: 0.125
+    - _s: 0.05
     m_Colors:
     - _ClipRect: {r: 0, g: 0, b: 0, a: 0}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
