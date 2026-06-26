@@ -10,28 +10,12 @@ public class InputHandler : NetworkBehaviour
     Vector2 ScreenPosition => Mouse.current.position.ReadValue();
 
     public bool IsHoldingLMB => Mouse.current.leftButton.isPressed;
-    
-    public event Action QuitPressed;
-    private InputAction quitAction;
 
     public override void Spawned()
     {
-        if (!Object.HasInputAuthority)
-        {
-            enabled = false;
-            return;
-        }
-        
         if (!mainCam)
             mainCam = Camera.main;
-
-        quitAction = new InputAction(binding: "<Keyboard>/q");
-        quitAction.performed += _ => QuitPressed?.Invoke();
     }
-
-    private void OnEnable() => quitAction.Enable();
-    private void OnDisable() => quitAction.Disable();
-
 
     public Vector2 WorldPosition
     {

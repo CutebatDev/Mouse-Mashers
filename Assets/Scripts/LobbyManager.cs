@@ -22,37 +22,13 @@ public class LobbyManager : MonoBehaviour, INetworkRunnerCallbacks
     private NetState state;
     private NetworkRunner runner;
     private PlayerScript currentPlayer;
-
-    private float loginTime;
     
     private int readiedPlayers = 0;
+    private bool matchStarted;
 
     private InputAction devAction;
 
-    [Networked]
-    private int ReadiedPlayers
-    {
-        get
-        {
-            return readiedPlayers;
-        }
-        set
-        {
-            readiedPlayers = value;
-        }
-    }
-
-    private void OnEnable()
-    {
-        devAction.Enable();
-    }
-
-    private void OnDisable()
-    {
-        devAction.Disable();
-    }
-
-    void Start()
+    private void Awake()
     {
         devAction = new InputAction(
             name: "DevKey",
@@ -60,8 +36,30 @@ public class LobbyManager : MonoBehaviour, INetworkRunnerCallbacks
             binding: "<Keyboard>/f1"
         );
 
-        devAction.performed += _ => StartMatch();
-        
+        devAction.performed += OnDevActionPerformed;
+    }
+
+    private void OnEnable()
+    {
+        devAction?.Enable();
+    }
+
+    private void OnDisable()
+    {
+        devAction?.Disable();
+    }
+
+    private void OnDestroy()
+    {
+        if (devAction == null)
+            return;
+
+        devAction.performed -= OnDevActionPerformed;
+        devAction.Dispose();
+    }
+
+    void Start()
+    {
         state = NetState.Disconnected;
 
         CreateRunner();
@@ -69,17 +67,19 @@ public class LobbyManager : MonoBehaviour, INetworkRunnerCallbacks
 
     private void Update()
     {
-        if (Time.time - loginTime > 300f)
-        {
-            runner.Shutdown();
-        }
+        TryStartMatchIfEveryoneReady();
+    }
+
+    private void OnDevActionPerformed(InputAction.CallbackContext context)
+    {
+        StartMatch();
     }
 
     private void CreateRunner()
     {
         runner = Instantiate(runnerPrefab);
         runner.AddCallbacks(this);
-        loginTime = Time.time;
+        matchStarted = false;
     }
 
     private void RefreshRoomUI()
@@ -235,48 +235,83 @@ public class LobbyManager : MonoBehaviour, INetworkRunnerCallbacks
 
         Debug.Log($"Player {player.PlayerId} joined, localPlayer: {isLocalPlayer}");
 
-        players.Add(player);
+        if (!players.Contains(player))
+            players.Add(player);
 
         if (isLocalPlayer)
             currentPlayer = runner.Spawn(playerPrefab, spawnPoints[player.PlayerId - 1].transform.position).GetComponent<PlayerScript>();
 
-        ReadiedPlayers++;
+        readiedPlayers = CountReadyPlayers();
 
         RefreshRoomUI();
-
-        if (ReadiedPlayers == runner.SessionInfo.MaxPlayers)
-            StartMatch();
     }
 
-    //[Rpc]
-    //public void TogglePlayerReadyRPC()
-    //{
-    //    if (!currentPlayer.IsReady)
-    //    {
-    //        currentPlayer.SetReadyRPC();
-    //        ReadiedPlayers++;
-    //    }
-    //    else
-    //    {
-    //        currentPlayer.SetUnreadyRPC();
-    //        ReadiedPlayers--;
-    //    }
+    public void TogglePlayerReadyRPC()
+    {
+        if (state != NetState.InSession)
+            return;
 
-    //    Debug.Log($"Current Readied Players: {ReadiedPlayers}");
+        if (currentPlayer == null)
+        {
+            Debug.LogWarning("Cannot toggle ready: local player has not spawned yet.");
+            return;
+        }
 
-    //    if (players.Count > 1 && ReadiedPlayers == players.Count)
-    //        StartMatch();
-    //}
+        currentPlayer.ToggleReady();
+    }
 
     public void StartMatch()
     {
+        if (matchStarted)
+            return;
+
+        if (!runner || !runner.IsRunning)
+            return;
+
+        if (!runner.IsSharedModeMasterClient)
+            return;
+
+        matchStarted = true;
+
         if (runner.IsSharedModeMasterClient)
         {
             runner.SessionInfo.IsVisible = false;
             runner.SessionInfo.IsOpen = false;
         }
+
         Debug.Log("Loading Game Scene");
         runner.LoadScene(GAME_SCENE_NAME);
+    }
+
+    private void TryStartMatchIfEveryoneReady()
+    {
+        if (matchStarted || state != NetState.InSession)
+            return;
+
+        if (runner == null || !runner.IsRunning || !runner.IsSharedModeMasterClient)
+            return;
+
+        if (players.Count == 0)
+            return;
+
+        readiedPlayers = CountReadyPlayers();
+
+        if (readiedPlayers == players.Count)
+            StartMatch();
+    }
+
+    private int CountReadyPlayers()
+    {
+        int readyCount = 0;
+        PlayerScript[] lobbyPlayers = FindObjectsByType<PlayerScript>(FindObjectsSortMode.None);
+
+        foreach (PlayerScript player in lobbyPlayers)
+        {
+            if (player.IsReady)
+                readyCount++;
+        }
+
+        return readyCount;
     }
 
     public void OnPlayerLeft(NetworkRunner runner, PlayerRef player)
@@ -285,8 +320,7 @@ public class LobbyManager : MonoBehaviour, INetworkRunnerCallbacks
             return;
 
         players.RemoveAll(p => p == player);
-
-        ReadiedPlayers--;
+        readiedPlayers = CountReadyPlayers();
 
         RefreshRoomUI();
     }
