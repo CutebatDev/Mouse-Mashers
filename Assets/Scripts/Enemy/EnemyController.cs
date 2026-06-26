@@ -90,7 +90,6 @@ public class EnemyController : NetworkBehaviour
 
     private void StartDeathSequence()
     {
-        enemyAI.StopMovement();
         sr.DOKill();
 
         RPC_PlayDeathVFX();
