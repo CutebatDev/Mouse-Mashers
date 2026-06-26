@@ -8,7 +8,8 @@ public class MultiplayerChat : NetworkBehaviour
     public delegate void MessageReceived(string username, string message);
     public static event MessageReceived OnMessageReceived;
 
-    private Dictionary<PlayerRef, string> usernames = new();
+    [Networked, Capacity(100)]
+    private NetworkDictionary<PlayerRef, NetworkString<_16>> Usernames { get; }
 
     public override void Spawned()
     {
@@ -23,10 +24,10 @@ public class MultiplayerChat : NetworkBehaviour
     [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
     private void RPC_SetUsername(string username, RpcInfo info = default)
     {
-        usernames[info.Source] = username;
+        Usernames.Set(info.Source, username);
     }
 
-    public void SendMessage(string username, string message)
+    public void SendMessage(string message)
     {
         RPC_SendMessage(message);
     }
@@ -41,8 +42,8 @@ public class MultiplayerChat : NetworkBehaviour
     {
         string username = "Unknown";
 
-        if (usernames.TryGetValue(info.Source, out string name))
-            username = name;
+        if (Usernames.TryGet(info.Source, out var name))
+            username = name.ToString();
 
         OnMessageReceived?.Invoke(username, message);
     }
@@ -50,15 +51,22 @@ public class MultiplayerChat : NetworkBehaviour
     [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
     private void RPC_RequestWhisper(string target, string message, RpcInfo info = default)
     {
-        foreach (var player in usernames)
+        foreach (var player in Usernames)
         {
-            if (player.Value == target)
+            if (player.Value.ToString() == target)
             {
-                RPC_DeliverWhisper(player.Key, usernames[info.Source], message);
-            }
+                string sender = "Unknown";
 
-            return;
+                if (Usernames.TryGet(info.Source, out var senderName))
+                    sender = senderName.ToString();
+
+                RPC_DeliverWhisper(player.Key, sender, message);
+
+                return;
+            }
         }
+
+        OnMessageReceived?.Invoke("System", $"User {target} not found");
     }
 
     [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
