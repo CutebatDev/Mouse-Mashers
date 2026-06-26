@@ -1,12 +1,16 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class MultiplayerChatUI : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI _messages;
     [SerializeField] private TMP_InputField input;
-    [SerializeField]private TMP_InputField usernameInput;
+    [SerializeField] private TMP_InputField usernameInput;
+    [SerializeField] private TextMeshProUGUI nameplate;
+
+    private MultiplayerChat chat;
 
     private string username = "Rat";
 
@@ -22,15 +26,33 @@ public class MultiplayerChatUI : MonoBehaviour
 
     void Update()
     {
+        if (chat == null)
+            chat = MultiplayerChat.Instance;
+
+        //bool ready = MultiplayerChat.Instance != null;
+
+        //usernameButton.interactable = ready;
+        //sendButton.interactable = ready;
+
         if (Keyboard.current.enterKey.wasPressedThisFrame)
             Send();
     }
 
     public void SetUsername()
     {
+        if (chat == null)
+            chat = MultiplayerChat.Instance;
+
+        if (chat == null)
+        {
+            Debug.LogWarning("Chat not ready");
+            return;
+        }
+
         username = usernameInput.text;
 
-        MultiplayerChat.Instance.SetUsername(username);
+        chat.SetUsername(username);
+        nameplate.text = username;
 
         usernameInput.text = "";
     }
@@ -48,7 +70,7 @@ public class MultiplayerChatUI : MonoBehaviour
         }
         else
         {
-            MultiplayerChat.Instance.SendMessage(username, message);
+            chat.SendMessage(message);
         }
 
         input.text = "";
@@ -65,7 +87,7 @@ public class MultiplayerChatUI : MonoBehaviour
         string target = parts[1];
         string message = parts[2];
 
-        MultiplayerChat.Instance.SendWhisper(target, message);
+        chat.SendWhisper(target, message);
     }
 
     private void AddMessage(string user, string message)
