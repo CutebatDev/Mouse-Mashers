@@ -30,6 +30,8 @@ public class MultiplayerChatUI : MonoBehaviour
     {
         username = usernameInput.text;
 
+        MultiplayerChat.Instance.SetUsername(username);
+
         usernameInput.text = "";
     }
 
@@ -40,11 +42,30 @@ public class MultiplayerChatUI : MonoBehaviour
 
         string message = input.text;
 
-        MultiplayerChat.Instance.SendMessage(username, message);
+        if (message.StartsWith("/whisper "))
+        {
+            SendWhisper(message);
+        }
+        else
+        {
+            MultiplayerChat.Instance.SendMessage(username, message);
+        }
 
         input.text = "";
-
         input.ActivateInputField();
+    }
+
+    private void SendWhisper(string text)
+    {
+        string[] parts = text.Split(' ', 3);
+
+        if (parts.Length < 3)
+            return;
+
+        string target = parts[1];
+        string message = parts[2];
+
+        MultiplayerChat.Instance.SendWhisper(target, message);
     }
 
     private void AddMessage(string user, string message)

@@ -1,7 +1,5 @@
 using Fusion;
-using TMPro;
-using UnityEngine;
-using UnityEngine.UI;
+using System.Collections.Generic;
 
 public class MultiplayerChat : NetworkBehaviour
 {
@@ -10,32 +8,62 @@ public class MultiplayerChat : NetworkBehaviour
     public delegate void MessageReceived(string username, string message);
     public static event MessageReceived OnMessageReceived;
 
+    private Dictionary<PlayerRef, string> usernames = new();
+
     public override void Spawned()
     {
         Instance = this;
     }
 
-    //public void SetUsername()
-    //{
-    //    username = usernameInput.text;
-    //}
+    public void SetUsername(string username)
+    {
+        RPC_SetUsername(username);
+    }
+
+    [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
+    private void RPC_SetUsername(string username, RpcInfo info = default)
+    {
+        usernames[info.Source] = username;
+    }
 
     public void SendMessage(string username, string message)
     {
-        RPC_SendMessage(username, message);
+        RPC_SendMessage(message);
     }
 
-    //public void CallMessageRPC()
-    //{
-    //    string message = input.text;
-    //    RPC_SendMessage(username, message);
-    //}
+    public void SendWhisper(string target, string message)
+    {
+        RPC_RequestWhisper(target, message);
+    }
 
     [Rpc(RpcSources.All, RpcTargets.All)]
-    public void RPC_SendMessage(string username, string message, RpcInfo rpcInfo = default)
+    public void RPC_SendMessage(string message, RpcInfo info = default)
     {
-        OnMessageReceived?.Invoke(username, message);
+        string username = "Unknown";
 
-        //_messages.text += $"{username}: {message}\n";
+        if (usernames.TryGetValue(info.Source, out string name))
+            username = name;
+
+        OnMessageReceived?.Invoke(username, message);
+    }
+
+    [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
+    private void RPC_RequestWhisper(string target, string message, RpcInfo info = default)
+    {
+        foreach (var player in usernames)
+        {
+            if (player.Value == target)
+            {
+                RPC_DeliverWhisper(player.Key, usernames[info.Source], message);
+            }
+
+            return;
+        }
+    }
+
+    [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
+    private void RPC_DeliverWhisper([RpcTarget] PlayerRef target, string sender, string message, RpcInfo info = default)
+    {
+        OnMessageReceived?.Invoke($"[Whisper] {sender}", message);
     }
 }
