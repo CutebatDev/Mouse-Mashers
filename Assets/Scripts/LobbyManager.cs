@@ -68,11 +68,6 @@ public class LobbyManager : MonoBehaviour, INetworkRunnerCallbacks
         CreateRunner();
     }
 
-    void Update()
-    {
-            
-    }
-
     private void CreateRunner()
     {
         runner = Instantiate(runnerPrefab);
@@ -89,8 +84,6 @@ public class LobbyManager : MonoBehaviour, INetworkRunnerCallbacks
 
     public async void JoinLobby()
     {
-        // string lobbyName = lobbyUI.LobbyNameText;
-
         StartGameResult result = await runner.JoinSessionLobby(SessionLobby.Custom,"default");
 
         if (result.Ok)
