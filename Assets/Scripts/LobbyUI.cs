@@ -1,3 +1,4 @@
+using System;
 using Fusion;
 using System.Collections.Generic;
 using TMPro;
@@ -38,6 +39,11 @@ public class LobbyUI : MonoBehaviour
     [SerializeField] private Button sessionButton;
 
     private Dictionary<string, Button> sessionButtons = new();
+
+    private void Start()
+    {
+        JoinLobbyOnClick();
+    }
 
     public void UpdatePlayerCount(int playerCount)
     {

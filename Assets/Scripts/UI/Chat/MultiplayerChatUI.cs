@@ -9,10 +9,18 @@ public class MultiplayerChatUI : MonoBehaviour
     [SerializeField] private TMP_InputField input;
     [SerializeField] private TMP_InputField usernameInput;
     [SerializeField] private TextMeshProUGUI nameplate;
+    [SerializeField] private LobbyManager lobbyManager;
 
     private MultiplayerChat chat;
 
     private string username = "Rat";
+    private bool usernameSent;
+
+    private void Start()
+    {
+        nameplate.text = username;
+        lobbyManager.SetLocalPlayerName(username);
+    }
 
     private void OnEnable()
     {
@@ -29,6 +37,12 @@ public class MultiplayerChatUI : MonoBehaviour
         if (chat == null)
             chat = MultiplayerChat.Instance;
 
+        if (chat != null && !usernameSent)
+        {
+            chat.SetUsername(username);
+            usernameSent = true;
+        }
+
         //bool ready = MultiplayerChat.Instance != null;
 
         //usernameButton.interactable = ready;
@@ -40,21 +54,32 @@ public class MultiplayerChatUI : MonoBehaviour
 
     public void SetUsername()
     {
-        if (chat == null)
-            chat = MultiplayerChat.Instance;
+        string newUsername = usernameInput.text.Trim();
 
-        if (chat == null)
-        {
-            Debug.LogWarning("Chat not ready");
+        if (string.IsNullOrEmpty(newUsername))
             return;
-        }
 
-        username = usernameInput.text;
+        username = newUsername.Length > 16
+            ? newUsername.Substring(0, 16)
+            : newUsername;
 
-        chat.SetUsername(username);
+        lobbyManager.SetLocalPlayerName(username);
         nameplate.text = username;
 
         usernameInput.text = "";
+
+        if (chat == null)
+            chat = MultiplayerChat.Instance;
+
+        if (chat != null)
+        {
+            chat.SetUsername(username);
+            usernameSent = true;
+        }
+        else
+        {
+            usernameSent = false;
+        }
     }
 
     public void Send()

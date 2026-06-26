@@ -97,7 +97,7 @@ public class GameManager : NetworkBehaviour, INetworkRunnerCallbacks
         base.Spawned();
         networkRunner = Runner;
         RegisterRunnerCallbacks();
-        RPCRequestSpawn(SelectedCharacter.Index);
+        RPCRequestSpawn();
     }
 
     private void RegisterRunnerCallbacks()
@@ -114,7 +114,7 @@ public class GameManager : NetworkBehaviour, INetworkRunnerCallbacks
     }
     
     [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
-    private void RPCRequestSpawn(int character, RpcInfo info = default) 
+    private void RPCRequestSpawn(RpcInfo info = default) 
     {
         NetworkRunner runner = GetRunner();
         string userId = runner.GetPlayerUserId(info.Source);
@@ -122,12 +122,20 @@ public class GameManager : NetworkBehaviour, INetworkRunnerCallbacks
         {
            Debug.Log("It's a rejoin!");
            RPCRequestAllAuthorityBack(info.Source, playerRef);
+           SessionState.Instance?.ReplacePlayer(playerRef, info.Source);
            userIdPlayersMap[userId] = info.Source;
         }
         else
         {
+            if (SessionState.Instance == null ||
+                !SessionState.Instance.TryGetPlayer(info.Source, out PlayerDetails details))
+            {
+                Debug.LogError($"Cannot spawn {info.Source}: no PlayerDetails found.");
+                return;
+            }
+
             userIdPlayersMap[userId] = info.Source;
-            RPCSpawnPlayer(info.Source, character);
+            RPCSpawnPlayer(info.Source, details.characterIndex);
         }
     }
     

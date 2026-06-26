@@ -1,20 +1,21 @@
 ﻿using Fusion;
 using UnityEngine;
-using System.Collections.Generic;
 
 public class CharacterSelectionManager : NetworkBehaviour
 {
     [SerializeField] private CharacterButtonVisuals[] buttons;
     [SerializeField] private string gameplaySceneName = "MultiplayerFlail";
 
-    private bool[] takenCharacters;
-    private readonly Dictionary<PlayerRef, int> playerCharacters = new();
     private bool localPickPending;
     private bool localPickConfirmed;
 
-    private void Awake()
+    public override void Spawned()
     {
-        takenCharacters = new bool[buttons.Length];
+        if (SessionState.Instance == null)
+            return;
+
+        for (int i = 0; i < buttons.Length; i++)
+            buttons[i].SetTaken(SessionState.Instance.IsCharacterTaken(i));
     }
 
     public void RequestPick(int characterIndex)
@@ -26,7 +27,6 @@ public class CharacterSelectionManager : NetworkBehaviour
             return;
 
         localPickPending = true;
-        SelectedCharacter.Index = characterIndex;
         SetLocalButtonsInteractable(false);
         RPC_RequestPick(characterIndex);
     }
@@ -34,30 +34,30 @@ public class CharacterSelectionManager : NetworkBehaviour
     [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
     private void RPC_RequestPick(int characterIndex, RpcInfo info = default)
     {
-        if (characterIndex < 0 || characterIndex >= takenCharacters.Length)
+        if (characterIndex < 0 || characterIndex >= buttons.Length)
         {
             RPC_RejectPick(info.Source);
             return;
         }
 
-        if (takenCharacters[characterIndex])
+        SessionState sessionState = SessionState.Instance;
+
+        if (sessionState == null)
         {
+            Debug.LogError("Cannot pick character: SessionState is missing.");
             RPC_RejectPick(info.Source);
             return;
         }
 
-        if (playerCharacters.ContainsKey(info.Source))
+        if (!sessionState.TrySelectCharacter(info.Source, characterIndex))
         {
             RPC_RejectPick(info.Source);
             return;
         }
-
-        takenCharacters[characterIndex] = true;
-        playerCharacters[info.Source] = characterIndex;
 
         RPC_ConfirmPick(info.Source, characterIndex);
 
-        if (playerCharacters.Count >= Runner.SessionInfo.PlayerCount)
+        if (sessionState.SelectedPlayerCount() >= Runner.SessionInfo.PlayerCount)
         {
             Runner.SessionInfo.IsVisible = false;
             Runner.SessionInfo.IsOpen = false;
@@ -76,7 +76,6 @@ public class CharacterSelectionManager : NetworkBehaviour
         {
             localPickPending = false;
             localPickConfirmed = true;
-            SelectedCharacter.Index = characterIndex;
             SetLocalButtonsInteractable(false);
         }
     }

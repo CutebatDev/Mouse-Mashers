@@ -11,6 +11,25 @@ public class PlayerScript : NetworkBehaviour
     [Networked, OnChangedRender(nameof(OnReadyChanged))]
     public bool IsReady { get; set; }
 
+    [Networked]
+    public NetworkString<_16> PlayerName { get; set; }
+
+    public void SetPlayerName(string playerName)
+    {
+        if (!HasStateAuthority)
+            return;
+
+        playerName = playerName?.Trim();
+
+        if (string.IsNullOrEmpty(playerName))
+            playerName = $"Rat {Object.StateAuthority.PlayerId}";
+
+        if (playerName.Length > 16)
+            playerName = playerName.Substring(0, 16);
+
+        PlayerName = playerName;
+    }
+
     public void ToggleReady()
     {
         if (IsReady)

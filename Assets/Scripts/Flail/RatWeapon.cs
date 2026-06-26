@@ -1,3 +1,4 @@
+using Fusion;
 using UnityEngine;
 
 public class RatWeapon : MonoBehaviour
@@ -7,8 +8,14 @@ public class RatWeapon : MonoBehaviour
     [SerializeField] private float damageMultiplier = 5f;
 
     [SerializeField] private AudioClip[] squickySounds;
-    
-    
+
+    private NetworkObject ownerObject;
+
+    private void Awake()
+    {
+        ownerObject = GetComponentInParent<NetworkObject>();
+    }
+
     //private void OnCollisionEnter2D(Collision2D other)
     //{
     //    float impactSpeed = other.relativeVelocity.magnitude;
@@ -24,6 +31,9 @@ public class RatWeapon : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
+        if (ownerObject == null || !ownerObject.HasStateAuthority)
+            return;
+
         float damage = rb.linearVelocity.magnitude * damageMultiplier;
 
         EnemyController enemy = other.GetComponent<EnemyController>();
