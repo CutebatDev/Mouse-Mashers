@@ -11,7 +11,9 @@ public class EnemyController : NetworkBehaviour
     [SerializeField] private EnemyAI enemyAI;
     [SerializeField] private SpriteRenderer sr;
 
+    [Header("Audio")]
     [SerializeField] private AudioClip[] hitSounds;
+    [SerializeField] private AudioClip[] damagedSounds;
     
     private bool isTakingDamage = false;
     private bool isDead = false;
