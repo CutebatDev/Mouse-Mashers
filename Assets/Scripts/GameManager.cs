@@ -4,12 +4,11 @@ using System.Linq;
 using Fusion;
 using Fusion.Sockets;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 
 public class GameManager : NetworkBehaviour, INetworkRunnerCallbacks
 {
-    public const string LOBBY_SCENE_NAME = "LobbyScene";
-    
     private Dictionary<string, PlayerRef> userIdPlayersMap = new Dictionary<string, PlayerRef>();
     
     public static GameManager Instance;
@@ -18,15 +17,40 @@ public class GameManager : NetworkBehaviour, INetworkRunnerCallbacks
 
     public NetworkRunner networkRunner;
 
+    public string lobbySceneName;
+
+    [SerializeField] public InputAction quitAction;
+    
+    
     private void Awake()
     {
         Instance = this;
     }
 
-    private void Start()
+    private void OnEnable()
     {
+        quitAction.Enable();
+    }
+
+    private void OnDisable()
+    {
+        quitAction.Disable();
+    }
+
+    void Start()
+    {
+        if (quitAction != null)
+            quitAction = new InputAction(
+                name: "DevKey",
+                type: InputActionType.Button,
+                binding: "<Keyboard>/q"
+            );
+
+        quitAction.performed += _ => LeaveGame();
+        
         networkRunner = NetworkRunner.GetRunnerForScene(SceneManager.GetActiveScene());
     }
+
     
     public override void Spawned()
     {
@@ -40,8 +64,7 @@ public class GameManager : NetworkBehaviour, INetworkRunnerCallbacks
         {
             networkRunner.Shutdown();
         }
-
-        SceneManager.LoadScene(LOBBY_SCENE_NAME);
+        SceneManager.LoadScene(lobbySceneName);
     }
     
     [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
@@ -101,13 +124,12 @@ public class GameManager : NetworkBehaviour, INetworkRunnerCallbacks
 
     public void OnPlayerLeft(NetworkRunner runner, PlayerRef player)
     {
-        if (player.IsMasterClient)
-            SceneManager.LoadScene("UI");
+        LeaveGame();
     }
 
     public void OnShutdown(NetworkRunner runner, ShutdownReason shutdownReason)
     {
-        SceneManager.LoadScene("UI");
+        LeaveGame();
     }
 
     public void OnDisconnectedFromServer(NetworkRunner runner, NetDisconnectReason reason)

@@ -53,6 +53,7 @@ public class LobbyUI : MonoBehaviour
         sessionPanel.SetActive(state == NetState.InSession);
         bottomPanel.SetActive(state == NetState.Lobby);
         endSessionButton.interactable = (state == NetState.InSession);
+        CreateRoomButton.interactable = (state == NetState.Lobby);
     }
 
     public void JoinLobbyOnClick()

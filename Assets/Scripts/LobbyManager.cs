@@ -23,6 +23,8 @@ public class LobbyManager : MonoBehaviour, INetworkRunnerCallbacks
     private NetworkRunner runner;
     private PlayerScript currentPlayer;
 
+    private float loginTime;
+    
     private int readiedPlayers = 0;
 
     private InputAction devAction;
@@ -40,17 +42,6 @@ public class LobbyManager : MonoBehaviour, INetworkRunnerCallbacks
         }
     }
 
-    private void Awake()
-    {
-        devAction = new InputAction(
-            name: "DevKey",
-            type: InputActionType.Button,
-            binding: "<Keyboard>/f1"
-            );
-
-        devAction.performed += _ => StartMatch();
-    }
-
     private void OnEnable()
     {
         devAction.Enable();
@@ -63,15 +54,32 @@ public class LobbyManager : MonoBehaviour, INetworkRunnerCallbacks
 
     void Start()
     {
+        devAction = new InputAction(
+            name: "DevKey",
+            type: InputActionType.Button,
+            binding: "<Keyboard>/f1"
+        );
+
+        devAction.performed += _ => StartMatch();
+        
         state = NetState.Disconnected;
 
         CreateRunner();
+    }
+
+    private void Update()
+    {
+        if (Time.time - loginTime > 300f)
+        {
+            runner.Shutdown();
+        }
     }
 
     private void CreateRunner()
     {
         runner = Instantiate(runnerPrefab);
         runner.AddCallbacks(this);
+        loginTime = Time.time;
     }
 
     private void RefreshRoomUI()
@@ -310,11 +318,9 @@ public class LobbyManager : MonoBehaviour, INetworkRunnerCallbacks
     public void OnShutdown(NetworkRunner runner, ShutdownReason shutdownReason)
     {
         Debug.Log($"Shutdown: {shutdownReason}");
-
+        
         players.Clear();
-
         CreateRunner();
-
         lobbyUI.UpdateUIState(state);
     }
 
