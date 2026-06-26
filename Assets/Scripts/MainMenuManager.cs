@@ -17,7 +17,7 @@ public class MainMenuManager : MonoBehaviour
 
     private void Start()
     {
-        AudioManager.Instance.PlayMusic(mainMenuMusic);
+        AudioManager.Instance.PlayMusic(mainMenuMusic, 0.25f);
     }
 
 

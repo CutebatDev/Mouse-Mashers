@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 9a59249fb3dc4684cbd7afa1cc533e7a
+guid: a0ac665eb79d94642b7f9b2caaa22bc4
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -1978833480162964145
-    second: Spider_SideView_0
+      213: 1772123215665035089
+    second: Roach_SideView_2_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -48,7 +48,7 @@ TextureImporter:
   compressionQuality: 50
   spriteMode: 1
   spriteExtrude: 1
-  spriteMeshType: 1
+  spriteMeshType: 0
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
   spritePixelsToUnits: 100
@@ -72,7 +72,7 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 4
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 2048
+    maxTextureSize: 512
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 1
@@ -109,17 +109,30 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WindowsStoreApps
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Spider_SideView_0
+      name: Roach_SideView_2_0
       rect:
         serializedVersion: 2
-        x: 7
-        y: 68
-        width: 240
-        height: 124
+        x: 16
+        y: 40
+        width: 228
+        height: 159
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -128,8 +141,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: f4d8c312f65c984e0800000000000000
-      internalID: -1978833480162964145
+      spriteID: 157ffefeca8d79810800000000000000
+      internalID: 1772123215665035089
       vertices: []
       indices: 
       edges: []
@@ -148,7 +161,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Spider_SideView_0: -1978833480162964145
+      Roach_SideView_2_0: 1772123215665035089
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
