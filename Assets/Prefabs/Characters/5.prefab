@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1001 &4879345264565506729
+--- !u!1001 &678601765338298490
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -8,14 +8,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 84419588238586913, guid: 4c6d25997ea2bfc4485f6eb8d7a64cfb, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 1852739196974634012}
-    - target: {fileID: 84419588238586913, guid: 4c6d25997ea2bfc4485f6eb8d7a64cfb, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: OnClicked
-      objectReference: {fileID: 0}
     - target: {fileID: 1542323450391894152, guid: 4c6d25997ea2bfc4485f6eb8d7a64cfb, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -98,37 +90,30 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2286975606169371429, guid: 4c6d25997ea2bfc4485f6eb8d7a64cfb, type: 3}
       propertyPath: m_text
-      value: Eww a rat
+      value: szczur
+      objectReference: {fileID: 0}
+    - target: {fileID: 2286975606169371429, guid: 4c6d25997ea2bfc4485f6eb8d7a64cfb, type: 3}
+      propertyPath: m_TextWrappingMode
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4437766269429662464, guid: 4c6d25997ea2bfc4485f6eb8d7a64cfb, type: 3}
       propertyPath: m_Name
-      value: Dirty
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 5086775752329602003, guid: 4c6d25997ea2bfc4485f6eb8d7a64cfb, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 6122595980825124715, guid: 083c0919a64c7f448bff4f8f7c5f5b31, type: 3}
+      objectReference: {fileID: 21300000, guid: 083c0919a64c7f448bff4f8f7c5f5b31, type: 3}
     - target: {fileID: 6242040161583693422, guid: 4c6d25997ea2bfc4485f6eb8d7a64cfb, type: 3}
       propertyPath: SortKey
-      value: 1729698405
+      value: 2965877293
       objectReference: {fileID: 0}
     - target: {fileID: 6485371279379842741, guid: 4c6d25997ea2bfc4485f6eb8d7a64cfb, type: 3}
       propertyPath: characterIndex
-      value: 2
+      value: 5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4c6d25997ea2bfc4485f6eb8d7a64cfb, type: 3}
---- !u!114 &1852739196974634012 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6485371279379842741, guid: 4c6d25997ea2bfc4485f6eb8d7a64cfb, type: 3}
-  m_PrefabInstance: {fileID: 4879345264565506729}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 116b401d78714735989da4884fdc5c1c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::CharacterButtonVisuals

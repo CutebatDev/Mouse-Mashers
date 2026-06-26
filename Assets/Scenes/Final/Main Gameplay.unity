@@ -809,7 +809,9 @@ MonoBehaviour:
   worldCanvas: {fileID: 2135239425}
   enemyRoot: {fileID: 119803043}
   enemyPrefabs:
-  - {fileID: 5078369847042128412, guid: f4304d0f6d7ed3142a95a1d871370c39, type: 3}
+  - {fileID: 4293588847914457442, guid: d6b067a9795496845bc3b47b1208d2ff, type: 3}
+  - {fileID: 8702127214938687370, guid: 6cca3d2ca464a224b89731c2d5b22ef9, type: 3}
+  - {fileID: 5498510423887014502, guid: be5a3fbcbc6e62248917b0d0256e856f, type: 3}
   maxEnemyCount: 20
   spawnThreshold: 10
   minToSpawn: 2
