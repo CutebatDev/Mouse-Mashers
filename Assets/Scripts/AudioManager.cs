@@ -23,7 +23,7 @@ public class AudioManager : MonoBehaviour
 
     public void SetMixerVolume(float linearVolume)
     {
-        mainMixerGroup.audioMixer.SetFloat("MasterVolume", Mathf.Log10(Mathf.Clamp(linearVolume, 0.0001f, 1f)) * 20f);
+        mainMixerGroup.audioMixer.SetFloat("MainVolume", Mathf.Log10(Mathf.Clamp(linearVolume, 0.0001f, 1f)) * 20f);
     }
     
     
@@ -51,6 +51,8 @@ public class AudioManager : MonoBehaviour
         audioSourceComponent.pitch = pitch;
 
         audioSourceComponent.Play();
+        _musicSource = audioSourceComponent;
+        DontDestroyOnLoad(audioSourceObject);
     }
 
     public void StopMusic()

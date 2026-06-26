@@ -1218,7 +1218,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 16f44c5ba13dc8042961de4d5d83f608, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  mainGameSceneName: UI
+  mainGameSceneName: Starting Screen
+  mainMenuMusic: {fileID: 8300000, guid: 4b974651c89c9c14ab9af618370301c8, type: 3}
   defaultMenuGroup: {fileID: 1267536870}
   settingsMenuGroup: {fileID: 1303159197}
   title: {fileID: 372023660}
@@ -2578,7 +2579,7 @@ MonoBehaviour:
   m_MinValue: 0
   m_MaxValue: 1
   m_WholeNumbers: 0
-  m_Value: 0
+  m_Value: 1
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:

@@ -62,6 +62,7 @@ public class CharacterSelectionManager : NetworkBehaviour
             Runner.SessionInfo.IsVisible = false;
             Runner.SessionInfo.IsOpen = false;
 
+            AudioManager.Instance.StopMusic();
             Runner.LoadScene(gameplaySceneName);
         }
     }

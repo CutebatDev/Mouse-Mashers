@@ -496,6 +496,7 @@ MonoBehaviour:
   playerPrefab: {fileID: 8783994713923211441, guid: 5ac016975b391fa45b7ae7743060ace3, type: 3}
   networkRunner: {fileID: 2464640736885289735, guid: c749f760057e0e1408386d0fce8501f7, type: 3}
   lobbySceneName: Starting Screen
+  shutdownRunnerOnEndGame: 1
   quitAction:
     m_Name: Quit
     m_Type: 0
@@ -513,6 +514,7 @@ MonoBehaviour:
       m_Action: Quit
       m_Flags: 0
     m_Flags: 0
+  mainGameplayMusic: {fileID: 8300000, guid: bf8d7fe947925ee419ab92cebf1139ca, type: 3}
 --- !u!4 &994932416
 Transform:
   m_ObjectHideFlags: 0

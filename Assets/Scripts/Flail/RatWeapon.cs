@@ -6,6 +6,9 @@ public class RatWeapon : MonoBehaviour
 
     [SerializeField] private float damageMultiplier = 5f;
 
+    [SerializeField] private AudioClip[] squickySounds;
+    
+    
     //private void OnCollisionEnter2D(Collision2D other)
     //{
     //    float impactSpeed = other.relativeVelocity.magnitude;
@@ -28,6 +31,15 @@ public class RatWeapon : MonoBehaviour
         if (enemy == null)
             return;
 
+        PlaySquickySound();
         enemy.TakeDamage(damage);
+    }
+
+
+    private void PlaySquickySound()
+    {
+        AudioManager.Instance.PlaySfx2D(
+            squickySounds[Random.Range(0,squickySounds.Length)]
+            );
     }
 }

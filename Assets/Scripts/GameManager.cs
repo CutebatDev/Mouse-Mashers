@@ -25,6 +25,9 @@ public class GameManager : NetworkBehaviour, INetworkRunnerCallbacks
     private bool menuLoadStarted;
     private bool returnToMenuStarted;
     private bool callbacksRegistered;
+
+    [SerializeField] private AudioClip mainGameplayMusic;
+    
     
     private void Awake()
     {
@@ -59,10 +62,13 @@ public class GameManager : NetworkBehaviour, INetworkRunnerCallbacks
             Debug.LogWarning("GameManager has no quit action assigned.");
         else if (quitAction.bindings.Count == 0)
             Debug.LogWarning("GameManager quit action has no input binding assigned.");
+        
+        AudioManager.Instance.PlayMusic(mainGameplayMusic);
     }
 
     private void OnQuitPerformed(InputAction.CallbackContext context)
     {
+        AudioManager.Instance.StopMusic();
         RequestEndGame();
     }
 
@@ -178,6 +184,7 @@ public class GameManager : NetworkBehaviour, INetworkRunnerCallbacks
 
         isReturningToMenu = true;
 
+        AudioManager.Instance.StopMusic();
         NetworkRunner runner = GetRunner();
         if (runner != null && runner.IsRunning)
             await runner.Shutdown();

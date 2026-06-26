@@ -11,6 +11,8 @@ public class EnemyController : NetworkBehaviour
     [SerializeField] private EnemyAI enemyAI;
     [SerializeField] private SpriteRenderer sr;
 
+    [SerializeField] private AudioClip[] hitSounds;
+    
     private bool isTakingDamage = false;
     private bool isDead = false;
 
@@ -61,10 +63,20 @@ public class EnemyController : NetworkBehaviour
         if (amount <= 10)
             return;
         ShowDamage(amount, transform.position);
+        PlaySquishSound();
         TakeDamageAnimation();
 
         RPC_TakeDamage(amount);
     }
+
+
+    private void PlaySquishSound()
+    {
+        AudioManager.Instance.PlaySfx2D(
+            hitSounds[Random.Range(0,hitSounds.Length)]
+        );
+    }
+    
     
     private void TakeDamageAnimation()
     {

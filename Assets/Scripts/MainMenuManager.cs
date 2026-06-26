@@ -23,7 +23,7 @@ public class MainMenuManager : MonoBehaviour
 
     public void OnPlayPressed()
     {
-        AudioManager.Instance.StopMusic();
+        // AudioManager.Instance.StopMusic();
         SceneManager.LoadScene(mainGameSceneName);
     }
 
