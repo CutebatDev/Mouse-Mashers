@@ -144,6 +144,6 @@ public class LobbyUI : MonoBehaviour
 
     public void CreateErrorMessage(string message)
     {
-        Instantiate(ErrorPrefab, baseObject.transform).GetComponent<ErrorMessage>().errorText.text = "IT WORKS";
+        Instantiate(ErrorPrefab, baseObject.transform).GetComponent<ErrorMessage>().errorText.text = message;
     }
 }

@@ -82,8 +82,15 @@ public class EnemySpawner : NetworkBehaviour
             EnemyController enemy = temp.GetComponent<EnemyController>();
 
             EnemyRegistry.Instance.Register(enemy);
-            enemy.SetWorldCanvasRef(worldCanvas);
+            RPC_parentEnemy(enemy);
+            
         }
+    }
+    
+    [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
+    public void RPC_parentEnemy(EnemyController enemy)
+    {
+        enemy.SetWorldCanvasRef(worldCanvas);
     }
 
     private Vector3 GetSpawnPosition()

@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: 425593979882560813}
   - component: {fileID: 4670679006498977071}
   m_Layer: 0
-  m_Name: AntEnemy
+  m_Name: Enemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -112,6 +112,7 @@ MonoBehaviour:
   damagePrefab: {fileID: 7996033507131442853, guid: 8bd8bccfea8a6ce4aa402c251906ca4d, type: 3}
   maxHealth: 100
   iFrameDuration: 0.25
+  sr: {fileID: 3221785411089241487}
 --- !u!114 &5913096013431632162
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -125,7 +126,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyAI
   sprite: {fileID: 3221785411089241487}
-  speed: 12
+  speed: 1.2
   turnDelay: 3.5
   arrivalDistance: 0.15
 --- !u!58 &3676144688188775632
