@@ -1,11 +1,12 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class MultiplayerChatUI : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI _messages;
-    [SerializeField] private TextMeshProUGUI input;
-    [SerializeField]private TextMeshProUGUI usernameInput;
+    [SerializeField] private TMP_InputField input;
+    [SerializeField]private TMP_InputField usernameInput;
 
     private string username = "Rat";
 
@@ -19,16 +20,31 @@ public class MultiplayerChatUI : MonoBehaviour
         MultiplayerChat.OnMessageReceived -= AddMessage;
     }
 
+    void Update()
+    {
+        if (Keyboard.current.enterKey.wasPressedThisFrame)
+            Send();
+    }
+
     public void SetUsername()
     {
         username = usernameInput.text;
+
+        usernameInput.text = "";
     }
 
     public void Send()
     {
-        MultiplayerChat.Instance.SendMessage(username, input.text);
+        if (string.IsNullOrEmpty(input.text))
+            return;
+
+        string message = input.text;
+
+        MultiplayerChat.Instance.SendMessage(username, message);
 
         input.text = "";
+
+        input.ActivateInputField();
     }
 
     private void AddMessage(string user, string message)

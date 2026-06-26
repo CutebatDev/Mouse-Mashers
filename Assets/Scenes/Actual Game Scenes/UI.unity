@@ -3694,8 +3694,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MultiplayerChatUI
   _messages: {fileID: 889189406}
-  input: {fileID: 1376619264}
-  usernameInput: {fileID: 543557549}
+  input: {fileID: 2130272433}
+  usernameInput: {fileID: 1036535681}
 --- !u!4 &997068574
 Transform:
   m_ObjectHideFlags: 0
