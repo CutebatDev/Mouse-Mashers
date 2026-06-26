@@ -14,6 +14,7 @@ public class EnemyAI : NetworkBehaviour
     private Vector2 target;
     private float timer;
 
+    private bool isStopped = false;
 
     void Awake()
     {
@@ -24,6 +25,8 @@ public class EnemyAI : NetworkBehaviour
 
     public override void FixedUpdateNetwork()
     {
+        if (isStopped)
+            return;
         Vector2 current = transform.position;
 
         Vector2 dir = (target - current).normalized;
@@ -51,5 +54,14 @@ public class EnemyAI : NetworkBehaviour
         );
 
         timer = turnDelay;
+    }
+
+    public void StopMovement()
+    {
+        isStopped = true;
+    }
+    public void ResumeMovement()
+    {
+        isStopped = false;
     }
 }
