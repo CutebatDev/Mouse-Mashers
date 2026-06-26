@@ -494,7 +494,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
   mainCamera: {fileID: 133992274}
   playerPrefab: {fileID: 8783994713923211441, guid: 5ac016975b391fa45b7ae7743060ace3, type: 3}
-  networkRunner: {fileID: 0}
+  networkRunner: {fileID: 2464640736885289735, guid: c749f760057e0e1408386d0fce8501f7, type: 3}
+  lobbySceneName: Starting Screen
+  quitAction:
+    m_Name: Quit
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: f78f83ba-1a4d-461d-959e-bfee8fb7255a
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
 --- !u!4 &994932416
 Transform:
   m_ObjectHideFlags: 0
@@ -843,63 +853,6 @@ MonoBehaviour:
   NetworkedBehaviours:
   - {fileID: 1313447809}
   ForceRemoteRenderTimeframe: 0
---- !u!1001 &1395062862
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 3908199152721112403, guid: d7fdbdb951c798248a9da0823c2a4352, type: 3}
-      propertyPath: m_Name
-      value: Baboon
-      objectReference: {fileID: 0}
-    - target: {fileID: 9000617688995033398, guid: d7fdbdb951c798248a9da0823c2a4352, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 7.48
-      objectReference: {fileID: 0}
-    - target: {fileID: 9000617688995033398, guid: d7fdbdb951c798248a9da0823c2a4352, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 3.39
-      objectReference: {fileID: 0}
-    - target: {fileID: 9000617688995033398, guid: d7fdbdb951c798248a9da0823c2a4352, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9000617688995033398, guid: d7fdbdb951c798248a9da0823c2a4352, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 9000617688995033398, guid: d7fdbdb951c798248a9da0823c2a4352, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9000617688995033398, guid: d7fdbdb951c798248a9da0823c2a4352, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9000617688995033398, guid: d7fdbdb951c798248a9da0823c2a4352, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9000617688995033398, guid: d7fdbdb951c798248a9da0823c2a4352, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9000617688995033398, guid: d7fdbdb951c798248a9da0823c2a4352, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9000617688995033398, guid: d7fdbdb951c798248a9da0823c2a4352, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: d7fdbdb951c798248a9da0823c2a4352, type: 3}
 --- !u!1 &1804196941
 GameObject:
   m_ObjectHideFlags: 0
@@ -1111,6 +1064,5 @@ SceneRoots:
   - {fileID: 1313447810}
   - {fileID: 1854907244}
   - {fileID: 119803043}
-  - {fileID: 1395062862}
   - {fileID: 2135239425}
   - {fileID: 605821948}
