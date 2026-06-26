@@ -671,7 +671,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SetFlailCharacter
   _Character: 0
   ratSprites:
+  - {fileID: 21300000, guid: 7f5c191684551b04ba28c3a291e4c1c0, type: 3}
+  - {fileID: 21300000, guid: 80bf8c0ed4c210b4bb96c2a359de2218, type: 3}
+  - {fileID: 21300000, guid: 9f3181e9390a967408accef983d95566, type: 3}
   - {fileID: 21300000, guid: 78d6ceaf71ef11c408665514e82ff5a5, type: 3}
-  - {fileID: 707919401268129858, guid: b19a206b9c6efb745b948bf630ee71d7, type: 3}
-  - {fileID: 6122595980825124715, guid: 083c0919a64c7f448bff4f8f7c5f5b31, type: 3}
+  - {fileID: 21300000, guid: b19a206b9c6efb745b948bf630ee71d7, type: 3}
+  - {fileID: 21300000, guid: 083c0919a64c7f448bff4f8f7c5f5b31, type: 3}
   ratSpriteRenderer: {fileID: 3854155200524011751}

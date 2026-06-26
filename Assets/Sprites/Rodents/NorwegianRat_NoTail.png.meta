@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 989df0570b94a2d44ab6dfe12d9ab5e7
+guid: b19a206b9c6efb745b948bf630ee71d7
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 7916330440704766664
-    second: Sideways_0
+      213: 707919401268129858
+    second: NorwegianRat_NoTail_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -46,7 +46,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 2
+  spriteMode: 1
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -126,13 +126,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Sideways_0
+      name: NorwegianRat_NoTail_0
       rect:
         serializedVersion: 2
-        x: 42
-        y: 10
-        width: 173
-        height: 226
+        x: 51
+        y: 0
+        width: 137
+        height: 245
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -141,8 +141,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 8c2b1d2e7947cdd60800000000000000
-      internalID: 7916330440704766664
+      spriteID: 240b13ad1f803d900800000000000000
+      internalID: 707919401268129858
       vertices: []
       indices: 
       edges: []
@@ -151,7 +151,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 5e97eb03825dee720800000000000000
     internalID: 0
     vertices: []
     indices: 
@@ -161,7 +161,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Sideways_0: 7916330440704766664
+      NorwegianRat_NoTail_0: 707919401268129858
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
