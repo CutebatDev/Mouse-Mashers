@@ -1,43 +1,83 @@
+using System.Collections.Generic;
+using Fusion;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PostGameStats : MonoBehaviour
 {
     [SerializeField] private DetailsUI playerStatsPrefab;
     [SerializeField] private Transform root;
+    [SerializeField] private string lobbySceneName = "Starting Screen";
 
-    [SerializeField] private PlayerDetails[] detailsArr;
+    private bool returningToLobby;
 
-    //public void ReceivePlayerDetails()
-    //{
-    //    PlayerDetails[] array = someManager.Players;
-
-    //    for (int i = 0; i < array.Length - 1; i++)
-    //    {
-    //        detailsArr[i] = array[i];
-    //    }
-    //}
-
-    public void CreateUIDisplays()
+    private void Start()
     {
-        PlayerDetails current = detailsArr[0];
+        AudioManager.Instance.StopMusic();
+        CreateUIDisplays();
+    }
 
-        PlayerDetails winner = detailsArr[0];
-
-        for (int i = 0; i < detailsArr.Length - 1; i++)
+    private void CreateUIDisplays()
+    {
+        for (int i = root.childCount - 1; i >= 0; i--)
         {
-            current = detailsArr[i];
+            root.GetChild(i).gameObject.SetActive(false);
+            Destroy(root.GetChild(i).gameObject);
+        }
 
-            DetailsUI details = Instantiate(playerStatsPrefab, root.transform.position, Quaternion.identity, root);
+        SessionState sessionState = SessionState.Instance;
 
-            details.SetName(current.playerName);
-            details.SetRat(current.characterIndex);
-            details.SetScore(current.score);
+        if (sessionState == null)
+        {
+            Debug.LogError("Cannot create post-game stats: SessionState is missing.");
+            return;
+        }
 
-            if (i == 0)
-                details.SetWinner();
+        List<PlayerDetails> players = new();
 
-            if (current.score > winner.score)
+        for (int i = 0; i < sessionState.Players.Length; i++)
+        {
+            PlayerDetails player = sessionState.Players[i];
+
+            if (player.isActive && player.characterIndex >= 0)
+                players.Add(player);
+        }
+
+        players.Sort((a, b) => b.score.CompareTo(a.score));
+
+        if (players.Count == 0)
+            return;
+
+        int winningScore = players[0].score;
+
+        foreach (PlayerDetails player in players)
+        {
+            DetailsUI details = Instantiate(playerStatsPrefab, root);
+
+            details.SetName(player.playerName.ToString());
+            details.SetRat(player.characterIndex);
+            details.SetScore(player.score);
+
+            if (player.score == winningScore)
                 details.SetWinner();
         }
+    }
+
+    public async void ReturnToLobby()
+    {
+        if (returningToLobby)
+            return;
+
+        returningToLobby = true;
+
+        string sceneName = lobbySceneName;
+        NetworkRunner runner = SessionState.Instance != null
+            ? SessionState.Instance.Runner
+            : null;
+
+        if (runner != null && runner.IsRunning)
+            await runner.Shutdown();
+
+        SceneManager.LoadScene(sceneName);
     }
 }

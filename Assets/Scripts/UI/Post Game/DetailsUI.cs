@@ -20,7 +20,7 @@ public class DetailsUI : MonoBehaviour
 
     public void SetScore(int score)
     {
-        scoreLabel.text = score.ToString();
+        scoreLabel.text = scoreTextPrefix + score;
     }
 
     public void SetWinner()
@@ -30,6 +30,9 @@ public class DetailsUI : MonoBehaviour
 
     public void SetRat(int index)
     {
+        if (index < 0 || index >= allRats.Length)
+            return;
+
         playerRat.sprite = allRats[index];
     }
 }

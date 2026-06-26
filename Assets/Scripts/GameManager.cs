@@ -18,13 +18,20 @@ public class GameManager : NetworkBehaviour, INetworkRunnerCallbacks
     public NetworkRunner networkRunner;
 
     public string lobbySceneName;
+    [SerializeField] private string postGameSceneName = "Post Game Screen";
+    [SerializeField] private float matchDuration = 60f;
     [SerializeField] private bool shutdownRunnerOnEndGame = true;
+
+    [Networked] private TickTimer MatchTimer { get; set; }
+    [Networked] private NetworkBool MatchEndRequested { get; set; }
 
     [SerializeField] public InputAction quitAction;
     private bool isReturningToMenu;
     private bool menuLoadStarted;
     private bool returnToMenuStarted;
     private bool callbacksRegistered;
+    private bool postGameLoadStarted;
+    private bool localEndRequested;
 
     [SerializeField] private AudioClip mainGameplayMusic;
     
@@ -53,6 +60,15 @@ public class GameManager : NetworkBehaviour, INetworkRunnerCallbacks
         quitAction.Disable();
     }
 
+    private void OnDestroy()
+    {
+        if (callbacksRegistered && networkRunner != null)
+            networkRunner.RemoveCallbacks(this);
+
+        if (Instance == this)
+            Instance = null;
+    }
+
     void Start()
     {
         networkRunner = GetRunner();
@@ -68,6 +84,11 @@ public class GameManager : NetworkBehaviour, INetworkRunnerCallbacks
 
     private void OnQuitPerformed(InputAction.CallbackContext context)
     {
+        if (localEndRequested)
+            return;
+
+        localEndRequested = true;
+        quitAction.Disable();
         AudioManager.Instance.StopMusic();
         RequestEndGame();
     }
@@ -97,7 +118,23 @@ public class GameManager : NetworkBehaviour, INetworkRunnerCallbacks
         base.Spawned();
         networkRunner = Runner;
         RegisterRunnerCallbacks();
+
+        if (Object.HasStateAuthority)
+        {
+            MatchEndRequested = false;
+            MatchTimer = TickTimer.CreateFromSeconds(Runner, matchDuration);
+        }
+
         RPCRequestSpawn();
+    }
+
+    public override void FixedUpdateNetwork()
+    {
+        if (!Object.HasStateAuthority || postGameLoadStarted)
+            return;
+
+        if (MatchEndRequested || MatchTimer.Expired(Runner))
+            LoadPostGameScene();
     }
 
     private void RegisterRunnerCallbacks()
@@ -142,20 +179,23 @@ public class GameManager : NetworkBehaviour, INetworkRunnerCallbacks
     [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
     public void RPC_RequestEndGame(RpcInfo info = default)
     {
-        LoadEndGameScene();
+        MatchEndRequested = true;
     }
     
     [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
     public void RPC_EndGame(RpcInfo info = default)
     {
-        LoadEndGameScene();
+        MatchEndRequested = true;
     }
 
-    private void LoadEndGameScene()
+    private void LoadPostGameScene()
     {
-        if (string.IsNullOrWhiteSpace(lobbySceneName))
+        if (postGameLoadStarted)
+            return;
+
+        if (string.IsNullOrWhiteSpace(postGameSceneName))
         {
-            Debug.LogError("Cannot end game: lobbySceneName is empty.");
+            Debug.LogError("Cannot end game: postGameSceneName is empty.");
             return;
         }
 
@@ -166,13 +206,11 @@ public class GameManager : NetworkBehaviour, INetworkRunnerCallbacks
             return;
         }
 
-        if (shutdownRunnerOnEndGame)
-        {
-            SendEveryoneToMenu();
-            return;
-        }
-
-        runner.LoadScene(lobbySceneName);
+        MatchEndRequested = true;
+        MatchTimer = TickTimer.None;
+        postGameLoadStarted = true;
+        Debug.Log("Match ended. Loading Post Game Screen once.");
+        runner.LoadScene(postGameSceneName);
     }
 
     private void SendEveryoneToMenu()

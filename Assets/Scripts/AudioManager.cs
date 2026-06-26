@@ -57,7 +57,11 @@ public class AudioManager : MonoBehaviour
 
     public void StopMusic()
     {
+        if (_musicSource == null)
+            return;
+
         _musicSource.Stop();
         Destroy(_musicSource.gameObject);
+        _musicSource = null;
     }
 }

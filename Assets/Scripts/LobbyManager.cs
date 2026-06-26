@@ -29,6 +29,7 @@ public class LobbyManager : MonoBehaviour, INetworkRunnerCallbacks
     private bool matchStarted;
 
     private InputAction devAction;
+    private bool isDestroyed;
 
     private void Awake()
     {
@@ -53,11 +54,16 @@ public class LobbyManager : MonoBehaviour, INetworkRunnerCallbacks
 
     private void OnDestroy()
     {
-        if (devAction == null)
-            return;
+        isDestroyed = true;
 
-        devAction.performed -= OnDevActionPerformed;
-        devAction.Dispose();
+        if (runner != null)
+            runner.RemoveCallbacks(this);
+
+        if (devAction != null)
+        {
+            devAction.performed -= OnDevActionPerformed;
+            devAction.Dispose();
+        }
     }
 
     void Start()
@@ -347,11 +353,18 @@ public class LobbyManager : MonoBehaviour, INetworkRunnerCallbacks
     private int CountReadyPlayers()
     {
         int readyCount = 0;
-        PlayerScript[] lobbyPlayers = FindObjectsByType<PlayerScript>(FindObjectsSortMode.None);
 
-        foreach (PlayerScript player in lobbyPlayers)
+        if (runner == null || !runner.IsRunning)
+            return readyCount;
+
+        foreach (NetworkObject networkObject in runner.GetAllNetworkObjects())
         {
-            if (player.IsReady)
+            if (!networkObject.IsValid)
+                continue;
+
+            PlayerScript player = networkObject.GetComponent<PlayerScript>();
+
+            if (player != null && player.IsReady)
                 readyCount++;
         }
 
@@ -395,11 +408,16 @@ public class LobbyManager : MonoBehaviour, INetworkRunnerCallbacks
 
     public void OnShutdown(NetworkRunner runner, ShutdownReason shutdownReason)
     {
+        if (isDestroyed)
+            return;
+
         Debug.Log($"Shutdown: {shutdownReason}");
         
         players.Clear();
         CreateRunner();
-        lobbyUI.UpdateUIState(state);
+
+        if (lobbyUI != null)
+            lobbyUI.UpdateUIState(state);
     }
 
     public void OnUserSimulationMessage(NetworkRunner runner, SimulationMessagePtr message)
