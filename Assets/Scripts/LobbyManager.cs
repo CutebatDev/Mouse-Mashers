@@ -11,6 +11,7 @@ public class LobbyManager : MonoBehaviour, INetworkRunnerCallbacks
     [Header("Prefabs")]
     [SerializeField] private NetworkRunner runnerPrefab;
     [SerializeField] private GameObject playerPrefab;
+    [SerializeField] private SessionState sessionStatePrefab;
 
     [Header("References")]
     [SerializeField] private LobbyUI lobbyUI;
@@ -22,6 +23,7 @@ public class LobbyManager : MonoBehaviour, INetworkRunnerCallbacks
     private NetState state;
     private NetworkRunner runner;
     private PlayerScript currentPlayer;
+    private string localPlayerName = "Rat";
     
     private int readiedPlayers = 0;
     private bool matchStarted;
@@ -239,7 +241,10 @@ public class LobbyManager : MonoBehaviour, INetworkRunnerCallbacks
             players.Add(player);
 
         if (isLocalPlayer)
+        {
             currentPlayer = runner.Spawn(playerPrefab, spawnPoints[player.PlayerId - 1].transform.position).GetComponent<PlayerScript>();
+            currentPlayer.SetPlayerName(localPlayerName);
+        }
 
         readiedPlayers = CountReadyPlayers();
 
@@ -260,6 +265,20 @@ public class LobbyManager : MonoBehaviour, INetworkRunnerCallbacks
         currentPlayer.ToggleReady();
     }
 
+    public void SetLocalPlayerName(string playerName)
+    {
+        playerName = playerName?.Trim();
+
+        if (string.IsNullOrEmpty(playerName))
+            return;
+
+        localPlayerName = playerName.Length > 16
+            ? playerName.Substring(0, 16)
+            : playerName;
+
+        currentPlayer?.SetPlayerName(localPlayerName);
+    }
+
     public void StartMatch()
     {
         if (matchStarted)
@@ -271,7 +290,32 @@ public class LobbyManager : MonoBehaviour, INetworkRunnerCallbacks
         if (!runner.IsSharedModeMasterClient)
             return;
 
+        if (sessionStatePrefab == null)
+        {
+            Debug.LogError("Cannot start match: SessionState prefab is not assigned.");
+            return;
+        }
+
         matchStarted = true;
+
+        SessionState sessionState = runner.Spawn(
+            sessionStatePrefab,
+            flags: NetworkSpawnFlags.DontDestroyOnLoad |
+                   NetworkSpawnFlags.SharedModeStateAuthMasterClient
+        );
+
+        foreach (NetworkObject networkObject in runner.GetAllNetworkObjects())
+        {
+            PlayerScript lobbyPlayer = networkObject.GetComponent<PlayerScript>();
+
+            if (lobbyPlayer != null)
+            {
+                sessionState.RegisterPlayer(
+                    networkObject.StateAuthority,
+                    lobbyPlayer.PlayerName.ToString()
+                );
+            }
+        }
 
         if (runner.IsSharedModeMasterClient)
         {

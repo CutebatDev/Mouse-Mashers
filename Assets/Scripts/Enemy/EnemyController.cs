@@ -42,7 +42,7 @@ public class EnemyController : NetworkBehaviour
     }
     
     [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
-    public void RPC_TakeDamage(float amount)
+    public void RPC_TakeDamage(float amount, RpcInfo info = default)
     {
         if (Time.time < lastDamageTime + iFrameDuration)
             return;
@@ -55,7 +55,7 @@ public class EnemyController : NetworkBehaviour
         {
             currentHealth = 0;
             isDead = true;
-
+            SessionState.Instance.AddScore(info.Source, (int)maxHealth);
             StartDeathSequence();
         }
     }
