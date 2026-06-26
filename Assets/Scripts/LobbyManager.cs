@@ -312,6 +312,9 @@ public class LobbyManager : MonoBehaviour, INetworkRunnerCallbacks
 
         foreach (NetworkObject networkObject in runner.GetAllNetworkObjects())
         {
+            if (!networkObject.IsValid)
+                continue;
+
             PlayerScript lobbyPlayer = networkObject.GetComponent<PlayerScript>();
 
             if (lobbyPlayer != null)
