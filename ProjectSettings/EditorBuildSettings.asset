@@ -6,7 +6,7 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/Actual Game Scenes/UI.unity
+    path: Assets/Scenes/Final/Starting Screen.unity
     guid: 13450bbb5fdd55e4fbee34640e87d4a5
   - enabled: 1
     path: Assets/Scenes/SampleScene.unity
@@ -18,13 +18,13 @@ EditorBuildSettings:
     path: Assets/Scenes/Actual Game Scenes/MultiplayerFlail.unity
     guid: 81fb218c87b259646aa19c9b1ba6c860
   - enabled: 1
-    path: Assets/Scenes/Actual Game Scenes/Character Selection.unity
+    path: Assets/Scenes/Final/Character Selection.unity
     guid: e1ac5b4efb85ee14e908ea95885821fe
   - enabled: 1
     path: Assets/Scenes/Actual Game Scenes/Singleplayer/GameSceneSP.unity
     guid: 53f30ba5892585d4a9e8577286ac8e9d
   - enabled: 1
-    path: Assets/Scenes/Actual Game Scenes/Singleplayer/ActualSPScene.unity
+    path: Assets/Scenes/Final/Main Gameplay.unity
     guid: 6701fc74568cfd04d9b0dbf856cb969c
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
