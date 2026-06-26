@@ -1,20 +1,29 @@
+using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class MainMenuManager : MonoBehaviour
 {
     
-    [Header("Scene Settings")]
+    [Header("Values")]
     [SerializeField] private string mainGameSceneName;
+    [SerializeField] private AudioClip mainMenuMusic;
     
     [Header("References")]
     [SerializeField] private GameObject defaultMenuGroup;
     [SerializeField] private GameObject settingsMenuGroup;
     [SerializeField] private GameObject title;
-    
-    
+
+
+    private void Start()
+    {
+        AudioManager.Instance.PlayMusic(mainMenuMusic);
+    }
+
+
     public void OnPlayPressed()
     {
+        AudioManager.Instance.StopMusic();
         SceneManager.LoadScene(mainGameSceneName);
     }
 
@@ -43,6 +52,6 @@ public class MainMenuManager : MonoBehaviour
 
     public void OnAudioSliderChanged(float value)
     {
-        Debug.Log("Audio Slider: " + value);
+        AudioManager.Instance.SetMixerVolume(value);
     }
 }
