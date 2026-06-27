@@ -14,6 +14,8 @@ public class MultiplayerChat : NetworkBehaviour
     public override void Spawned()
     {
         Instance = this;
+
+        DontDestroyOnLoad(gameObject);
     }
 
     public void SetUsername(string username)

@@ -16,6 +16,8 @@ public class ChatNetworkManager : MonoBehaviour, INetworkRunnerCallbacks
     async void Start()
     {
         await CreateChatRunner();
+
+        DontDestroyOnLoad(gameObject);
     }
 
     private async Task CreateChatRunner()
@@ -39,6 +41,7 @@ public class ChatNetworkManager : MonoBehaviour, INetworkRunnerCallbacks
         if (chatRunner.IsSharedModeMasterClient)
         {
             chatRunner.Spawn(multiplayerChatPrefab);
+            DontDestroyOnLoad(chatRunner.gameObject);
         }
 
         Debug.Log("Chat connected");

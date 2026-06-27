@@ -20,6 +20,8 @@ public class MultiplayerChatUI : MonoBehaviour
     {
         nameplate.text = username;
         lobbyManager.SetLocalPlayerName(username);
+
+        DontDestroyOnLoad(gameObject);
     }
 
     private void OnEnable()
