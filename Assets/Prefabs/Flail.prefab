@@ -232,9 +232,9 @@ MonoBehaviour:
   rb: {fileID: 6265263461444359986}
   damageMultiplier: 5
   squickySounds:
-  - {fileID: 8300000, guid: 9598fa465bbfc5648bacab5178c66ccc, type: 3}
-  - {fileID: 8300000, guid: 99c085e076bcd574c8fae68c4575e4ad, type: 3}
-  - {fileID: 8300000, guid: fa701e00349f26d46b17ccb91f54c70f, type: 3}
+  - {fileID: 8300000, guid: 2ce50668fa7e61641aa6464249cdf490, type: 3}
+  - {fileID: 8300000, guid: f28f238a25247704abe34022d0348448, type: 3}
+  - {fileID: 8300000, guid: 6430f8234fe9d5a48b05859f798eacff, type: 3}
 --- !u!58 &3603485330793878756
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -616,7 +616,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SetFlailCharacter
   _Character: 0
   ratSprites:
-  - {fileID: 21300000, guid: 7f5c191684551b04ba28c3a291e4c1c0, type: 3}
+  - {fileID: 21300000, guid: 25c77242281d54c45a569dababf1e466, type: 3}
   - {fileID: 21300000, guid: 80bf8c0ed4c210b4bb96c2a359de2218, type: 3}
   - {fileID: 21300000, guid: 9f3181e9390a967408accef983d95566, type: 3}
   - {fileID: 21300000, guid: 78d6ceaf71ef11c408665514e82ff5a5, type: 3}

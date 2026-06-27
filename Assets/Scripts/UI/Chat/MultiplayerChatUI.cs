@@ -7,6 +7,8 @@ public class MultiplayerChatUI : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI _messages;
     [SerializeField] private TMP_InputField input;
+
+    // Lobby only
     [SerializeField] private TMP_InputField usernameInput;
     [SerializeField] private TextMeshProUGUI nameplate;
     [SerializeField] private LobbyManager lobbyManager;
@@ -16,12 +18,20 @@ public class MultiplayerChatUI : MonoBehaviour
     private string username = "Rat";
     private bool usernameSent;
 
+    private void Awake()
+    {
+        Debug.Log("Chat UI Awake");
+    }
+
     private void Start()
     {
+        Debug.Log("Chat UI Start");
+
         if (nameplate != null)
             nameplate.text = username;
 
-        lobbyManager.SetLocalPlayerName(username);
+        if (lobbyManager != null)
+            lobbyManager.SetLocalPlayerName(username);
     }
         
     private void OnEnable()
@@ -39,7 +49,9 @@ public class MultiplayerChatUI : MonoBehaviour
         if (chat == null)
             chat = MultiplayerChat.Instance;
 
-        if (chat != null && !usernameSent)
+
+        // Wait until fusion finishes spawning NetworkBehaviour
+        if (chat != null && chat.Object.IsValid && !usernameSent)
         {
             chat.SetUsername(username);
             usernameSent = true;
@@ -56,6 +68,11 @@ public class MultiplayerChatUI : MonoBehaviour
 
     public void SetUsername()
     {
+
+        if (usernameInput == null)
+            return;
+
+
         string newUsername = usernameInput.text.Trim();
 
         if (string.IsNullOrEmpty(newUsername))
@@ -65,15 +82,18 @@ public class MultiplayerChatUI : MonoBehaviour
             ? newUsername.Substring(0, 16)
             : newUsername;
 
-        lobbyManager.SetLocalPlayerName(username);
-        nameplate.text = username;
+        if (lobbyManager!= null)
+            lobbyManager.SetLocalPlayerName(username);
+
+        if (nameplate != null)
+            nameplate.text = username;
 
         usernameInput.text = "";
 
         if (chat == null)
             chat = MultiplayerChat.Instance;
 
-        if (chat != null)
+        if (chat != null && chat.Object.IsValid)
         {
             chat.SetUsername(username);
             usernameSent = true;
@@ -86,6 +106,27 @@ public class MultiplayerChatUI : MonoBehaviour
 
     public void Send()
     {
+        Debug.Log($"SEND CALLED. chat={chat}");
+
+        if (chat == null)
+        {
+            Debug.Log("Chat is null");
+            return;
+        }
+
+        if (chat.Object == null)
+        {
+            Debug.Log("Chat object is null");
+            return;
+        }
+
+        if (!chat.Object.IsValid)
+        {
+            Debug.Log("Chat object invalid");
+            return;
+        }
+
+
         if (string.IsNullOrEmpty(input.text))
             return;
 
@@ -106,6 +147,10 @@ public class MultiplayerChatUI : MonoBehaviour
 
     private void SendWhisper(string text)
     {
+        if (chat == null || !chat.Object.IsValid)
+            return;
+
+
         string[] parts = text.Split(' ', 3);
 
         if (parts.Length < 3)
