@@ -18,12 +18,12 @@ public class MultiplayerChatUI : MonoBehaviour
 
     private void Start()
     {
-        nameplate.text = username;
+        if (nameplate != null)
+            nameplate.text = username;
+
         lobbyManager.SetLocalPlayerName(username);
-
-        DontDestroyOnLoad(gameObject);
     }
-
+        
     private void OnEnable()
     {
         MultiplayerChat.OnMessageReceived += AddMessage;

@@ -7,17 +7,29 @@ using UnityEngine;
 
 public class ChatNetworkManager : MonoBehaviour, INetworkRunnerCallbacks
 {
+    public static ChatNetworkManager Instance;
+
     [Header("References")]
     [SerializeField] private NetworkRunner runnerPrefab;
     [SerializeField] private NetworkObject multiplayerChatPrefab;
 
     private NetworkRunner chatRunner;
 
+    void Awake()
+    {
+        if (Instance != null)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        Instance = this;
+        DontDestroyOnLoad(gameObject);
+    }
+
     async void Start()
     {
         await CreateChatRunner();
-
-        DontDestroyOnLoad(gameObject);
     }
 
     private async Task CreateChatRunner()
@@ -41,7 +53,6 @@ public class ChatNetworkManager : MonoBehaviour, INetworkRunnerCallbacks
         if (chatRunner.IsSharedModeMasterClient)
         {
             chatRunner.Spawn(multiplayerChatPrefab);
-            DontDestroyOnLoad(chatRunner.gameObject);
         }
 
         Debug.Log("Chat connected");
