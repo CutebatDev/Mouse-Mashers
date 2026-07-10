@@ -32,6 +32,8 @@ public class LobbyUI : MonoBehaviour
     
     [SerializeField] private GameObject ErrorPrefab;
     
+    public Toggle isPublicToggle;
+    
     public string LobbyNameText => lobbyNameTextInput.text;
     public string RoomNameText => roomNameTextInput.text;
     public int RoomMaxPlayers => int.Parse(maxPlayersDropdown.options[maxPlayersDropdown.value].text);

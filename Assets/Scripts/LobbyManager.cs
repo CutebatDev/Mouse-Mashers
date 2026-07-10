@@ -130,9 +130,10 @@ public class LobbyManager : MonoBehaviour, INetworkRunnerCallbacks
             PlayerCount = maxPlayers,
             OnGameStarted = OnGameStarted
         });
-
+        
         if (result.Ok)
         {
+            runner.SessionInfo.IsVisible = lobbyUI.isPublicToggle.isOn;
             state = NetState.InSession;
             Debug.Log($"Created and Joined Room: {roomName}");
         }
