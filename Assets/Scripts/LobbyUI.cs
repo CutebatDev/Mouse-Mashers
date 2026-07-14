@@ -1,6 +1,7 @@
 using System;
 using Fusion;
 using System.Collections.Generic;
+using JetBrains.Annotations;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -42,6 +43,8 @@ public class LobbyUI : MonoBehaviour
 
     private Dictionary<string, Button> sessionButtons = new();
 
+    private List<SessionInfo> savedSessions;
+
     private void Start()
     {
         JoinLobbyOnClick();
@@ -76,7 +79,7 @@ public class LobbyUI : MonoBehaviour
         SessionLoadingBlockingPanel.SetActive(true);
     }
 
-    public void CreateSessionUI(string roomName, int maxPlayers, int currentPlayers, bool isFull)
+    public void CreateSessionUI(string roomName, int maxPlayers, int currentPlayers, bool isFull, int gameMode)
     {
         Button btn = Instantiate(sessionButton, lobbyPanel.transform);
 
@@ -85,7 +88,7 @@ public class LobbyUI : MonoBehaviour
         btn.interactable = !isFull;
 
         TMP_Text text = btn.GetComponentInChildren<TMP_Text>();
-        text.text = $"{roomName} {currentPlayers}/{maxPlayers}";
+        text.text = $"{roomName} {currentPlayers}/{maxPlayers} Mode:{gameMode}";
 
         sessionButtons[roomName] = btn;
     }
@@ -113,26 +116,37 @@ public class LobbyUI : MonoBehaviour
         text.text = $"{roomName} {currentPlayerCount}/{maxPlayers}";
     }
 
-    public void UpdateSessions(List<SessionInfo> sessions)
+    public void UpdateSessionsDrop()
     {
+        UpdateSessions(null);
+    }
+    public void UpdateSessions([CanBeNull] List<SessionInfo> sessions)
+    {
+        if(sessions != null)
+            savedSessions = sessions;
         HashSet<string> activeSessions = new();
+        int selectedGameMode = RoomMaxPlayers;
 
-        foreach (var session in sessions)
+        foreach (var session in savedSessions)
         {
+            if (!SessionMatchesSelectedGameMode(session, selectedGameMode))
+                continue;
+
             activeSessions.Add(session.Name);
 
             bool isFull = session.PlayerCount >= session.MaxPlayers;
+            int gameMode = GetSessionGameMode(session);
 
             if (sessionButtons.TryGetValue(session.Name, out Button btn))
             {
                 TMP_Text text = btn.GetComponentInChildren<TMP_Text>();
-                text.text = $"{session.Name} {session.PlayerCount}/{session.MaxPlayers}";
+                text.text = $"{session.Name} {session.PlayerCount}/{session.MaxPlayers} Mode:{gameMode}";
 
                 btn.interactable = !isFull;
             }
             else
             {
-                CreateSessionUI(session.Name, session.MaxPlayers, session.PlayerCount, isFull);
+                CreateSessionUI(session.Name, session.MaxPlayers, session.PlayerCount, isFull, gameMode);
             }
         }
 
@@ -149,6 +163,22 @@ public class LobbyUI : MonoBehaviour
 
         foreach (var key in keysToRemove)
             sessionButtons.Remove(key);
+    }
+
+    private static bool SessionMatchesSelectedGameMode(SessionInfo session, int selectedGameMode)
+    {
+        return GetSessionGameMode(session) == selectedGameMode;
+    }
+
+    private static int GetSessionGameMode(SessionInfo session)
+    {
+        if (session.Properties != null &&
+            session.Properties.TryGetValue(LobbyManager.GameModeSessionProperty, out SessionProperty gameMode))
+        {
+            return gameMode;
+        }
+
+        return session.MaxPlayers;
     }
 
     public void CreateErrorMessage(string message)

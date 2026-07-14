@@ -8,6 +8,8 @@ using UnityEngine.InputSystem;
 
 public class LobbyManager : MonoBehaviour, INetworkRunnerCallbacks
 {
+    public const string GameModeSessionProperty = "game_mode";
+
     [Header("Prefabs")]
     [SerializeField] private NetworkRunner runnerPrefab;
     [SerializeField] private GameObject playerPrefab;
@@ -128,12 +130,17 @@ public class LobbyManager : MonoBehaviour, INetworkRunnerCallbacks
             GameMode = GameMode.Shared,
             SessionName = roomName,
             PlayerCount = maxPlayers,
+            IsOpen = true,
+            IsVisible = lobbyUI.isPublicToggle.isOn,
+            SessionProperties = new Dictionary<string, SessionProperty>
+            {
+                { GameModeSessionProperty, maxPlayers }
+            },
             OnGameStarted = OnGameStarted
         });
         
         if (result.Ok)
         {
-            runner.SessionInfo.IsVisible = lobbyUI.isPublicToggle.isOn;
             state = NetState.InSession;
             Debug.Log($"Created and Joined Room: {roomName}");
         }

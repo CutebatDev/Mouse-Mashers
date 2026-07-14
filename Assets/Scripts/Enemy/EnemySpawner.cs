@@ -57,13 +57,15 @@ public class EnemySpawner : NetworkBehaviour
     private void TrySpawnEnemies()
     {
         int currentCount = EnemyRegistry.Instance.RegisteredEnemies.Count;
+        int effectiveMaxEnemyCount = GetEffectiveMaxEnemyCount();
+        int effectiveSpawnThreshold = GetEffectiveSpawnThreshold();
 
-        if (currentCount > spawnThreshold)
+        if (currentCount > effectiveSpawnThreshold)
             return;
 
         int amount = ChooseSpawnAmount();
 
-        int spaceLeft = maxEnemyCount - currentCount;
+        int spaceLeft = effectiveMaxEnemyCount - currentCount;
         amount = Mathf.Min(amount, spaceLeft);
 
         SpawnEnemies(amount);
@@ -137,5 +139,32 @@ public class EnemySpawner : NetworkBehaviour
     private int ChooseSpawnAmount()
     {
         return Random.Range(minToSpawn, maxToSpawn + 1);
+    }
+
+    private int GetEffectiveMaxEnemyCount()
+    {
+        return maxEnemyCount + GetSelectedGameMode();
+    }
+
+    private int GetEffectiveSpawnThreshold()
+    {
+        return spawnThreshold + Mathf.Max(0, GetSelectedGameMode() - 2);
+    }
+
+    private int GetSelectedGameMode()
+    {
+        NetworkRunner runner = GetNetworkRunner();
+
+        if (runner != null &&
+            runner.SessionInfo != null &&
+            runner.SessionInfo.Properties != null &&
+            runner.SessionInfo.Properties.TryGetValue(LobbyManager.GameModeSessionProperty, out SessionProperty gameMode))
+        {
+            return gameMode;
+        }
+
+        return runner != null && runner.SessionInfo != null
+            ? runner.SessionInfo.MaxPlayers
+            : 0;
     }
 }
