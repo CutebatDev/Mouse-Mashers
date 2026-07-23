@@ -33,6 +33,8 @@ public class LobbyManager : MonoBehaviour, INetworkRunnerCallbacks
     private InputAction devAction;
     private bool isDestroyed;
 
+    private List<SessionInfo> sessionsInfoList;
+    
     private void Awake()
     {
         devAction = new InputAction(
@@ -77,6 +79,7 @@ public class LobbyManager : MonoBehaviour, INetworkRunnerCallbacks
 
     private void Update()
     {
+        TryAssignLocalPlayer();
         TryStartMatchIfEveryoneReady();
     }
 
@@ -155,9 +158,21 @@ public class LobbyManager : MonoBehaviour, INetworkRunnerCallbacks
 
     public async void JoinRoom(string roomName)
     {
+        GameMode gameMode = GameMode.Shared;
+        foreach (var session in sessionsInfoList)
+        {
+            if(session.Name == roomName)
+                if (session.Properties.TryGetValue("mode", out var mode))
+                {
+                    gameMode = (GameMode)(int)mode.PropertyValue;
+                }
+        }
+
+        if (gameMode == GameMode.Server) gameMode = GameMode.Client;
+        
         StartGameResult result = await runner.StartGame(new StartGameArgs
         {
-            GameMode = GameMode.Shared,
+            GameMode = gameMode,
             SessionName = roomName,
             OnGameStarted = OnGameStarted
         });
@@ -199,6 +214,24 @@ public class LobbyManager : MonoBehaviour, INetworkRunnerCallbacks
         JoinLobby();
     }
 
+    private void TryAssignLocalPlayer()
+    {
+        if (currentPlayer != null ||
+            runner == null ||
+            !runner.IsRunning ||
+            runner.GameMode != GameMode.Client)
+        {
+            return;
+        }
+
+        if (runner.TryGetPlayerObject(runner.LocalPlayer, out NetworkObject playerObject))
+        {
+            currentPlayer = playerObject.GetComponent<PlayerScript>();
+
+            if (currentPlayer != null)
+                Debug.Log($"Assigned local player object: {playerObject.Id}");
+        }
+    }
 
     // Beware, callbacks below!
 
@@ -254,7 +287,7 @@ public class LobbyManager : MonoBehaviour, INetworkRunnerCallbacks
         if (!players.Contains(player))
             players.Add(player);
 
-        if (isLocalPlayer)
+        if (isLocalPlayer && runner.GameMode == GameMode.Shared)
         {
             currentPlayer = runner.Spawn(playerPrefab, spawnPoints[player.PlayerId - 1].transform.position).GetComponent<PlayerScript>();
             currentPlayer.SetPlayerName(localPlayerName);
@@ -304,7 +337,7 @@ public class LobbyManager : MonoBehaviour, INetworkRunnerCallbacks
         if (!runner.IsSharedModeMasterClient)
             return;
 
-        if (sessionStatePrefab == null)
+        if (!sessionStatePrefab)
         {
             Debug.LogError("Cannot start match: SessionState prefab is not assigned.");
             return;
@@ -414,6 +447,7 @@ public class LobbyManager : MonoBehaviour, INetworkRunnerCallbacks
         if (state != NetState.Lobby)
             return;
 
+        sessionsInfoList = sessionList;
         lobbyUI.UpdateSessions(sessionList);
     }
 

@@ -79,16 +79,16 @@ public class LobbyUI : MonoBehaviour
         SessionLoadingBlockingPanel.SetActive(true);
     }
 
-    public void CreateSessionUI(string roomName, int maxPlayers, int currentPlayers, bool isFull, int gameMode)
+    public void CreateSessionUI(string roomName, int maxPlayers, int currentPlayers, bool isFull, bool isOpen)
     {
         Button btn = Instantiate(sessionButton, lobbyPanel.transform);
 
         btn.onClick.AddListener(() => lobbyManager.JoinRoom(roomName));
 
-        btn.interactable = !isFull;
+        btn.interactable = !isFull || !isOpen;
 
         TMP_Text text = btn.GetComponentInChildren<TMP_Text>();
-        text.text = $"{roomName} {currentPlayers}/{maxPlayers} Mode:{gameMode}";
+        text.text = $"{roomName} {currentPlayers}/{maxPlayers}";
 
         sessionButtons[roomName] = btn;
     }
@@ -140,13 +140,13 @@ public class LobbyUI : MonoBehaviour
             if (sessionButtons.TryGetValue(session.Name, out Button btn))
             {
                 TMP_Text text = btn.GetComponentInChildren<TMP_Text>();
-                text.text = $"{session.Name} {session.PlayerCount}/{session.MaxPlayers} Mode:{gameMode}";
+                text.text = $"{session.Name} {session.PlayerCount}/{session.MaxPlayers}";
 
-                btn.interactable = !isFull;
+                btn.interactable = !isFull || !session.IsOpen;
             }
             else
             {
-                CreateSessionUI(session.Name, session.MaxPlayers, session.PlayerCount, isFull, gameMode);
+                CreateSessionUI(session.Name, session.MaxPlayers, session.PlayerCount, isFull, session.IsOpen);
             }
         }
 
