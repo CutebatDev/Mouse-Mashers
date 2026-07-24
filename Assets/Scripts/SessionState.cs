@@ -171,4 +171,16 @@ public class SessionState : NetworkBehaviour
 
         return playerName;
     }
+    public int ActivePlayerCount()
+    {
+        int count = 0;
+
+        for (int i = 0; i < Players.Length; i++)
+        {
+            if (Players[i].isActive)
+                count++;
+        }
+
+        return count;
+    }
 }

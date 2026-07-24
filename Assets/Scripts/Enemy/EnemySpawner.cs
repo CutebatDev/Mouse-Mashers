@@ -43,7 +43,7 @@ public class EnemySpawner : NetworkBehaviour
     {
         base.FixedUpdateNetwork();
         
-        if(!GetNetworkRunner().IsSharedModeMasterClient)
+        if (!Object.HasStateAuthority)
             return;
         spawnTimer -= Time.fixedDeltaTime;
         
@@ -73,9 +73,6 @@ public class EnemySpawner : NetworkBehaviour
     
     private void SpawnEnemies(int amount)
     {
-        if(!GetNetworkRunner().IsSharedModeMasterClient)
-            return;
-
         for (int i = 0;  i < amount; i++)
         {
             NetworkObject temp = GetNetworkRunner()

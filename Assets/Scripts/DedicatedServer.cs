@@ -85,7 +85,7 @@ public class DedicatedServer : NetworkBehaviour, INetworkRunnerCallbacks
     {
         int readyCount = 0;
 
-        if (networkRunner == null || !networkRunner.IsRunning)
+        if (!networkRunner || !networkRunner.IsRunning)
             return readyCount;
 
         foreach (NetworkObject networkObject in networkRunner.GetAllNetworkObjects())
@@ -95,7 +95,7 @@ public class DedicatedServer : NetworkBehaviour, INetworkRunnerCallbacks
 
             PlayerScript player = networkObject.GetComponent<PlayerScript>();
 
-            if (player != null && player.IsReady)
+            if (player && player.IsReady)
                 readyCount++;
         }
 
@@ -133,10 +133,10 @@ public class DedicatedServer : NetworkBehaviour, INetworkRunnerCallbacks
 
             PlayerScript lobbyPlayer = networkObject.GetComponent<PlayerScript>();
 
-            if (lobbyPlayer != null)
+            if (lobbyPlayer)
             {
                 sessionState.RegisterPlayer(
-                    networkObject.StateAuthority,
+                    networkObject.InputAuthority,
                     lobbyPlayer.PlayerName.ToString()
                 );
             }

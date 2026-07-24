@@ -127,7 +127,7 @@ public class LobbyManager : MonoBehaviour, INetworkRunnerCallbacks
     {
         if (string.IsNullOrWhiteSpace(roomName))
             return;
-
+        runner.ProvideInput = true;
         StartGameResult result = await runner.StartGame(new StartGameArgs
         {
             GameMode = GameMode.Shared,
@@ -169,7 +169,7 @@ public class LobbyManager : MonoBehaviour, INetworkRunnerCallbacks
         }
 
         if (gameMode == GameMode.Server) gameMode = GameMode.Client;
-        
+        runner.ProvideInput = true;
         StartGameResult result = await runner.StartGame(new StartGameArgs
         {
             GameMode = gameMode,

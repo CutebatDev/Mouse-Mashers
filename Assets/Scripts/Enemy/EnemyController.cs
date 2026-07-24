@@ -43,40 +43,72 @@ public class EnemyController : NetworkBehaviour
     }
     
     [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
-    public void RPC_TakeDamage(float amount, RpcInfo info = default)
+    public void RPC_TakeDamage(
+        float amount,
+        PlayerRef attacker,
+        RpcInfo info = default)
     {
+        if (amount <= 10)
+            return;
+
         if (Time.time < lastDamageTime + iFrameDuration)
             return;
 
         lastDamageTime = Time.time;
-
         currentHealth -= amount;
+
+        RPC_PlayHitFeedback(amount, transform.position);
 
         if (currentHealth <= 0 && !isDead)
         {
             currentHealth = 0;
             isDead = true;
-            SessionState.Instance.AddScore(info.Source, (int)maxHealth);
+
+            PlayerRef creditedPlayer =
+                info.Source.IsRealPlayer ? info.Source : attacker;
+
+            SessionState.Instance?.AddScore(
+                creditedPlayer,
+                (int)maxHealth
+            );
+
             StartDeathSequence();
         }
     }
-
-    public void TakeDamage(float amount)
+    [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
+    private void RPC_PlayHitFeedback(float amount, Vector3 position)
     {
-        if (amount <= 10)
+        // Dedicated server does not need visuals or sound.
+        if (Runner.GameMode == GameMode.Server)
             return;
-        ShowDamage(amount, transform.position);
+
+        if (damagePrefab != null && worldCanvas != null)
+            ShowDamage(amount, position);
+
         PlaySquishSound();
         TakeDamageAnimation();
-
-        RPC_TakeDamage(amount);
     }
+
+    // public void TakeDamage(float amount)
+    // {
+    //     if (amount <= 10)
+    //         return;
+    //     ShowDamage(amount, transform.position);
+    //     PlaySquishSound();
+    //     TakeDamageAnimation();
+    //
+    //     RPC_TakeDamage(amount);
+    // }
 
 
     private void PlaySquishSound()
     {
+        if (AudioManager.Instance == null ||
+            hitSounds == null ||
+            hitSounds.Length == 0)
+            return;
+
         int soundIndex = Random.Range(0, hitSounds.Length);
-        Debug.Log($"Playing sound {soundIndex} from {hitSounds.Length}");
         AudioManager.Instance.PlaySfx2D(hitSounds[soundIndex]);
     }
     

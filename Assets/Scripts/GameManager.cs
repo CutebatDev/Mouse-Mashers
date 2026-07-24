@@ -124,8 +124,9 @@ public class GameManager : NetworkBehaviour, INetworkRunnerCallbacks
             MatchEndRequested = false;
             MatchTimer = TickTimer.CreateFromSeconds(Runner, matchDuration);
         }
-
-        RPCRequestSpawn();
+        
+        if (Runner.LocalPlayer.IsRealPlayer)
+            RPCRequestSpawn();
     }
 
     public override void FixedUpdateNetwork()
@@ -172,17 +173,20 @@ public class GameManager : NetworkBehaviour, INetworkRunnerCallbacks
             }
 
             userIdPlayersMap[userId] = info.Source;
-            RPCSpawnPlayer(info.Source, details.characterIndex);
+            if (runner.GameMode == GameMode.Server)
+                ServerSpawnPlayer(info.Source, details.characterIndex);
+            else
+                RPCSpawnPlayer(info.Source, details.characterIndex);
         }
     }
     
-    [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
+    [Rpc(RpcSources.All, RpcTargets.StateAuthority | RpcTargets.InputAuthority)]
     public void RPC_RequestEndGame(RpcInfo info = default)
     {
         MatchEndRequested = true;
     }
     
-    [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
+    [Rpc(RpcSources.All, RpcTargets.StateAuthority | RpcTargets.InputAuthority)]
     public void RPC_EndGame(RpcInfo info = default)
     {
         MatchEndRequested = true;
@@ -247,7 +251,7 @@ public class GameManager : NetworkBehaviour, INetworkRunnerCallbacks
         SceneManager.LoadScene(lobbySceneName);
     }
     
-    [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
+    [Rpc(RpcSources.StateAuthority | RpcSources.InputAuthority, RpcTargets.All)]
     private void RPCSpawnPlayer([RpcTarget] PlayerRef targetPlayer, int character)
     {
         NetworkObject spawnedPlayer = GetRunner().Spawn(
@@ -261,8 +265,25 @@ public class GameManager : NetworkBehaviour, INetworkRunnerCallbacks
 
         flailCharacter.Character = character;
     }
+    
+    private void ServerSpawnPlayer(PlayerRef player, int characterIndex)
+    {
+        NetworkObject playerObject = Runner.Spawn(
+            playerPrefab,
+            Vector3.zero,
+            Quaternion.identity,
+            inputAuthority: player
+        );
 
-    [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
+        Runner.SetPlayerObject(player, playerObject);
+
+        SetFlailCharacter character =
+            playerObject.GetComponent<SetFlailCharacter>();
+
+        character.Character = characterIndex;
+    }
+
+    [Rpc(RpcSources.StateAuthority | RpcSources.InputAuthority, RpcTargets.All)]
     private void RPCRequestAllAuthorityBack([RpcTarget] PlayerRef targetPlayer, PlayerRef oldPlayer)
     {
         List<NetworkObject> networkObjects = GetRunner().GetAllNetworkObjects();
@@ -325,6 +346,28 @@ public class GameManager : NetworkBehaviour, INetworkRunnerCallbacks
 
     public void OnInput(NetworkRunner runner, NetworkInput input)
     {
+        if (Mouse.current == null)
+            return;
+
+        Camera cameraToUse = mainCamera != null ? mainCamera : Camera.main;
+        if (cameraToUse == null)
+            return;
+
+        Vector2 screenPosition = Mouse.current.position.ReadValue();
+
+        Vector3 worldPosition = cameraToUse.ScreenToWorldPoint(
+            new Vector3(
+                screenPosition.x,
+                screenPosition.y,
+                -cameraToUse.transform.position.z
+            )
+        );
+
+        input.Set(new PlayerInputData
+        {
+            IsPressed = Mouse.current.leftButton.isPressed,
+            WorldPosition = worldPosition
+        });
     }
 
     public void OnInputMissing(NetworkRunner runner, PlayerRef player, NetworkInput input)

@@ -31,7 +31,7 @@ public class CharacterSelectionManager : NetworkBehaviour
         RPC_RequestPick(characterIndex);
     }
 
-    [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
+    [Rpc(RpcSources.All, RpcTargets.StateAuthority | RpcTargets.InputAuthority)]
     private void RPC_RequestPick(int characterIndex, RpcInfo info = default)
     {
         if (characterIndex < 0 || characterIndex >= buttons.Length)
@@ -57,7 +57,9 @@ public class CharacterSelectionManager : NetworkBehaviour
 
         RPC_ConfirmPick(info.Source, characterIndex);
 
-        if (sessionState.SelectedPlayerCount() >= Runner.SessionInfo.PlayerCount)
+        int activePlayers = sessionState.ActivePlayerCount();
+            
+        if (activePlayers >= 0 && sessionState.SelectedPlayerCount() >= activePlayers)
         {
             Runner.SessionInfo.IsVisible = false;
             Runner.SessionInfo.IsOpen = false;
@@ -67,7 +69,7 @@ public class CharacterSelectionManager : NetworkBehaviour
         }
     }
 
-    [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
+    [Rpc(RpcSources.StateAuthority | RpcSources.InputAuthority, RpcTargets.All)]
     private void RPC_ConfirmPick(PlayerRef player, int characterIndex)
     {
         buttons[characterIndex].SetTaken(true);
@@ -80,7 +82,7 @@ public class CharacterSelectionManager : NetworkBehaviour
         }
     }
 
-    [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
+    [Rpc(RpcSources.StateAuthority | RpcSources.InputAuthority, RpcTargets.All)]
     private void RPC_RejectPick([RpcTarget] PlayerRef targetPlayer)
     {
         localPickPending = false;

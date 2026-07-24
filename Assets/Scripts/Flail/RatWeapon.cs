@@ -34,20 +34,26 @@ public class RatWeapon : MonoBehaviour
         if (ownerObject == null || !ownerObject.HasStateAuthority)
             return;
 
-        float damage = rb.linearVelocity.magnitude * damageMultiplier;
-
         EnemyController enemy = other.GetComponent<EnemyController>();
-
         if (enemy == null)
             return;
 
-        PlaySquickySound();
-        enemy.TakeDamage(damage);
+        float damage = rb.linearVelocity.magnitude * damageMultiplier;
+
+        enemy.RPC_TakeDamage(
+            damage,
+            ownerObject.InputAuthority
+        );
     }
 
 
     private void PlaySquickySound()
     {
+        if (AudioManager.Instance == null ||
+            squickySounds == null ||
+            squickySounds.Length == 0)
+            return;
+        
         AudioManager.Instance.PlaySfx2D(
             squickySounds[Random.Range(0,squickySounds.Length)]
             );
