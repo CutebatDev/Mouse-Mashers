@@ -24,8 +24,10 @@ public class LobbyUI : MonoBehaviour
     [SerializeField] private GameObject bottomPanel;
     [SerializeField] private GameObject playerPanel;
     [SerializeField] private GameObject SessionLoadingBlockingPanel;
+    [SerializeField] private Button returnToLobbyBtn;
 
     [SerializeField] private TMP_Dropdown maxPlayersDropdown;
+    [SerializeField] private TMP_Dropdown filterMaxPlayersDropdown;
 
     [SerializeField] private TextMeshProUGUI lobbyNameTextInput;
     [SerializeField] private TextMeshProUGUI roomNameTextInput;
@@ -38,6 +40,7 @@ public class LobbyUI : MonoBehaviour
     public string LobbyNameText => lobbyNameTextInput.text;
     public string RoomNameText => roomNameTextInput.text;
     public int RoomMaxPlayers => int.Parse(maxPlayersDropdown.options[maxPlayersDropdown.value].text);
+    public int FilteredRoomMaxPlayers => int.Parse(filterMaxPlayersDropdown.options[filterMaxPlayersDropdown.value].text);
 
     [SerializeField] private Button sessionButton;
 
@@ -65,6 +68,7 @@ public class LobbyUI : MonoBehaviour
         bottomPanel.SetActive(state == NetState.Lobby);
         endSessionButton.interactable = (state == NetState.InSession);
         CreateRoomButton.interactable = (state == NetState.Lobby);
+        returnToLobbyBtn.gameObject.SetActive(state == NetState.Lobby);
     }
 
     public void JoinLobbyOnClick()
@@ -120,12 +124,15 @@ public class LobbyUI : MonoBehaviour
     {
         UpdateSessions(null);
     }
+
     public void UpdateSessions([CanBeNull] List<SessionInfo> sessions)
     {
         if(sessions != null)
             savedSessions = sessions;
         HashSet<string> activeSessions = new();
-        int selectedGameMode = RoomMaxPlayers;
+        int selectedGameMode = FilteredRoomMaxPlayers;
+
+        Debug.Log($"Filter: {selectedGameMode} players");
 
         foreach (var session in savedSessions)
         {
