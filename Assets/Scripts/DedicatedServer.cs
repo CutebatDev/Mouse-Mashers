@@ -193,6 +193,23 @@ public class DedicatedServer : NetworkBehaviour, INetworkRunnerCallbacks
 
     public void OnPlayerLeft(NetworkRunner runner, PlayerRef player)
     {
+        if (state != NetState.InSession)
+            return;
+
+        players.RemoveAll(p => p == player);
+
+        if (runner.TryGetPlayerObject(
+                player,
+                out NetworkObject playerObject) &&
+            playerObject != null &&
+            playerObject.IsValid)
+        {
+            runner.Despawn(playerObject);
+        }
+
+        readiedPlayers = CountReadyPlayers();
+
+        Debug.Log($"Removed lobby player {player}");
     }
 
     public void OnShutdown(NetworkRunner runner, ShutdownReason shutdownReason)

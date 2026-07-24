@@ -65,7 +65,8 @@ public class CharacterSelectionManager : NetworkBehaviour
             Runner.SessionInfo.IsOpen = false;
 
             Runner.LoadScene(gameplaySceneName);
-            AudioManager.Instance.StopMusic();
+            if (Runner.GameMode != GameMode.Server)
+                AudioManager.Instance.StopMusic();
         }
     }
 

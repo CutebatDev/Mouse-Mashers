@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 15003, guid: 0000000000000000e000000000000000, type: 0}
-  m_Name: Windows Server
+  m_Name: Headless Server
   m_EditorClassIdentifier: UnityEditor.dll::UnityEditor.Build.Profile.BuildProfile
   m_AssetVersion: 1
   m_BuildTarget: 19
@@ -18,9 +18,24 @@ MonoBehaviour:
   m_PlatformId: 8d1e1bca926649cba89d37a4c66e8b3d
   m_PlatformBuildProfile:
     rid: 1078302607144124492
-  m_OverrideGlobalSceneList: 0
-  m_Scenes: []
-  m_HasScriptingDefines: 1
+  m_OverrideGlobalSceneList: 1
+  m_Scenes:
+  - m_enabled: 1
+    m_path: Assets/Scenes/Final/Dedicated Server Starter.unity
+    m_guid: 64070c594a60b0348aad2b31ce0f2e50
+  - m_enabled: 1
+    m_path: Assets/Scenes/Final/Starting Screen.unity
+    m_guid: 13450bbb5fdd55e4fbee34640e87d4a5
+  - m_enabled: 1
+    m_path: Assets/Scenes/Final/Character Selection.unity
+    m_guid: e1ac5b4efb85ee14e908ea95885821fe
+  - m_enabled: 1
+    m_path: Assets/Scenes/Final/Main Gameplay.unity
+    m_guid: 6701fc74568cfd04d9b0dbf856cb969c
+  - m_enabled: 1
+    m_path: Assets/Scenes/Final/Post Game Screen.unity
+    m_guid: 404f42c8ac9bc4846962b03df3b2c778
+  m_HasScriptingDefines: 0
   m_ScriptingDefines: []
   m_PlayerSettingsYaml:
     m_Settings: []
