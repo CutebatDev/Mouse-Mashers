@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Fusion;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -76,12 +77,14 @@ public class PostGameStats : MonoBehaviour
             : null;
 
         if (runner != null && runner.IsRunning)
-            await runner.Shutdown();
-
-        if (runner != null && runner.IsRunning)
         {
             await runner.Shutdown();
+
+            runner.RemoveCallbacks();
+
             Destroy(runner.gameObject);
+
+            await Task.Yield();
         }
         
         SceneManager.LoadScene(sceneName);

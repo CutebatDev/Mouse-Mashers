@@ -25,7 +25,7 @@ public class GameManager : NetworkBehaviour, INetworkRunnerCallbacks
     [Networked] private TickTimer MatchTimer { get; set; }
     [Networked] private NetworkBool MatchEndRequested { get; set; }
 
-    [SerializeField] public InputAction quitAction;
+    //[SerializeField] public InputAction quitAction;
     private bool isReturningToMenu;
     private bool menuLoadStarted;
     private bool returnToMenuStarted;
@@ -42,23 +42,23 @@ public class GameManager : NetworkBehaviour, INetworkRunnerCallbacks
         networkRunner = NetworkRunner.GetRunnerForScene(SceneManager.GetActiveScene());
     }
 
-    private void OnEnable()
-    {
-        if (quitAction == null)
-            return;
+    //private void OnEnable()
+    //{
+    //    if (quitAction == null)
+    //        return;
 
-        quitAction.performed += OnQuitPerformed;
-        quitAction.Enable();
-    }
+    //    quitAction.performed += OnQuitPerformed;
+    //    quitAction.Enable();
+    //}
 
-    private void OnDisable()
-    {
-        if (quitAction == null)
-            return;
+    //private void OnDisable()
+    //{
+    //    if (quitAction == null)
+    //        return;
 
-        quitAction.performed -= OnQuitPerformed;
-        quitAction.Disable();
-    }
+    //    quitAction.performed -= OnQuitPerformed;
+    //    quitAction.Disable();
+    //}
 
     private void OnDestroy()
     {
@@ -76,12 +76,12 @@ public class GameManager : NetworkBehaviour, INetworkRunnerCallbacks
         networkRunner = GetRunner();
         RegisterRunnerCallbacks(GetRunner());
 
-        if (quitAction == null)
-            Debug.LogWarning("GameManager has no quit action assigned.");
-        else if (quitAction.bindings.Count == 0)
-            Debug.LogWarning("GameManager quit action has no input binding assigned.");
+        //if (quitAction == null)
+        //    Debug.LogWarning("GameManager has no quit action assigned.");
+        //else if (quitAction.bindings.Count == 0)
+        //    Debug.LogWarning("GameManager quit action has no input binding assigned.");
         
-        if (Runner.GameMode != GameMode.Server)
+        if (networkRunner.GameMode != GameMode.Server)
             AudioManager.Instance.PlayMusic(mainGameplayMusic);
     }
 
@@ -91,7 +91,7 @@ public class GameManager : NetworkBehaviour, INetworkRunnerCallbacks
             return;
 
         localEndRequested = true;
-        quitAction.Disable();
+        //quitAction.Disable();
         AudioManager.Instance.StopMusic();
         RequestEndGame();
     }
