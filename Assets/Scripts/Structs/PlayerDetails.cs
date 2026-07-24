@@ -1,5 +1,7 @@
 using Fusion;
+using System;
 
+[Serializable]
 public struct PlayerDetails : INetworkStruct
 {
     public NetworkBool isActive;

@@ -83,7 +83,7 @@ public class LobbyUI : MonoBehaviour
         SessionLoadingBlockingPanel.SetActive(true);
     }
 
-    public void CreateSessionUI(string roomName, int maxPlayers, int currentPlayers, bool isFull, bool isOpen)
+    public void CreateSessionUI(string roomName, int maxPlayers, int currentPlayers, bool isFull, bool isOpen, GameMode sessionType)
     {
         Button btn = Instantiate(sessionButton, lobbyPanel.transform);
 
@@ -92,13 +92,21 @@ public class LobbyUI : MonoBehaviour
         btn.interactable = !isFull || !isOpen;
 
         TMP_Text text = btn.GetComponentInChildren<TMP_Text>();
+
+        if (sessionType == GameMode.Server)
+        {
+            currentPlayers--;
+            maxPlayers--;
+        }            
+
         text.text = $"{roomName} {currentPlayers}/{maxPlayers}";
 
         sessionButtons[roomName] = btn;
     }
 
-    public void UpdateSessionPlayerCount(string roomName, int currentPlayerCount)
+    public void UpdateSessionPlayerCount(string roomName, int currentPlayerCount, GameMode sessionType)
     {
+        Debug.Log("UpdateSessionPlayerCount");
 
         if (!sessionButtons.TryGetValue(roomName, out Button btn))
             return;
@@ -116,6 +124,12 @@ public class LobbyUI : MonoBehaviour
             return;
 
         string maxPlayers = counts[1];
+
+        if (sessionType == GameMode.Server)
+        {
+            currentPlayerCount--;
+            //maxPlayers--;
+        }
 
         text.text = $"{roomName} {currentPlayerCount}/{maxPlayers}";
     }
@@ -144,16 +158,37 @@ public class LobbyUI : MonoBehaviour
             bool isFull = session.PlayerCount >= session.MaxPlayers;
             int gameMode = GetSessionGameMode(session);
 
+            GameMode sessionType = GameMode.Shared;
+
+            if (session.Properties.TryGetValue("mode", out var type))
+            {
+                sessionType = (GameMode)(int)type.PropertyValue;
+            }
+
+            int currentPlayers = session.PlayerCount;
+            int maxPlayers = session.MaxPlayers;
+
+            if (sessionType == GameMode.Server)
+            {
+                currentPlayers--;
+                maxPlayers--;
+            }
+
             if (sessionButtons.TryGetValue(session.Name, out Button btn))
             {
                 TMP_Text text = btn.GetComponentInChildren<TMP_Text>();
-                text.text = $"{session.Name} {session.PlayerCount}/{session.MaxPlayers}";
+
+                text.text = $"{session.Name} {currentPlayers}/{maxPlayers}";
 
                 btn.interactable = !isFull || !session.IsOpen;
             }
             else
             {
-                CreateSessionUI(session.Name, session.MaxPlayers, session.PlayerCount, isFull, session.IsOpen);
+                if (session.Properties.TryGetValue("mode", out var mode))
+                {
+                    sessionType = (GameMode)(int)mode.PropertyValue;
+                    CreateSessionUI(session.Name, session.MaxPlayers, session.PlayerCount, isFull, session.IsOpen, sessionType);
+                }
             }
         }
 
