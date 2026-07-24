@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 public class LobbyManager : MonoBehaviour, INetworkRunnerCallbacks
 {
@@ -19,6 +20,7 @@ public class LobbyManager : MonoBehaviour, INetworkRunnerCallbacks
     [SerializeField] private LobbyUI lobbyUI;
     [SerializeField] private Transform[] spawnPoints;
     [SerializeField] private string GAME_SCENE_NAME;
+    [SerializeField] private string MENU_SCENE_NAME;
 
     private readonly List<PlayerRef> players = new();
 
@@ -81,6 +83,14 @@ public class LobbyManager : MonoBehaviour, INetworkRunnerCallbacks
     {
         TryAssignLocalPlayer();
         TryStartMatchIfEveryoneReady();
+    }
+
+    public void ReturnToMainMenu()
+    {
+        SceneManager.LoadScene(MENU_SCENE_NAME);
+
+        AudioManager.Instance.StopMusic();
+        CreateRunner();
     }
 
     private void OnDevActionPerformed(InputAction.CallbackContext context)

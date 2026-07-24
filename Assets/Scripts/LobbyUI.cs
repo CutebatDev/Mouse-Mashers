@@ -24,6 +24,7 @@ public class LobbyUI : MonoBehaviour
     [SerializeField] private GameObject bottomPanel;
     [SerializeField] private GameObject playerPanel;
     [SerializeField] private GameObject SessionLoadingBlockingPanel;
+    [SerializeField] private Button returnToLobbyBtn;
 
     [SerializeField] private TMP_Dropdown maxPlayersDropdown;
 
@@ -65,6 +66,7 @@ public class LobbyUI : MonoBehaviour
         bottomPanel.SetActive(state == NetState.Lobby);
         endSessionButton.interactable = (state == NetState.InSession);
         CreateRoomButton.interactable = (state == NetState.Lobby);
+        returnToLobbyBtn.gameObject.SetActive(state == NetState.Lobby);
     }
 
     public void JoinLobbyOnClick()
