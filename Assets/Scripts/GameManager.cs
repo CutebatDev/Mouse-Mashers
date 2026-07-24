@@ -227,6 +227,11 @@ public class GameManager : NetworkBehaviour, INetworkRunnerCallbacks
         ReturnToMenu();
     }
 
+    public void ActivateReturnToMenu()
+    {
+        ReturnToMenu();
+    }
+
     private async void ReturnToMenu()
     {
         if (isReturningToMenu)
