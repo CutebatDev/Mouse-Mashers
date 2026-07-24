@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class MainMenuManager : MonoBehaviour
 {
@@ -13,13 +14,23 @@ public class MainMenuManager : MonoBehaviour
     [SerializeField] private GameObject defaultMenuGroup;
     [SerializeField] private GameObject settingsMenuGroup;
     [SerializeField] private GameObject title;
+    [SerializeField] private Toggle coolModeToggle;
 
 
     private void Start()
     {
         AudioManager.Instance.PlayMusic(mainMenuMusic, 0.25f);
+        
+        coolModeToggle.isOn = SettingsManager.Instance.isCoolModeEnabled;
     }
 
+
+    public void OnCoolModeToggle(bool isToggled)
+    {
+        SettingsManager.Instance.isCoolModeEnabled = isToggled;
+        SettingsManager.Instance.SaveSettingsToPrefs();
+    }
+    
 
     public void OnPlayPressed()
     {
