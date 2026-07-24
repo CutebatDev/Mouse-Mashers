@@ -55,6 +55,7 @@ MonoBehaviour:
   iFrameDuration: 0.25
   enemyAI: {fileID: 5913096013431632162}
   sr: {fileID: 3566565459640174831}
+  nonCoolModeSprite: {fileID: -5449040201064031705, guid: ed70b492556222f40a0970b8aaaf3090, type: 3}
   hitSounds:
   - {fileID: 8300000, guid: fa701e00349f26d46b17ccb91f54c70f, type: 3}
   - {fileID: 8300000, guid: 99c085e076bcd574c8fae68c4575e4ad, type: 3}

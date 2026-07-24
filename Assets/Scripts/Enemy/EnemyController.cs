@@ -12,6 +12,7 @@ public class EnemyController : NetworkBehaviour
     [SerializeField] private float iFrameDuration = 0.25f;
     [SerializeField] private EnemyAI enemyAI;
     [SerializeField] private SpriteRenderer sr;
+    [SerializeField] private Sprite nonCoolModeSprite;
 
     [Header("Audio")]
     [SerializeField] private AudioClip[] hitSounds;
@@ -24,10 +25,15 @@ public class EnemyController : NetworkBehaviour
     private float lastDamageTime;
     private RectTransform worldCanvas;
 
+
     public override void Spawned()
     {
         base.Spawned();
         currentHealth = maxHealth;
+
+        if (!SettingsManager.Instance.isCoolModeEnabled) {
+             sr.sprite = nonCoolModeSprite;  
+        }
     }
 
     public void SetWorldCanvasRef(RectTransform canvas)
