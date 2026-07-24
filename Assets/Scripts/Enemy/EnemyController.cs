@@ -31,6 +31,9 @@ public class EnemyController : NetworkBehaviour
         base.Spawned();
         currentHealth = maxHealth;
 
+        if (Runner.GameMode == GameMode.Server)
+            return;
+        
         if (!SettingsManager.Instance.isCoolModeEnabled) {
              sr.sprite = nonCoolModeSprite;  
         }

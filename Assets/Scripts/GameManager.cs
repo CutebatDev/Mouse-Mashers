@@ -81,7 +81,8 @@ public class GameManager : NetworkBehaviour, INetworkRunnerCallbacks
         else if (quitAction.bindings.Count == 0)
             Debug.LogWarning("GameManager quit action has no input binding assigned.");
         
-        AudioManager.Instance.PlayMusic(mainGameplayMusic);
+        if (Runner.GameMode != GameMode.Server)
+            AudioManager.Instance.PlayMusic(mainGameplayMusic);
     }
 
     private void OnQuitPerformed(InputAction.CallbackContext context)

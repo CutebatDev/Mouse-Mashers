@@ -299,7 +299,16 @@ public class LobbyManager : MonoBehaviour, INetworkRunnerCallbacks
 
         if (isLocalPlayer && runner.GameMode == GameMode.Shared)
         {
-            currentPlayer = runner.Spawn(playerPrefab, spawnPoints[player.PlayerId - 1].transform.position).GetComponent<PlayerScript>();
+            NetworkObject playerObject = runner.Spawn(
+                playerPrefab,
+                spawnPoints[player.PlayerId - 1].position,
+                Quaternion.identity,
+                inputAuthority: player
+            );
+
+            runner.SetPlayerObject(player, playerObject);
+
+            currentPlayer = playerObject.GetComponent<PlayerScript>();
             currentPlayer.SetPlayerName(localPlayerName);
         }
 
