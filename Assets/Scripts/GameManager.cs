@@ -29,7 +29,7 @@ public class GameManager : NetworkBehaviour, INetworkRunnerCallbacks
     private bool isReturningToMenu;
     private bool menuLoadStarted;
     private bool returnToMenuStarted;
-    private bool callbacksRegistered;
+    private NetworkRunner callbackRunner;
     private bool postGameLoadStarted;
     private bool localEndRequested;
 
@@ -62,8 +62,10 @@ public class GameManager : NetworkBehaviour, INetworkRunnerCallbacks
 
     private void OnDestroy()
     {
-        if (callbacksRegistered && networkRunner != null)
-            networkRunner.RemoveCallbacks(this);
+        if (callbackRunner != null)
+            callbackRunner.RemoveCallbacks(this);
+
+        callbackRunner = null;
 
         if (Instance == this)
             Instance = null;
@@ -72,7 +74,7 @@ public class GameManager : NetworkBehaviour, INetworkRunnerCallbacks
     void Start()
     {
         networkRunner = GetRunner();
-        RegisterRunnerCallbacks();
+        RegisterRunnerCallbacks(GetRunner());
 
         if (quitAction == null)
             Debug.LogWarning("GameManager has no quit action assigned.");
@@ -116,15 +118,16 @@ public class GameManager : NetworkBehaviour, INetworkRunnerCallbacks
     public override void Spawned()
     {
         base.Spawned();
+
         networkRunner = Runner;
-        RegisterRunnerCallbacks();
+        RegisterRunnerCallbacks(Runner);
 
         if (Object.HasStateAuthority)
         {
             MatchEndRequested = false;
             MatchTimer = TickTimer.CreateFromSeconds(Runner, matchDuration);
         }
-        
+
         if (Runner.LocalPlayer.IsRealPlayer)
             RPCRequestSpawn();
     }
@@ -138,17 +141,16 @@ public class GameManager : NetworkBehaviour, INetworkRunnerCallbacks
             LoadPostGameScene();
     }
 
-    private void RegisterRunnerCallbacks()
+    private void RegisterRunnerCallbacks(NetworkRunner runner)
     {
-        if (callbacksRegistered)
+        if (runner == null || callbackRunner == runner)
             return;
 
-        NetworkRunner runner = GetRunner();
-        if (runner == null)
-            return;
+        if (callbackRunner != null)
+            callbackRunner.RemoveCallbacks(this);
 
         runner.AddCallbacks(this);
-        callbacksRegistered = true;
+        callbackRunner = runner;
     }
     
     [Rpc(RpcSources.All, RpcTargets.StateAuthority)]

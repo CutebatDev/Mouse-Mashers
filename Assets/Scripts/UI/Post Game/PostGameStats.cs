@@ -78,6 +78,12 @@ public class PostGameStats : MonoBehaviour
         if (runner != null && runner.IsRunning)
             await runner.Shutdown();
 
+        if (runner != null && runner.IsRunning)
+        {
+            await runner.Shutdown();
+            Destroy(runner.gameObject);
+        }
+        
         SceneManager.LoadScene(sceneName);
     }
 }
